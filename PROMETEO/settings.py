@@ -78,10 +78,24 @@ WSGI_APPLICATION = 'PROMETEO.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'NAME': 'prometeo_app',
+    'USER': 'postgres',
+    'PASSWORD': 'postgres',
+    'HOST': '127.0.0.1',
+    'PORT': '5432',
+    'CONN_MAX_AGE': 500,
     }
 }
+
+
+STATIC_URL = '/static/'
+
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
 
 
 # Internationalization
@@ -98,11 +112,12 @@ USE_L10N = True
 USE_TZ = True
 
 
+RECAPTCHA_PUBLIC_KEY = '6LcLryMTAAAAAEbrchsa2PMbizBwJoOk197CK15q'
+
+RECAPTCHA_PRIVATE_KEY = '6LcLryMTAAAAAC7mDdMMBLwm7fEMlKlEaExFY52-'
+
+NOCAPTCHA = True
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
