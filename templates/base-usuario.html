@@ -113,7 +113,7 @@
                 <!--================================-->
                 <div class="navbar-header">
                     <a href="index.html" class="navbar-brand">
-                        <img src="img/loo.png" alt="" class="brand-icon">
+                        <img src={% static 'img/logo.png' %}" alt="" class="brand-icon">
                         <div class="brand-title">
                             <span class="brand-text">PROMETEO</span>
                         </div>
@@ -325,7 +325,7 @@
                                     <!--<img class="img-circle img-user media-object" src="img/profile-photos/1.png" alt="Profile Picture">-->
                                     <i class="demo-pli-male ic-user"></i>
                                 </span>
-                                <div class="username hidden-xs">Aaron Chavez</div>
+                                <div class="username hidden-xs"> {{ request.user.get_full_name }} </div>
                             </a>
 
 
@@ -354,7 +354,7 @@
 
                                 <!-- Dropdown footer -->
                                 <div class="pad-all text-right">
-                                    <a href="pages-login.html" class="btn btn-primary">
+                                        <a href="{% url 'logout' %}" class="btn btn-primary">
                                         <i class="demo-pli-unlock"></i> Cerrar Sesión
                                     </a>
                                 </div>

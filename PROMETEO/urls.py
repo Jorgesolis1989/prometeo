@@ -16,9 +16,12 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from usuarios import views
+from django.contrib.auth.views import logout
+
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.login_user, name="login_user"),
+    url(r'^logout', logout,  {'next_page': '/'} , name='logout'),
     #url(r'^usuario/$', views., name="login"),
 ]
