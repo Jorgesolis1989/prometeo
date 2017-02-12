@@ -15,8 +15,11 @@ formulario para registrar usuario
 """
 class FormularioRegistroUsuario(forms.Form):
 
-    nombre_completo = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí su nombre y apellido', 'required':'true'}))
+    first_name = forms.CharField(
+        widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí sus nombres', 'required':'true'}))
+
+    last_name = forms.CharField(
+        widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí sus apellidos', 'required':'true'}))
 
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí su correo electrónico', 'required':'true'}))

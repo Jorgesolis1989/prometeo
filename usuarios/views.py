@@ -3,6 +3,7 @@ from usuarios.forms import FormularioLogin, FormularioRegistroUsuario
 from usuarios.models import Usuario
 from django.contrib.auth import authenticate, login
 from django.template.context import RequestContext
+from django.core.validators import validate_email
 # Create your views here.
 
 #Pagina de login
@@ -59,9 +60,10 @@ def registro_usuario(request):
             except Usuario.DoesNotExist:
                     # Creando el usuario
                     usuario = Usuario()
-                    usuario.nombre_completo = cd["nombre_completo"]
+                    usuario.first_name = cd["first_name"]
+                    usuario.last_name = cd["last_name"]
                     usuario.email = cd["email"]
-                    usuario.password = cd["password"]
+                    usuario.set_password(cd["password"])
                     usuario.username = cd["nombre_usuario"]
                     usuario.email_alternativo = cd["email_alternativo"]
                     usuario.telefono_fijo = cd["tel_fijo"]
@@ -78,11 +80,16 @@ def registro_usuario(request):
                         return redirect("login_user")
                     except Exception as e:
                         print(e)
+            else:
+                form = FormularioRegistroUsuario()
+                mensaje = "El usuario con email " +str(email_usuario)+ " ya esta registrado"
+                print("entre ya existe")
+                return render(request, 'registrar-usuario.html', {'mensaje': mensaje, 'form': form})
         else:
-            form = FormularioRegistroUsuario()
-            mensaje = "El usuario con email " + str(Usuario.email)+ " ya esta registrado"
+            print("form invalid")
             return render(request, 'registrar-usuario.html', {'mensaje': mensaje, 'form': form})
     else:
         form = FormularioRegistroUsuario()
     return render(request, 'registrar-usuario.html', {'mensaje': mensaje, 'form': form})
+
 

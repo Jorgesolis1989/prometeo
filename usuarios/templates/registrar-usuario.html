@@ -119,55 +119,99 @@
 		    <div class="cls-content-lg panel">
 		        <div class="panel-body">
 		            <div class="mar-ver pad-btm">
-		                <h3 class="h4 mar-no">Crear una cuenta </h3>
-		                <p class="text-muted"></p>
+		                <h2 class="h3 mar-no">Crear una cuenta </h2>
 		            </div>
-		            <form method="post" action="">
+		            <form method="post" action="" class="form-horizontal">
                         {% csrf_token %}
 		                <div class="row">
-		                    <div class="col-sm-6">
-		                        <div class="form-group">
-		                            {{ form.nombre_completo}}
-		                        </div>
-		                        <div class="form-group">
-		                            {{ form.email }}
-		                        </div>
-		                    </div>
-		                    <div class="col-sm-6">
-		                        <div class="form-group">
-		                            {{ form.nombre_usuario }}
-		                        </div>
-		                        <div class="form-group">
-		                            {{ form.password }}
-		                        </div>
-		                    </div>
-                            <div class="col-sm-6">
-		                        <div class="form-group">
-		                            {{ form.email_alternativo }}
-		                        </div>
-		                        <div class="form-group">
-		                            {{ form.tel_fijo }}
-		                        </div>
-		                    </div>
-                            <div class="col-sm-6">
-		                        <div class="form-group">
-		                            {{ form.tel_movil }}
-		                        </div>
-		                        <div class="form-group">
-		                            {{ form.codigo_perfil }}
-		                        </div>
-		                    </div>
-		                </div>
-		                <div class="checkbox pad-btm text-left">
-		                    <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox">
-		                    <label for="demo-form-checkbox">Está de acuerdo con los<a href="#" class="btn-link">Términos y Condiciones</a></label>
-		                </div>
-		                <button style="background-color: #37495b" class="btn btn-primary btn-block" type="submit" name="btnRegister">Registrarse</button>
-		            </form>
-		        </div>
-		        <div class="pad-all">
-		            Estás registrado ? <a href= "{% url 'login_user' %}" class="btn-link mar-rgt">Iniciar Sesión</a>
+                             <div class="col-sm-10">
+                                 <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Nombres: </label>
+                                        <div class="col-lg-8">
+                                            {{ form.first_name}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                 <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Apellidos: </label>
+                                        <div class="col-lg-8">
+                                            {{ form.last_name}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                 <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Email: </label>
+                                        <div class="col-lg-8">
+                                            {{ form.email}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                 <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Nombre de usuario: </label>
+                                        <div class="col-lg-8">
+                                            {{ form.nombre_usuario}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+		                        <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Contraseña: </label>
+                                        <div class="col-lg-8">
+                                            {{ form.password}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                 <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Email alternativo: </label>
+                                        <div class="col-lg-8">
+                                            {{ form.email_alternativo}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                 <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Teléfono fijo : </label>
+                                        <div class="col-lg-8">
+                                            {{ form.tel_fijo}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                 <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Teléfono móvil : </label>
+                                        <div class="col-lg-8">
+                                            {{ form.tel_movil}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <div class="checkbox pad-btm text-left">
+                                    <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox">
+                                    <label for="demo-form-checkbox">Está de acuerdo con los<a href="#" class="btn-link">Términos y Condiciones</a></label>
+                                </div>
+                                 <div class="form-group">
+                                    <button style="background-color: #37495b" class="btn btn-primary btn-block" type="submit" name="btnRegister">Registrarse</button>
+                                 </div>
+                             </div>
+                        </div>
+		                </form>
+
+                     <div class="pad-all">
+		               Tienes cuenta ?  <a href= "{% url 'login_user' %}" class="btn-link mar-rgt"><strong>Inicia Sesión</strong></a>
 		            </div>
+		        </div>
 		        </div>
 		    </div>
 		</div>
