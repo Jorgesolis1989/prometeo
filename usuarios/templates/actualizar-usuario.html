@@ -1,8 +1,10 @@
 {% extends "base-usuario.html" %}
-{%block title %}
-
-{%endblock title %}
+{%block title %} Actualización de Datos{%endblock title %}
 {%block content %}
+    <div class="mar-top clearfix">
+        <h2 class="h3 mar-no text-center">Actualización de Datos</h2>
+    </div>
+    <hr>
  <form method="post" action="" class="form-horizontal">
                         {% csrf_token %}
 		                <div class="row">
@@ -61,10 +63,13 @@
                                     </div>
                                 </fieldset>
 
-
-                                 <div class="form-group">
-                                    <button style="background-color: #37495b" class="btn btn-primary btn-block" type="submit" name="btnRegister">Actualizar Datos </button>
-                                 </div>
+                                    <div class="row">
+                                        <div class="col-sm-7 col-sm-offset-7">
+                                            <div class="form-group">
+                                            <button style="background-color: #37495b" class="btn btn-primary " type="submit" name="btnRegister">Actualizar Datos </button>
+                                            </div>
+                                        </div>
+                                    </div>
                              </div>
                         </div>
 		                </form>
