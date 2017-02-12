@@ -1,9 +1,9 @@
-from django.shortcuts import render
-from usuarios.forms import FormularioLogin
+from django.shortcuts import render, render_to_response, redirect
+from usuarios.forms import FormularioLogin, FormularioRegistroUsuario
 from usuarios.models import Usuario
 from django.contrib.auth import authenticate, login
+from django.template.context import RequestContext
 # Create your views here.
-
 
 #Pagina de login
 def login_user(request):
@@ -33,3 +33,56 @@ def login_user(request):
 
 
 # Este metodo se utiliza para el cambio de contrasena del usuario
+def cambio_contrasena(request):
+    return  render(request, 'cambio_contrasena.html')
+
+#Vista de registro de usuarios
+def registro_usuario(request):
+    mensaje = ""
+    llamarMensaje = ""
+
+    form = FormularioRegistroUsuario(request.POST)
+
+    if request.method == 'POST' and "btnRegister":
+        form = FormularioRegistroUsuario(request.POST)
+        #Si el formulario es valido y tiene datos
+        if form.is_valid():
+            cd = form.cleaned_data
+            #Capture correo
+            email = cd["email"]
+            try:
+                #Consultando el usuario en la base de datos.
+                email_usuario = Usuario.objects.get(email=email)
+                print("usuario" + str(email_usuario))
+
+            #Si el usuario no existe, lo crea
+            except Usuario.DoesNotExist:
+                    # Creando el usuario
+                    usuario = Usuario()
+                    usuario.nombre_completo = cd["nombre_completo"]
+                    usuario.email = cd["email"]
+                    usuario.password = cd["password"]
+                    usuario.username = cd["nombre_usuario"]
+                    usuario.email_alternativo = cd["email_alternativo"]
+                    usuario.telefono_fijo = cd["tel_fijo"]
+                    usuario.telefono_movil = cd["tel_movil"]
+
+                    # Borrando los datos del formulario y enviando el mensaje de sactisfacion
+                    #form = FormularioRegistroUsuario()
+                    mensaje = "El usuario se ha registrado satisfactoriamente, al correo" + usuario.email + "llegará un mensaje confirmando el registro"
+                    llamarMensaje = "exito_usuario"
+
+                    #Crea el usuario en la BD si hay excepcion
+                    try:
+                        usuario.save()
+                        return redirect("login_user")
+                    except Exception as e:
+                        print(e)
+        else:
+            form = FormularioRegistroUsuario()
+            mensaje = "El usuario con email " + str(Usuario.email)+ " ya esta registrado"
+            return render(request, 'registrar-usuario.html', {'mensaje': mensaje, 'form': form})
+    else:
+        form = FormularioRegistroUsuario()
+    return render(request, 'registrar-usuario.html', {'mensaje': mensaje, 'form': form})
+
