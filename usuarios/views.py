@@ -1,8 +1,9 @@
 from django.shortcuts import render, render_to_response, redirect
-from usuarios.forms import FormularioLogin, FormularioRegistroUsuario
+from usuarios.forms import FormularioLogin, FormularioRegistroUsuario , FormularioActualizarUsuario , FormularioCambiarContrasena
 from usuarios.models import Usuario
 from django.contrib.auth import authenticate, login
 from django.template.context import RequestContext
+from usuarios.models import Usuario
 # Create your views here.
 
 #Pagina de login
@@ -34,7 +35,10 @@ def login_user(request):
 
 # Este metodo se utiliza para el cambio de contrasena del usuario
 def cambio_contrasena(request):
-    return  render(request, 'cambio_contrasena.html')
+    form = FormularioCambiarContrasena()
+
+    return  render(request, 'cambiar_contrasena.html', {'form': form})
+
 
 #Vista de registro de usuarios
 def registro_usuario(request):
@@ -86,3 +90,40 @@ def registro_usuario(request):
         form = FormularioRegistroUsuario()
     return render(request, 'registrar-usuario.html', {'mensaje': mensaje, 'form': form})
 
+# Este metodo se utiliza para el cambio de contrasena del usuario
+def actualizar_usuario(request):
+    mensaje = ""
+    usuario = Usuario.objects.get(username=request.user.username)
+
+    if request.method == 'POST' and "btnUpdate":
+        form = FormularioActualizarUsuario(request.POST)
+
+        if form.is_valid():
+            usuario.first_name = form.cleaned_data['first_name']
+            usuario.last_name = form.cleaned_data['last_name']
+            usuario.email_alternativo = form.cleaned_data['email_alternativo']
+            usuario.telefono_movil = form.cleaned_data['tel_movil']
+            usuario.telefono_fijo= form.cleaned_data['tel_fijo']
+
+            print ("esta bien ")
+            try:
+                usuario.save()
+            except Exception as e:
+                print(e)
+
+            form = FormularioActualizarUsuario()
+            mensaje = "se ha actualizado correctamente sus datos"
+
+        else:
+            mensaje = "Formulario No valido"
+            print(form)
+            form = FormularioActualizarUsuario()
+
+
+    else:
+
+        form = FormularioActualizarUsuario()
+        form.initial = {'first_name': usuario.first_name, 'last_name': usuario.last_name , 'email': usuario.email, 'nombre_usuario': usuario.username, 'email_alternativo': usuario.email_alternativo,
+                        'tel_fijo': usuario.telefono_fijo, 'tel_movil': usuario.telefono_movil}
+        form.fields['email'].widget.attrs['readonly'] = True
+    return  render(request, 'actualizar-usuario.html', {'form': form , 'mensaje': mensaje})

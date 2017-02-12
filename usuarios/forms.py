@@ -35,3 +35,42 @@ class FormularioRegistroUsuario(forms.Form):
 
     tel_movil = forms.IntegerField(
        widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí un teléfono móvil', 'min':'1' , 'required':'true'}))
+
+
+"""
+formulario para editar usuario
+"""
+class FormularioActualizarUsuario(forms.Form):
+
+
+    first_name = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí su nombre', 'required':'true'}))
+
+    last_name = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí su apellido', 'required':'true'}))
+
+
+    email = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí su correo electrónico'}), required= False)
+
+
+    email_alternativo = forms.EmailField(
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí un correo electrónico alternativo', 'required':'true'}))
+
+    tel_fijo = forms.IntegerField(
+       widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí un teléfono fijo', 'min':'1' , 'required':'true'}))
+
+    tel_movil = forms.IntegerField(
+       widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí un teléfono móvil', 'min':'1' , 'required':'true'}))
+
+
+class FormularioCambiarContrasena(forms.Form):
+
+    old_password = forms.CharField(
+        widget= forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí su contraseña anterior', 'required':'true'}))
+
+    new_password = forms.CharField(
+        widget= forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí su contraseña nueva', 'required':'true'}))
+
+    confirm_password = forms.CharField(
+        widget= forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirme su contraseña nueva    ', 'required':'true'}))
