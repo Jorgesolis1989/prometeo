@@ -1,0 +1,74 @@
+{% extends "base-usuario.html" %}
+{%block title %}
+
+{%endblock title %}
+{%block content %}
+ <form method="post" action="" class="form-horizontal">
+                        {% csrf_token %}
+		                <div class="row">
+                             <div class="col-sm-10">
+                                 <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Nombres: </label>
+                                        <div class="col-lg-8">
+                                            {{ form.first_name}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                 <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Apellidos: </label>
+                                        <div class="col-lg-8">
+                                            {{ form.last_name}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+								 <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Email: </label>
+                                        <div class="col-lg-8">
+                                            {{ form.email}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                 <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Email alternativo: </label>
+                                        <div class="col-lg-8">
+                                            {{ form.email_alternativo}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                 <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Teléfono fijo : </label>
+                                        <div class="col-lg-8">
+                                            {{ form.tel_fijo}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                 <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Teléfono móvil : </label>
+                                        <div class="col-lg-8">
+                                            {{ form.tel_movil}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+
+                                 <div class="form-group">
+                                    <button style="background-color: #37495b" class="btn btn-primary btn-block" type="submit" name="btnRegister">Actualizar Datos </button>
+                                 </div>
+                             </div>
+                        </div>
+		                </form>
+
+
+
+{%endblock content%}
