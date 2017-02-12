@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usuario | CREDIWEB ONLINE</title>
+    <title>{% block title %} {% endblock title%}| CREDIWEB ONLINE</title>
 
 
     <!--STYLESHEET-->
@@ -452,6 +452,7 @@
 					                        <!-- Newsfeed Content -->
 					                        <!--===================================================-->
 					                        <div class="media-block">
+
                                                 <div class="media-body">
 					
 					                                <div class="media">
@@ -459,7 +460,7 @@
 
 					                                    </div>
 					                                    <div class="media-body">
-
+                                                            {% block content %}{% endblock content %}
 					                                    </div>
 					                                </div>
 					
@@ -604,10 +605,20 @@
 
 						            <!--Menu list item-->
 						            <li>
-						                <a href="widgets.html">
+						                <a href="{% url 'update_user' %}">
 						                    <i class="demo-psi-gear-2"></i>
 						                    <span class="menu-title">
 												<strong>Actualización de Datos</strong>
+											</span>
+						                </a>
+						            </li>
+
+                                    <!--Menu list item-->
+						            <li>
+						                <a href="{% url 'change_password' %}">
+						                    <i class="demo-psi-gear-2"></i>
+						                    <span class="menu-title">
+												<strong>Cambiar Contraseña</strong>
 											</span>
 						                </a>
 						            </li>

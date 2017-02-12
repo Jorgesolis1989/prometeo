@@ -24,5 +24,7 @@ urlpatterns = [
     url(r'^$', views.login_user, name="login_user"),
     url(r'^logout', logout,  {'next_page': '/'}, name='logout'),
     url(r'^register_user', views.registro_usuario, name="register_user"),
+    url(r'^update_user', views.actualizar_usuario, name="update_user"),
+    url(r'^change_password', views.cambio_contrasena, name="change_password")
     #url(r'^usuario/$', views., name="login"),
 ]
