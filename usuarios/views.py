@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect
 from usuarios.forms import FormularioLogin, FormularioRegistroUsuario
 from usuarios.models import Usuario
 from django.contrib.auth import authenticate, login
@@ -41,7 +41,6 @@ def registro_usuario(request):
     form = FormularioRegistroUsuario(request.POST)
 
     if request.method == 'POST' and "btnRegister":
-        print("ingresse")
         form = FormularioRegistroUsuario(request.POST)
         #Si el formulario es valido y tiene datos
         if form.is_valid():
@@ -50,7 +49,8 @@ def registro_usuario(request):
             email = cd["email"]
             try:
                 #Consultando el usuario en la base de datos.
-                usuario = Usuario.objects.get(email=email)
+                email_usuario = Usuario.objects.get(email=email)
+                print("usuario" + str(email_usuario))
 
             #Si el usuario no existe, lo crea
             except Usuario.DoesNotExist:
@@ -59,29 +59,28 @@ def registro_usuario(request):
                     usuario.nombre_completo = cd["nombre_completo"]
                     usuario.email = cd["email"]
                     usuario.password = cd["password"]
-                    usuario.username = cd ["nombre_usuario"]
-                    usuario.email_alternativo = cd ["email_alternativo"]
-                    usuario.telefono_fijo = cd ["tel_fijo"]
-                    usuario.telefono_movil = cd ["tel_movil"]
-                    #generando el password aleatorio.
-                    password = usuario.objects.make_random_password()
-                    usuario.set_password(password)
+                    usuario.username = cd["nombre_usuario"]
+                    usuario.email_alternativo = cd["email_alternativo"]
+                    usuario.telefono_fijo = cd["tel_fijo"]
+                    usuario.telefono_movil = cd["tel_movil"]
 
                     # Borrando los datos del formulario y enviando el mensaje de sactisfacion
-                    form = FormularioRegistroUsuario()
+                    #form = FormularioRegistroUsuario()
                     mensaje = "El usuario se ha registrado satisfactoriamente, al correo" + usuario.email + "llegará un mensaje confirmando el registro"
                     llamarMensaje = "exito_usuario"
 
                     #Crea el usuario en la BD si hay excepcion
                     try:
                         usuario.save()
+                        return redirect("login_user")
                     except Exception as e:
                         print(e)
         else:
-            form = FormularioRegistroUsuario
+            form = FormularioRegistroUsuario()
+            mensaje = "El usuario con email " + str(Usuario.email)+ " ya esta registrado"
             return render(request, 'registrar-usuario.html', {'mensaje': mensaje, 'form': form})
     else:
         form = FormularioRegistroUsuario()
-        return render(request, 'registrar-usuario.html', {'mensaje': mensaje, 'form': form})
+    return render(request, 'registrar-usuario.html', {'mensaje': mensaje, 'form': form})
 
 
