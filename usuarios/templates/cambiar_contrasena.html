@@ -1,6 +1,21 @@
 {% extends "base-usuario.html" %}
 {% block title %}Cambiar contraseña {% endblock title %}
 {%block content %}
+<style type="text/css">
+    ul.errorlist {
+        margin: 0;
+        padding: 0;
+}
+    .errorlist li {
+    background­color: red;
+    color: red    ;
+    display: block;
+    font­size: 10px;
+    margin: 0 0 3px;
+    padding: 4px 5px;
+}
+
+</style>
     <div class="mar-top clearfix">
         <h3 class="h3 mar-no text-center">Cambiar Contraseña</h3>
     </div>
@@ -13,6 +28,7 @@
                 <div class="form-group">
                     <label class="col-lg-4 control-label">Contraseña Anterior: </label>
                     <div class="col-lg-8">
+                        {{form.old_password.errors}}
                         {{ form.old_password}}
                     </div>
                 </div>
@@ -22,6 +38,7 @@
                 <div class="form-group">
                     <label class="col-lg-4 control-label">Contraseña Nueva:  </label>
                     <div class="col-lg-8">
+                        {{ form.new_password.errors}}
                         {{ form.new_password}}
                     </div>
                 </div>
@@ -31,10 +48,12 @@
                 <div class="form-group">
                     <label class="col-lg-4 control-label">Confirmar Contraseña: </label>
                     <div class="col-lg-8">
+                        {{ form.new_password.errors}}
                         {{ form.confirm_password}}
                     </div>
                 </div>
             </fieldset>
+
 
              <div class="row">
                     <div class="col-sm-7 col-sm-offset-7">
@@ -43,6 +62,7 @@
                         </div>
                     </div>
              </div>
+              {{ mensaje }}
          </div>
     </div>
  </form>

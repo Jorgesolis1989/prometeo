@@ -77,3 +77,13 @@ class FormularioCambiarContrasena(forms.Form):
 
     confirm_password = forms.CharField(
         widget= forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirme su contraseña nueva    ', 'required':'true'}))
+
+    def clean(self):
+        new_password = self.cleaned_data['new_password']
+        confirm_password = self.cleaned_data['confirm_password']
+
+        if new_password != confirm_password:
+            self._errors["new_password"] = "Password no coinciden" # Will raise a error message
+            #del form_data['new_password']
+        return self.cleaned_data
+

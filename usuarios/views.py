@@ -19,7 +19,6 @@ def login_user(request):
     elif request.method == 'POST':
         form = FormularioLogin(request.POST)
         if form.is_valid():
-            print("entre")
             cd = form.cleaned_data
             usuario = authenticate(username=cd['username'], password=cd['password'])
             if usuario is not None:
@@ -39,9 +38,31 @@ def login_user(request):
 
 # Este metodo se utiliza para el cambio de contrasena del usuario
 def cambio_contrasena(request):
-    form = FormularioCambiarContrasena()
 
-    return  render(request, 'cambiar_contrasena.html', {'form': form})
+    mensaje = ""
+
+    if request.method == 'POST' and 'btnCambiarContrasena':
+        usuario = Usuario.objects.get(username = request.user.username)
+        print(usuario)
+        form = FormularioCambiarContrasena(request.POST)
+        #Si el formulario es valido y tiene datos
+
+        if form.is_valid():
+            if usuario.check_password(form.cleaned_data['old_password']):
+                usuario.set_password(form.cleaned_data['new_password'])
+                try:
+                    usuario.save()
+                except Exception as e:
+                    print (e)
+                mensaje = "La contraseña fue cambiada exitosamente"
+            else:
+                form._errors["old_password"] = "Password no es igual al anterior"
+
+    else:
+        form = FormularioCambiarContrasena()
+        print ()
+
+    return  render(request, 'cambiar_contrasena.html', {'form': form , 'mensaje': mensaje})
 
 
 #Vista de registro de usuarios
