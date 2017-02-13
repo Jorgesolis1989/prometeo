@@ -101,19 +101,17 @@
 		
 		<!-- BACKGROUND IMAGE -->
 		<!--===================================================-->
-		<div id="bg-overlay"></div>
-		
-		
+		<div id="bg-overlay" class="bg-img" style="background-image: url({% static 'img/bg2.jpg' %}");></div>
+
 		<!-- LOGIN FORM -->
 		<!--===================================================-->
 		<div class="cls-content">
 		    <div class="cls-content-sm panel">
 		        <div class="panel-body">
 		            <div class="mar-ver pad-btm">
-		                <h3 class="h4 mar-no">Iniciar Sesión</h3>
-		                <p class="text-muted"></p>
+		                <h3 class="h3 mar-no">Iniciar Sesión</h3>
+		                <p><hr></p>
 		            </div>
-
 		            <form method="post" action="" >
                         {% csrf_token %}
 		                <div class="form-group">
@@ -130,11 +128,10 @@
 		            </form>
 
 		        </div>
-		
+		        <hr>
 		        <div class="pad-all">
-		            <a href="pages-password-reminder.html" class="btn-link mar-rgt">Recordar mi clave</a>
-		            <a href="{% url 'register_user' %}" class="btn-link mar-lft" type="submit" name="btnToRegister">Registrarme</a>
-
+		            <a href="pages-password-reminder.html" class="btn-link mar-rgt ">Recordar mi clave</a>
+		            <a href="{% url 'register_user' %}" class="btn-link mar-lft" type="submit" name="btnToRegister"><u>Registrarme</u></a>
 		        </div>
 		    </div>
 		</div>

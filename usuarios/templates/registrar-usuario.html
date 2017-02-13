@@ -110,8 +110,7 @@
 
 		<!-- BACKGROUND IMAGE -->
 		<!--===================================================-->
-		<div id="bg-overlay"></div>
-		
+		<div id="bg-overlay" class="bg-img" style="background-image: url({% static 'img/bg2.jpg' %}");></div>
 		
 		<!-- REGISTRATION FORM -->
 		<!--===================================================-->
@@ -119,7 +118,8 @@
 		    <div class="cls-content-lg panel">
 		        <div class="panel-body">
 		            <div class="mar-ver pad-btm">
-		                <h2 class="h3 mar-no">Crear una cuenta </h2>
+		                <h3 class="h3 mar-no">Crear una cuenta </h3>
+                        <p><hr></p>
 		            </div>
 		            <form method="post" action="" class="form-horizontal">
                         {% csrf_token %}
@@ -199,27 +199,29 @@
 
                                 <div class="checkbox pad-btm text-left">
                                     <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox">
-                                    <label for="demo-form-checkbox">Está de acuerdo con los<a href="#" class="btn-link">Términos y Condiciones</a></label>
+                                    <label for="demo-form-checkbox">Está de acuerdo con los <a href="#" class="btn-link">Términos y Condiciones</a></label>
                                 </div>
-                                 <div class="form-group">
-                                    <button style="background-color: #37495b" class="btn btn-primary btn-block" type="submit" name="btnRegister">Registrarse</button>
-                                 </div>
+                                    <div class="col-sm-5 col-sm-offset-5">
+                                        <div class="form-group">
+                                            <button style="background-color: #37495b" class="btn btn-primary btn-block" type="submit" name="btnRegister">Registrarse</button>
+                                        </div>
+                                    </div>
                              </div>
-                        </div>
-		                </form>
 
-                     <div class="pad-all">
-		               Tienes cuenta ?  <a href= "{% url 'login_user' %}" class="btn-link mar-rgt"><strong>Inicia Sesión</strong></a>
-		            </div>
-		        </div>
-		        </div>
-		    </div>
-		</div>
-		<!--===================================================-->
-		
-	</div>
+                        </div>
+                    </form>
+                    <hr>
+                     <div class="pad-all col-sm-6 col-sm-offset-6">
+                       Tienes cuenta ?  <a href= "{% url 'login_user' %}" class="btn-link mar-rgt"><strong>Inicia Sesión</strong></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--===================================================-->
+    </div>
 	<!--===================================================-->
 	<!-- END OF CONTAINER -->
 
-		</body>
+</body>
 </html>
