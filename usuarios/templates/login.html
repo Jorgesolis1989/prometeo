@@ -111,6 +111,12 @@
 		            <div class="mar-ver pad-btm">
 		                <h3 class="h3 mar-no">Iniciar Sesión</h3>
 		                <p><hr></p>
+                            <p class="text-success text-bold ">
+                                {{ mensaje }}
+                            </p>
+                            <p class="text-danger text-bold ">
+                                {{ mensajeE }}
+                            </p>
 		            </div>
 		            <form method="post" action="" >
                         {% csrf_token %}
@@ -124,8 +130,10 @@
 		                    <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox">
 		                    <label for="demo-form-checkbox">Recuerdame</label>
 		                </div>
-		                <button style="background-color: #37495b" class="btn btn-lg btn-block" type="submit"><font color="white">Ingresar</font></button>
-		            </form>
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <button style="background-color: #37495b" class="btn btn-primary btn-block" type="submit">Ingresar</button>
+                        </div>
+                    </form>
 
 		        </div>
 		        <hr>

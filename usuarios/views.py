@@ -13,6 +13,7 @@ from usuarios.models import Usuario
 #Pagina de login
 def login_user(request):
     mensaje = ""
+    mensajeE = ""
     if request.user.is_authenticated() and not request.user.is_superuser:
         return render(request, 'base-usuario.html')
 
@@ -28,12 +29,12 @@ def login_user(request):
                     #Redireccionar
                     return render(request, 'base-usuario.html')
                 else:
-                   mensaje = "Usuario no activado"
+                   mensajeE = "Usuario no activado"
             else:
-                   mensaje = "Datos erróneos. Por favor, inténtelo otra vez.    "
+                   mensajeE = "Datos erróneos. Por favor, inténtelo otra vez.    "
     else:
         form = FormularioLogin()
-    return render(request, 'login.html', {'mensaje': mensaje, 'form': form })
+    return render(request, 'login.html', {'mensaje': mensaje,'mensajeE': mensajeE, 'form': form })
 
 
 # Este metodo se utiliza para el cambio de contrasena del usuario
@@ -56,19 +57,21 @@ def cambio_contrasena(request):
                     print (e)
                 mensaje = "La contraseña fue cambiada exitosamente"
             else:
-                form._errors["old_password"] = "Password no es igual al anterior"
+                form._errors["old_password"] = "La contraseña no es igual a la anterior"
 
     else:
         form = FormularioCambiarContrasena()
-        print ()
+        print()
 
-    return  render(request, 'cambiar_contrasena.html', {'form': form , 'mensaje': mensaje})
+    return render(request, 'cambiar_contrasena.html', {'form': form , 'mensaje': mensaje})
 
 
 #Vista de registro de usuarios
 def registro_usuario(request):
     mensaje = ""
     llamarMensaje = ""
+    #bandera para ocultar o no los campos en formulario de registro
+    ocultar = False
 
     form = FormularioRegistroUsuario(request.POST)
 
@@ -99,26 +102,26 @@ def registro_usuario(request):
 
                     # Borrando los datos del formulario y enviando el mensaje de sactisfacion
                     #form = FormularioRegistroUsuario()
-                    mensaje = "El usuario se ha registrado satisfactoriamente, al correo" + usuario.email + "llegará un mensaje confirmando el registro"
+                    mensaje = "Registro satisfactorio. Al correo " + usuario.email + " se enviará un mensaje confirmando el registro"
                     llamarMensaje = "exito_usuario"
 
                     #Crea el usuario en la BD si hay excepcion
                     try:
                         usuario.save()
-                        return redirect("login_user")
+                        #return redirect("login_user")
+                        ocultar = True
+                        return render(request, 'registrar-usuario.html', {'form': form, 'mensaje': mensaje, 'ocultar':ocultar})
                     except Exception as e:
                         print(e)
             else:
                 form = FormularioRegistroUsuario()
-                mensaje = "El usuario con email " +str(email_usuario)+ " ya esta registrado"
-                print("entre ya existe")
-                return render(request, 'registrar-usuario.html', {'mensaje': mensaje, 'form': form})
+                mensajeE = "Ya existe un usuario con el correo " + email +""
+                return render(request, 'registrar-usuario.html', {'form': form, 'mensajeE': mensajeE,  'ocultar':ocultar})
         else:
-            print("form invalid")
-            return render(request, 'registrar-usuario.html', {'mensaje': mensaje, 'form': form})
+            return render(request, 'registrar-usuario.html', {'form': form, 'mensaje': mensaje,  'ocultar':ocultar})
     else:
         form = FormularioRegistroUsuario()
-    return render(request, 'registrar-usuario.html', {'mensaje': mensaje, 'form': form})
+    return render(request, 'registrar-usuario.html', {'form': form, 'mensaje': mensaje,  'ocultar':ocultar})
 
 
 
@@ -137,25 +140,22 @@ def actualizar_usuario(request):
             usuario.telefono_movil = form.cleaned_data['tel_movil']
             usuario.telefono_fijo= form.cleaned_data['tel_fijo']
 
-            print ("esta bien ")
             try:
                 usuario.save()
             except Exception as e:
                 print(e)
 
             form = FormularioActualizarUsuario()
-            mensaje = "se ha actualizado correctamente sus datos"
+            mensaje = "Se ha actualizado correctamente sus datos"
 
         else:
-            mensaje = "Formulario No valido"
+            mensaje = "Formulario con campos sin diligenciar"
             print(form)
             form = FormularioActualizarUsuario()
-
-
     else:
 
         form = FormularioActualizarUsuario()
         form.initial = {'first_name': usuario.first_name, 'last_name': usuario.last_name , 'email': usuario.email, 'nombre_usuario': usuario.username, 'email_alternativo': usuario.email_alternativo,
                         'tel_fijo': usuario.telefono_fijo, 'tel_movil': usuario.telefono_movil}
         form.fields['email'].widget.attrs['readonly'] = True
-    return  render(request, 'actualizar-usuario.html', {'form': form , 'mensaje': mensaje})
+    return render(request, 'actualizar-usuario.html', {'form': form , 'mensaje': mensaje})
