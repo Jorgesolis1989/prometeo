@@ -118,6 +118,12 @@ RECAPTCHA_PRIVATE_KEY = '6LcLryMTAAAAAC7mDdMMBLwm7fEMlKlEaExFY52-'
 
 NOCAPTCHA = True
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'sivore@correounivalle.edu.co'
+EMAIL_HOST_PASSWORD = 'sivorePass06'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
