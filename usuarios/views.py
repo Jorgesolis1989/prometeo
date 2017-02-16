@@ -55,6 +55,8 @@ def cambio_contrasena(request):
                     usuario.save()
                 except Exception as e:
                     print (e)
+                user = authenticate(username=usuario.username, password=form.cleaned_data['new_password'])
+                login(request, user)
                 mensaje = "La contraseña fue cambiada exitosamente"
             else:
                 form._errors["old_password"] = "La contraseña no es igual a la anterior"
