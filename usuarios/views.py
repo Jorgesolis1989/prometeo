@@ -3,7 +3,7 @@ from usuarios.forms import FormularioLogin, FormularioRegistroUsuario , Formular
 from usuarios.models import Usuario
 from django.contrib.auth import authenticate, login
 from django.template.context import RequestContext
-
+from django.core.mail import send_mail
 from django.core.validators import validate_email
 
 from usuarios.models import Usuario
@@ -100,11 +100,14 @@ def registro_usuario(request):
                     usuario.telefono_fijo = cd["tel_fijo"]
                     usuario.telefono_movil = cd["tel_movil"]
 
-                    # Borrando los datos del formulario y enviando el mensaje de sactisfacion
+                    # Borrando los datos del formulario y enviando el mensaje de satisfacion
                     #form = FormularioRegistroUsuario()
                     mensaje = "Registro satisfactorio. Al correo " + usuario.email + " se enviará un mensaje confirmando el registro"
                     llamarMensaje = "exito_usuario"
-
+                 # Enviando correo electronico de confirmacion de registro.
+                    mensajeC = "Señor(a) ", usuario.first_name, usuario.last_name, "\n su registro a PROMETEO fue exitoso!!\n \n ", "Estos son los datos de acceso ingresados \n \n  Nombre de usuario: " + usuario.email, "\n Contraseña: ", usuario.password
+                    send_mail("Envío de confirmación de regitro a PROMETEO", mensajeC,settings.EMAIL_HOST_USER , [usuario.email], fail_silently=False)
+                    print("send_mail -->" + send_mail)
                     #Crea el usuario en la BD si hay excepcion
                     try:
                         usuario.save()
