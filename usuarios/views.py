@@ -145,7 +145,7 @@ def registro_usuario(request):
                     pw = make_pw_hash('123')
                     print(pw)
 
-                    activation_key = pw[:10]
+                    activation_key = pw[:15]
                     key_expires = datetime.datetime.today() + datetime.timedelta(2)
 
                     # Crear el perfil del usuario
@@ -154,7 +154,7 @@ def registro_usuario(request):
 
                     # Enviar un email de confirmación
                     email_subject = 'Confirmación de Cuenta "PROMETEO"'
-                    email_body = "Señor(a)%s, Gracias por registrarte.\n Para activar tu cuenta da click en el siguiente enlace : " \
+                    email_body = "Señor(a)%s, Gracias por registrarte.\n Para activar tu cuenta da click en el siguiente enlace " \
                                  "en menos de 48 horas: http://127.0.0.1:8000/activate/%s" % (usuario.username, activation_key)
 
                     send_mail(email_subject, email_body, 'settings.EMAIL_HOST_USER',[email], fail_silently=False)
