@@ -24,7 +24,7 @@ class Usuario(User):
 class Perfil_Usuario(models.Model):
     usuario = models.OneToOneField(User)
     activation_key = models.CharField(max_length=40, blank=True)
-    key_expires = models.DateTimeField(default=datetime.date.today())
+    key_expires = models.DateTimeField(default=datetime.datetime.now())
 
     def __str__(self):
         return self.usuario.username

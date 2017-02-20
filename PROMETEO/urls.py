@@ -33,6 +33,6 @@ urlpatterns = [
     url(r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete', name='password_reset_complete'),
     url(r'^usuarios/$', include('usuarios.urls')),
     url(r'^register_user', views.registro_usuario, name="register_user"),
-    url(r'^register_success/', views.confirmar_registro, name="register_success"),
+    url(r'^register_success/', views.confirmar_registro),
     url(r'^activate/(?P<activation_key>\w+)/',views.confirmar_registro, name="register_confirm"),
 ]

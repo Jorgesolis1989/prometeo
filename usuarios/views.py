@@ -1,4 +1,5 @@
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.models import User
 from django.shortcuts import render, render_to_response, redirect,  get_object_or_404
 from usuarios.forms import FormularioLogin, FormularioRegistroUsuario , FormularioActualizarUsuario , FormularioCambiarContrasena
 from usuarios.models import Usuario, Perfil_Usuario
@@ -7,6 +8,9 @@ from django.template.context import RequestContext
 from django.core.mail import send_mail
 from django.core.validators import validate_email
 from django.utils import timezone
+from django.utils.timezone import activate
+from django.conf import settings
+activate(settings.TIME_ZONE)
 import hashlib, datetime, random
 from usuarios.models import Usuario
 import hmac
@@ -124,15 +128,24 @@ def registro_usuario(request):
                     usuario.telefono_movil = cd["tel_movil"]
                     usuario.is_active = False
 
+                    #Crea el usuario en la BD si hay excepcion
+                    try:
+                        usuario.save()
+                        #return redirect("login_user")
+                    except Exception as e:
+                        print(e)
+
                     #Crea la llave de activación y se envia el correo para la confirmación de registro
                     pw = make_pw_hash('123')
                     print(pw)
-
                     activation_key = pw[:15]
                     key_expires = datetime.datetime.today() + datetime.timedelta(2)
 
+                    #Obtener el nombre de usuario
+                    user=User.objects.get(username=usuario.username)
+
                     # Crear el perfil del usuario
-                    perfil_usuario = Perfil_Usuario(usuario=usuario, activation_key=activation_key, key_expires=key_expires)
+                    perfil_usuario = Perfil_Usuario(usuario=user, activation_key=activation_key, key_expires=key_expires)
                     try:
                         perfil_usuario.save()
                     except Exception as e:
@@ -143,13 +156,8 @@ def registro_usuario(request):
                                  "en menos de 48 horas: http://127.0.0.1:8000/activate/%s" % (usuario.username, activation_key)
                     send_mail(email_subject, email_body, 'settings.EMAIL_HOST_USER',[email], fail_silently=False)
 
-                    #Crea el usuario en la BD si hay excepcion
-                    try:
-                        usuario.save()
-                        #return redirect("login_user")
-                    except Exception as e:
-                        print(e)
                     return render_to_response('registration/registro_exitoso.html')
+
             else:
                 form = FormularioRegistroUsuario()
                 mensajeE = "Ya existe un usuario con el correo " + email +""
@@ -161,21 +169,30 @@ def registro_usuario(request):
     return render(request, 'registrar-usuario.html', {'form': form, 'mensaje': mensaje,  'ocultar':ocultar})
 
 def confirmar_registro(request, activation_key=None):
+    print("activation_key ---", activation_key)
     # Verifica que el usuario ya está logeado
-    if request.user.is_authenticated():
+    if request.user.is_authenticated() and not request.user.is_superuser:
         #HttpResponseRedirect('/login')
         return render(request, 'base-usuario.html')
 
     # Verifica que el token de activación sea válido y sino retorna un 404
-    perfil_usuario = get_object_or_404(Perfil_Usuario, activation_key=activation_key)
+    try:
+        perfil_usuario = get_object_or_404(Perfil_Usuario, activation_key=activation_key)
+        print("timezone ---", timezone.now())
+        print("perfil_usuario.key_expires", perfil_usuario.key_expires)
+
+        if perfil_usuario.key_expires < timezone.now():
+            return render_to_response('registration/registro_expirado.html')
+
+        # Si el token no ha expirado, se activa el usuario y se muestra el html de confirmación
+        usuario = perfil_usuario.usuario
+        print ("usuario",usuario)
+        usuario.is_active = True
+        usuario.save()
+    except Exception as e:
+        print(e)
 
     # verifica si el token de activación ha expirado y si es así renderiza el html de registro expirado
-    if perfil_usuario.key_expires < timezone.now():
-        return render_to_response('registration/registro_expirado.html')
-    # Si el token no ha expirado, se activa el usuario y se muestra el html de confirmación
-    usuario = perfil_usuario.usuario
-    usuario.is_active = True
-    usuario.save()
     return render_to_response('registration/registro_confirmado.html')
 
 # Este metodo se utiliza para el cambio de contrasena del usuario
