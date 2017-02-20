@@ -1,4 +1,9 @@
 from django.db import models
+from django.utils import timezone
+from django.utils.timezone import activate
+from django.conf import settings
+activate(settings.TIME_ZONE)
+
 
 # Create your models here
 from django.db import models
@@ -24,7 +29,7 @@ class Usuario(User):
 class Perfil_Usuario(models.Model):
     usuario = models.OneToOneField(User)
     activation_key = models.CharField(max_length=40, blank=True)
-    key_expires = models.DateTimeField(default=datetime.datetime.now())
+    key_expires = models.DateTimeField()
 
     def __str__(self):
         return self.usuario.username

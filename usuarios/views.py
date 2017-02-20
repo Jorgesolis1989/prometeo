@@ -7,16 +7,20 @@ from django.contrib.auth import authenticate, login
 from django.template.context import RequestContext
 from django.core.mail import send_mail
 from django.core.validators import validate_email
+
 from django.utils import timezone
 from django.utils.timezone import activate
 from django.conf import settings
 activate(settings.TIME_ZONE)
+
 import hashlib, datetime, random
 from usuarios.models import Usuario
 import hmac
 import string
 
 # Create your views here.
+def utc_to_local(utc_dt):
+    return utc_dt.replace(tzinfo=timezone.utc).astimezone(tz=None)
 
 #Pagina de login
 def login_user(request):
@@ -74,8 +78,6 @@ def cambio_contrasena(request):
         print()
 
     return render(request, 'cambiar_contrasena.html', {'form': form , 'mensaje': mensaje})
-
-
 
 
 
@@ -139,6 +141,7 @@ def registro_usuario(request):
                     pw = make_pw_hash('123')
                     print(pw)
                     activation_key = pw[:15]
+                    """  se debe de corregir datetime.datetime.today  para no generar warning"""
                     key_expires = datetime.datetime.today() + datetime.timedelta(2)
 
                     #Obtener el nombre de usuario
@@ -178,10 +181,10 @@ def confirmar_registro(request, activation_key=None):
     # Verifica que el token de activación sea válido y sino retorna un 404
     try:
         perfil_usuario = get_object_or_404(Perfil_Usuario, activation_key=activation_key)
-        print("timezone ---", timezone.now())
+        print("timezone ---", utc_to_local(timezone.now()))
         print("perfil_usuario.key_expires", perfil_usuario.key_expires)
 
-        if perfil_usuario.key_expires < timezone.now():
+        if perfil_usuario.key_expires < utc_to_local(timezone.now()):
             return render_to_response('registration/registro_expirado.html')
 
         # Si el token no ha expirado, se activa el usuario y se muestra el html de confirmación
