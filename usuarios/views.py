@@ -158,7 +158,7 @@ def registro_usuario(request):
                     # Enviar un email de confirmación
                     email_subject = 'Confirmación de Cuenta "PROMETEO"'
                     email_body = "Señor(a)%s, Gracias por registrarte.\n Para activar tu cuenta da click en el siguiente enlace " \
-                                 "en menos de 48 horas: http://"+request.META['HTTP_HOST']+"/activate/%s" % (usuario.username, activation_key)
+                                 "en menos de 48 horas: http://"+str(request.META['HTTP_HOST'])+"/activate/%s" % (usuario.username, activation_key)
                     send_mail(email_subject, email_body, 'settings.EMAIL_HOST_USER',[email], fail_silently=False)
 
                     return render_to_response('registration/registro_exitoso.html')
