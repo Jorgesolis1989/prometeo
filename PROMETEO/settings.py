@@ -80,7 +80,10 @@ WSGI_APPLICATION = 'PROMETEO.wsgi.application'
 DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': 'prometeo_app',
+    'OPTIONS': {
+            'options': '-c search_path=sql_soluciones'
+        },
+    'NAME': 'prometeo',
     'USER': 'postgres',
     'PASSWORD': 'postgres',
     'HOST': '127.0.0.1',
@@ -97,13 +100,8 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-#Email configurations
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'marthalilianamd@gmail.com'
-EMAIL_HOST_PASSWORD = 'marthaGmail10'
-EMAIL_USE_TLS = True
+AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend', "usuarios.backends.BackendUsuarios")
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

@@ -2,7 +2,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import render, render_to_response, redirect,  get_object_or_404
 from usuarios.forms import FormularioLogin, FormularioRegistroUsuario , FormularioActualizarUsuario , FormularioCambiarContrasena
-from usuarios.models import Usuario, Perfil_Usuario
+from usuarios.models import  Perfil_Usuario , Usuario_Web
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
 from django.template.context import RequestContext
 from django.core.mail import send_mail
@@ -16,7 +17,6 @@ from django.conf import settings
 activate(settings.TIME_ZONE)
 
 import hashlib, datetime, random
-from usuarios.models import Usuario
 import hmac
 import string
 
@@ -57,7 +57,7 @@ def cambio_contrasena(request):
     mensaje = ""
 
     if request.method == 'POST' and 'btnCambiarContrasena':
-        usuario = Usuario.objects.get(username = request.user.username)
+        usuario = User.objects.get(email = request.user.email)
         print(usuario)
         form = FormularioCambiarContrasena(request.POST)
         #Si el formulario es valido y tiene datos
@@ -65,11 +65,15 @@ def cambio_contrasena(request):
         if form.is_valid():
             if usuario.check_password(form.cleaned_data['old_password']):
                 usuario.set_password(form.cleaned_data['new_password'])
+
+                usuario_web = Usuario_Web.objects.get(email_usrio=usuario.email)
+                usuario_web.email_usrio = make_password(form.cleaned_data['new_password'])
                 try:
                     usuario.save()
+                    usuario_web.save()
                 except Exception as e:
                     print (e)
-                user = authenticate(username=usuario.username, password=form.cleaned_data['new_password'])
+                user = authenticate(username=usuario.email, password=form.cleaned_data['new_password'])
                 login(request, user)
                 mensaje = "La contraseña fue cambiada exitosamente"
             else:
@@ -104,8 +108,6 @@ def registro_usuario(request):
     #bandera para ocultar o no los campos en formulario de registro
     ocultar = False
 
-    form = FormularioRegistroUsuario(request.POST)
-
     if request.method == 'POST' and "btnRegister":
         form = FormularioRegistroUsuario(request.POST)
         #Si el formulario es valido y tiene datos
@@ -115,42 +117,48 @@ def registro_usuario(request):
             email = cd["email"]
             try:
                 #Consultando el usuario en la base de datos.
-                email_usuario = Usuario.objects.get(email=email)
+                email_usuario = User.objects.get(email=email)
                 print("usuario" + str(email_usuario))
 
             #Si el usuario no existe, lo crea
-            except Usuario.DoesNotExist:
-                    # Creando el usuario
-                    usuario = Usuario()
+            except User.DoesNotExist:
+                    # Creando el usuario en la tabla auth_user de django
+                    usuario = User()
                     usuario.first_name = cd["first_name"]
                     usuario.last_name = cd["last_name"]
                     usuario.email = cd["email"]
                     usuario.set_password(cd["password"])
-                    usuario.username = cd["nombre_usuario"]
-                    usuario.email_alternativo = cd["email_alternativo"]
-                    usuario.telefono_fijo = cd["tel_fijo"]
-                    usuario.telefono_movil = cd["tel_movil"]
                     usuario.is_active = False
 
                     #Crea el usuario en la BD si hay excepcion
                     try:
                         usuario.save()
-                        #return redirect("login_user")
+                    except Exception as e:
+                        print(e)
+
+                    # Creando el usuario web en la base de datos de Prometeo tabla usrios_web
+                    usuario_web = Usuario_Web()
+                    usuario_web.nmbre_usrio = usuario.get_full_name()
+                    usuario_web.email_usrio = usuario.email
+                    usuario_web.clve_accso = make_password(cd["password"])
+                    usuario_web.email_altrntvo = cd["email_alternativo"]
+                    usuario_web.tlfno_mvil = cd["tel_movil"]
+                    usuario_web.tlno_fjo = cd["tel_fijo"]
+
+                    try:
+                        usuario_web.save()
                     except Exception as e:
                         print(e)
 
                     #Crea la llave de activación y se envia el correo para la confirmación de registro
                     pw = make_pw_hash('123')
-                    print(pw)
                     activation_key = pw[:15]
                     """  se debe de corregir datetime.datetime.today  para no generar warning"""
                     key_expires = datetime.datetime.today() + datetime.timedelta(2)
 
-                    #Obtener el nombre de usuario
-                    user=User.objects.get(username=usuario.username)
 
                     # Crear el perfil del usuario
-                    perfil_usuario = Perfil_Usuario(usuario=user, activation_key=activation_key, key_expires=key_expires)
+                    perfil_usuario = Perfil_Usuario(usuario=usuario, activation_key=activation_key, key_expires=key_expires)
                     try:
                         perfil_usuario.save()
                     except Exception as e:
@@ -194,6 +202,12 @@ def confirmar_registro(request, activation_key=None):
         print ("usuario",usuario)
         usuario.is_active = True
         usuario.save()
+
+        usuario_web = Usuario_Web.objects.get(email_usrio=usuario.email)
+        usuario_web.actvo = 1
+        usuario_web.estdo_usrio = 1
+        usuario_web.save()
+
     except Exception as e:
         print(e)
 
@@ -203,7 +217,9 @@ def confirmar_registro(request, activation_key=None):
 # Este metodo se utiliza para el cambio de contrasena del usuario
 def actualizar_usuario(request):
     mensaje = ""
-    usuario = Usuario.objects.get(username=request.user.username)
+    usuario = get_object_or_404(User, email=request.user.email)
+    usuario_web = Usuario_Web.objects.get(email_usrio= usuario.email)
+
 
     if request.method == 'POST' and "btnUpdate":
         form = FormularioActualizarUsuario(request.POST)
@@ -211,12 +227,15 @@ def actualizar_usuario(request):
         if form.is_valid():
             usuario.first_name = form.cleaned_data['first_name']
             usuario.last_name = form.cleaned_data['last_name']
-            usuario.email_alternativo = form.cleaned_data['email_alternativo']
-            usuario.telefono_movil = form.cleaned_data['tel_movil']
-            usuario.telefono_fijo= form.cleaned_data['tel_fijo']
+
+
+            usuario_web.email_altrntvo = form.cleaned_data['email_alternativo']
+            usuario_web.tlfno_mvil  = form.cleaned_data['tel_movil']
+            usuario_web.tlno_fjo= form.cleaned_data['tel_fijo']
 
             try:
                 usuario.save()
+                usuario_web.save()
             except Exception as e:
                 print(e)
 
@@ -230,7 +249,7 @@ def actualizar_usuario(request):
     else:
 
         form = FormularioActualizarUsuario()
-        form.initial = {'first_name': usuario.first_name, 'last_name': usuario.last_name , 'email': usuario.email, 'nombre_usuario': usuario.username, 'email_alternativo': usuario.email_alternativo,
-                        'tel_fijo': usuario.telefono_fijo, 'tel_movil': usuario.telefono_movil}
+        form.initial = {'first_name': usuario.first_name, 'last_name': usuario.last_name , 'email': usuario.email,  'email_alternativo': usuario_web.email_altrntvo,
+                        'tel_fijo': usuario_web.tlno_fjo, 'tel_movil': usuario_web.tlfno_mvil}
         form.fields['email'].widget.attrs['readonly'] = True
     return render(request, 'actualizar-usuario.html', {'form': form , 'mensaje': mensaje})
