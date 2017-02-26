@@ -38,7 +38,6 @@ def login_user(request):
             cd = form.cleaned_data
             usuario = authenticate(username=cd['username'], password=cd['password'])
             if usuario is not None:
-                print("autenticado")
                 if usuario.is_active:
                     login(request, usuario)
                     #Redireccionar
