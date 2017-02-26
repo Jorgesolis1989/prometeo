@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import render, render_to_response, redirect,  get_object_or_404
 from usuarios.forms import FormularioLogin, FormularioRegistroUsuario , FormularioActualizarUsuario , FormularioCambiarContrasena
-from usuarios.models import  Perfil_Usuario , Usuario_Web
+from usuarios.models import  Perfil_Usuario , Usuario_Web, Usuario_Web_Vinculacion_Empresa
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
 from django.template.context import RequestContext
@@ -118,7 +118,7 @@ def registro_usuario(request):
             try:
                 #Consultando el usuario en la base de datos.
                 email_usuario = User.objects.get(email=email)
-                print("usuario" + str(email_usuario))
+                print("email" + str(email_usuario))
 
             #Si el usuario no existe, lo crea
             except User.DoesNotExist:
@@ -127,8 +127,11 @@ def registro_usuario(request):
                     usuario.first_name = cd["first_name"]
                     usuario.last_name = cd["last_name"]
                     usuario.email = cd["email"]
+                    usuario.username = '12'
                     usuario.set_password(cd["password"])
                     usuario.is_active = False
+                    integer = int(User.objects.latest('id').id)
+                    usuario.username = integer + 1
 
                     #Crea el usuario en la BD si hay excepcion
                     try:
@@ -145,8 +148,14 @@ def registro_usuario(request):
                     usuario_web.tlfno_mvil = cd["tel_movil"]
                     usuario_web.tlno_fjo = cd["tel_fijo"]
 
+
                     try:
                         usuario_web.save()
+                        # Guardando información de las empresas
+                        usuario_web_vinculacion_empresa = Usuario_Web_Vinculacion_Empresa()
+                        usuario_web_vinculacion_empresa.id_emprsa = 10
+                        usuario_web_vinculacion_empresa.email_usrio = usuario_web
+                        usuario_web_vinculacion_empresa.save()
                     except Exception as e:
                         print(e)
 
@@ -162,6 +171,7 @@ def registro_usuario(request):
                     try:
                         perfil_usuario.save()
                     except Exception as e:
+                        print("eror en perfil")
                         print (e)
                     # Enviar un email de confirmación
                     email_subject = 'Confirmación de Cuenta "PROMETEO"'
@@ -181,6 +191,10 @@ def registro_usuario(request):
         form = FormularioRegistroUsuario()
     return render(request, 'registrar-usuario.html', {'form': form, 'mensaje': mensaje,  'ocultar':ocultar})
 
+def principal(request):
+    return render(request, 'index.html')
+
+
 def confirmar_registro(request, activation_key=None):
     print("activation_key ---", activation_key)
     # Verifica que el usuario ya está logeado
@@ -193,8 +207,13 @@ def confirmar_registro(request, activation_key=None):
         perfil_usuario = get_object_or_404(Perfil_Usuario, activation_key=activation_key)
         print("timezone ---", utc_to_local(timezone.now()))
         print("perfil_usuario.key_expires", perfil_usuario.key_expires)
-
+        print(utc_to_local(timezone.now()))
         if perfil_usuario.key_expires < utc_to_local(timezone.now()):
+            print("perfil_usuario.key_expires", perfil_usuario.key_expires)
+            print("es menor a ")
+            print("timezone ---", utc_to_local(timezone.now()))
+
+
             return render_to_response('registration/registro_expirado.html')
 
         # Si el token no ha expirado, se activa el usuario y se muestra el html de confirmación

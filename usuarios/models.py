@@ -33,9 +33,19 @@ class Usuario_Web(models.Model):
     tlfno_mvil = models.CharField(max_length=20)
     cdgo_prfil = models.IntegerField(null=True)
     estdo_usrio = models.IntegerField(null=False , default= 0)
-    fcha_crcion_date = models.DateTimeField(auto_now_add=True)
+    fcha_crcion_date = models.DateTimeField( default=timezone.now)
     actvo = models.IntegerField(null=False, default= 0)
 
     class Meta:
         verbose_name_plural= u'Usuarios_Web'
         db_table = 'usrios_web'
+
+class Usuario_Web_Vinculacion_Empresa(models.Model):
+    email_usrio = models.ForeignKey(Usuario_Web, db_column='email_usrio' , null=False)
+    id_emprsa = models.IntegerField(primary_key=True)
+    fcha_crcion = models.DateTimeField( default=timezone.now)
+    actvo = models.IntegerField(null=False, default=1)
+
+    class Meta:
+        verbose_name_plural= u'Usuarios_Web_Vinculacion_Empresas'
+        db_table = 'usrios_web_vnclcnes_emprsas'

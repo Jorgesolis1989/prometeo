@@ -22,7 +22,8 @@ from django.contrib.auth.views import logout
 urlpatterns = [
     #url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', views.login_user, name="login_user"),
+    url(r'^$', views.principal, name="principal"),
+    url(r'^login$', views.login_user, name="login_user"),
     url(r'^logout', logout,  {'next_page': '/'}, name='logout'),
     url(r'^register_user', views.registro_usuario, name="register_user"),
     url(r'^update_user', views.actualizar_usuario, name="update_user"),
