@@ -1,0 +1,278 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+	<meta charset="utf-8"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<meta name="description" content="Prometeo - Asistencia al Proveedor">
+	<meta name="keywords" content="Certificados, retefuente, reteiva, retecree, empresas, clientes" />
+	<meta name="author" content=""> 
+	<title>Prometeo - Asistencia al Proveedor</title>
+	<link href="{% static 'webPrometeo/css/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static 'webPrometeo/css/prettyPhoto.css' %}" rel="stylesheet">
+	<link href="{% static 'webPrometeo/css/font-awesome.min.css' %}" rel="stylesheet">
+	<link href="{% static 'webPrometeo/css/animate.css' %}" rel="stylesheet">
+	<link href="{% static 'webPrometeo/css/main.css' %}" rel="stylesheet">
+	<link href="{% static 'webPrometeo/css/responsive.css' %}" rel="stylesheet">
+	<!--[if lt IE 9]> <script src="js/html5shiv.js"></script> 
+	<script src="js/respond.min.js"></script> <![endif]--> 
+	<link rel="shortcut icon" href="{% static 'images/ico/favicon.png' %}">
+</head><!--/head-->
+<body>
+	<header id="navigation"> 
+		<div class="navbar navbar-inverse navbar-fixed-top" role="banner">
+			<div class="container"> 
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> 
+					</button> 
+					<a class="navbar-brand" href="/"><h1><img src="{% static 'images/logo.png' %}" alt="Prometeo"></h1></a>
+				</div> 
+				<div class="collapse navbar-collapse"> 
+					<ul class="nav navbar-nav navbar-right"> 
+						<li class="scroll active"><a href="#navigation">INICIO</a></li>
+						<li class="scroll"><a href="#about-us">QUIÉNES SOMOS</a></li>
+						<li class="scroll"><a href="#services">NORMATIVIDAD</a></li>
+						<li class="scroll"><a href="#portfolio">SERVICIOS</a></li>
+						<li class="scroll"><a href="#our-team">PREGUNTAS</a></li>
+						<li class="scroll"><a href="#contact">CONTÁCTENOS</a></li>
+					</ul> 
+				</div> 
+			</div> 
+		</div><!--/navbar--> 
+	</header> <!--/#navigation--> 
+
+	<section id="home">
+		<div class="home-pattern"></div>
+		<div id="main-carousel" class="carousel slide" data-ride="carousel"> 
+			<ol class="carousel-indicators">
+				<li data-target="#main-carousel" data-slide-to="0" class="active"></li>
+				<!--<li data-target="#main-carousel" data-slide-to="1"></li>-->
+				<!--<li data-target="#main-carousel" data-slide-to="2"></li>-->
+			</ol><!--/.carousel-indicators--> 
+			<div class="carousel-inner">
+				<div class="item active" style="background-image: url({% static 'images/slider/slider-prometeo.jpg' %})">
+					<div class="carousel-caption"> 
+						<div class="carousel">
+							<h2 class="heading animated bounceInDown" style="color:#f8ac1a"><b>PROMETEO</b></h2>
+							<p class="animated bounceInUp " style="color:#c9252c;"><b>Nunca la información de sus proveedores, <br>clientes y empleados<br> estuvo tan cerca!</b></p>
+							<a class="btn btn-default slider-btn animated fadeIn" href="#">Saber más ...</a>
+						</div>
+						<div class="carousel-right" style="margin-right: 8%">
+							<a class="btn btn-default slider-btn" href="/login" >INGRESE</a><br>
+							<a class="btn btn-default slider-btn" href="/register_user">REGÍSTRESE</a>
+						</div>
+					</div>
+				</div>
+				<!--
+				<div class="item" style="background-image: url(images/slider/slide2.jpg)">
+					<div class="carousel-caption"> <div> 
+						<h2 class="heading animated bounceInDown">Get All in Onepage</h2> 
+						<p class="animated bounceInUp">Everything is outstanding </p> <a class="btn btn-default slider-btn animated fadeIn" href="#">Get Started</a> 
+					</div> 
+				</div> 
+			</div> 
+			<div class="item" style="background-image: url(images/slider/slide1.jpg)"> 
+				<div class="carousel-caption"> 
+					<div> 
+						<h2 class="heading animated bounceInRight">Fully Responsive Template</h2> 
+						<p class="animated bounceInLeft">100% Responsive HTML template</p> 
+						<a class="btn btn-default slider-btn animated bounceInUp" href="#">Get Started</a> 
+					</div> 
+				</div> 
+			</div>
+			-->
+		</div><!--/.carousel-inner-->
+
+		<!--<a class="carousel-left member-carousel-control hidden-xs" href="#main-carousel" data-slide="prev"><i class="fa fa-angle-left"></i></a>
+		<a class="carousel-right member-carousel-control hidden-xs" href="#main-carousel" data-slide="next"><i class="fa fa-angle-right"></i></a>-->
+	</div> 
+
+</section><!--/#home-->
+
+	<section id="about-us">
+	<div class="container">
+		<div class="text-center">
+			<div class="col-sm-8 col-sm-offset-2">
+				<h2 class="title-one">QUIÉNES SOMOS?</h2>
+				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+			</div>
+		</div>
+		<div class="about-us">
+			<div class="row">
+				<!-- why ours -->
+				<!--kills -->
+				</div>
+			</div>
+		</div>
+	</section><!--/#about-us-->
+
+	<section id="services" class="parallax-section">
+		<div class="container">
+			<div class="row text-center">
+				<div class="col-sm-8 col-sm-offset-2">
+					<h2 class="title-one">Servicios</h2>
+					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="our-service">
+						<div class="services row">
+							<div class="col-sm-4">
+								<div class="single-service">
+									<i class="fa fa-certificate "></i>
+									<h2>Descarga de certificado</h2>
+									<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore.</p>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="single-service">
+									<i class="fa fa-file"></i>
+									<h2>Gestión Documental</h2>
+									<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy </p>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="single-service">
+									<i class="fa fa-building-o "></i>
+									<h2>Gestión de Empresas</h2>
+									<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore.</p>
+								</div>
+							</div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section><!--/#service-->
+
+	<!--/#Our-Team-->
+
+	<!--<section id="portfolio">
+			<div class="container">
+				<div class="row text-center">
+					<div class="col-sm-8 col-sm-offset-2">
+						<h2 class="title-one">¿Qué usos tiene Prometeo?</h2>
+						<p>Descarga de certificados</p>
+					</div>
+				</div>
+				<ul class="portfolio-filter text-center">
+					<li><a class="btn btn-default active" href="#" data-filter="*">Todos</a></li>
+					<li><a class="btn btn-default" href="#" data-filter=".rfuente">Retención en la Fuente</a></li>
+					<li><a class="btn btn-default" href="#" data-filter=".rtiva">RETE IVA</a></li>
+					<li><a class="btn btn-default" href="#" data-filter=".rcree">RETECRE</a></li>
+				</ul>
+				<div class="portfolio-items fa-align-center">
+					<div class="col-sm-3 col-xs-15 portfolio-item rfuente">
+						<div class="view efffect">
+							<div class="portfolio-image">
+								<img src="images/portfolio/certificado-retefuente.jpg" height="220" alt=""></div>
+								<div class="mask text-center">
+									<h3></h3>
+									<h4>Certificado de Retefuente</h4>
+									<a href="#"><i class="fa fa-link"></i></a>
+									<a href="images/portfolio/certificado-retefuente.jpg" data-gallery="prettyPhoto"><i class="fa fa-search-plus"></i></a>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-3 col-xs-15 portfolio-item rtiva">
+							<div class="view efffect" >
+								<div class="portfolio-image">
+									<img src="images/portfolio/certificado-reteiva.png" alt="" height="220">
+								</div>
+								<div class="mask text-center">
+									<h3></h3>
+									<h4>Certificado de Rete IVA</h4>
+									<a href="#"><i class="fa fa-link"></i></a>
+									<a href="images/portfolio/certificado-reteiva.png" data-gallery="prettyPhoto"><i class="fa fa-search-plus"></i></a>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-3 col-xs-15 portfolio-item rcree">
+						<div class="view efffect">
+							<div class="portfolio-image">
+								<img src="images/portfolio/certificado-cree.jpg" height="220" alt="">
+							</div>
+							<div class="mask text-center">
+								<h3></h3>
+								<h4>Certificado RETECREE</h4>
+								<a href="#"><i class="fa fa-link"></i></a>
+								<a href="images/portfolio/certificado-cree.jpg" data-gallery="prettyPhoto"><i class="fa fa-search-plus"></i></a>
+							</div>
+						</div>
+					</div>
+					</div>
+				</div>
+
+			</section>
+	<!--/#portfolio end-->
+	<!--/#portfolio-->
+
+	<!--/#clients-->
+
+	<!--/#blog-->
+
+	<section id="contact">
+							<div class="container">
+								<div class="row text-center clearfix">
+									<div class="col-sm-8 col-sm-offset-2">
+										<div class="contact-heading">
+											<h2 class="title-one">Contáctenos</h2>
+											<p>Información SQL SOLUCIONES INFORMATICAS</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="container">
+								<div class="contact-details">
+									<div class="pattern"></div>
+									<div class="row text-center clearfix">
+										<div class="col-sm-6">
+											<div class="contact-address"><address><p><span>SQL</span>Soluciones</p><strong>Calle 28 100-118<br>Oficina 204<br> Edificio Piamonte</strong><br><small>Cali - Colombia</small></address>
+												<div class="social-icons">
+													<a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a>
+													<a href="#"><i class="fa fa-google-plus"></i></a><a href="#"><i class="fa fa-dribbble"></i></a>
+													<a href="#"><i class="fa fa-linkedin"></i></a>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-6"> 
+											<div id="contact-form-section">
+												<div class="status alert alert-success" style="display: none"></div>
+												<form id="contact-form" class="contact" name="contact-form" method="post" action="send-mail.php">
+													<div class="form-group">
+														<input type="text" name="name" class="form-control name-field" required="required" placeholder="Tu nombre"></div>
+														<div class="form-group">
+															<input type="email" name="email" class="form-control mail-field" required="required" placeholder="Tu e-mail">
+														</div>
+														<div class="form-group">
+															<textarea name="message" id="message" required="required" class="form-control" rows="8" placeholder="Mensaje"></textarea>
+														</div> 
+														<div class="form-group">
+															<button type="submit" class="btn btn-primary">Enviar</button>
+														</div>
+													</form> 
+												</div>
+											</div>
+										</div>
+									</div>
+								</div> 
+							</section> <!--/#contact--> 
+
+	<footer id="footer"> 
+		<div class="container"> 
+			<div class="text-center"> 
+				<p>Copyright &copy; 2017 - <a href="http://sqlsoluciones.com/">SQL Soluciones S.A.S</a> | Todos los derechos reservados</p>
+			</div> 
+		</div> 
+	</footer> <!--/#footer--> 
+
+	<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/smoothscroll.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.isotope.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.parallax.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

@@ -28,6 +28,7 @@ def utc_to_local(utc_dt):
 def login_user(request):
     mensaje = ""
     mensajeE = ""
+
     if request.user.is_authenticated() and not request.user.is_superuser:
         return render(request, 'base-principal.html')
 
@@ -41,12 +42,13 @@ def login_user(request):
                 if usuario.is_active:
                     login(request, usuario)
                     #Redireccionar
-                    return render(request, 'base-usuario.html')
+                    return render(request, 'base-principal.html')
                 else:
                    mensajeE = "Usuario no activado"
             else:
                    mensajeE = "Datos erróneos. Por favor, inténtelo otra vez.    "
     else:
+        print("else")
         form = FormularioLogin()
     return render(request, 'login.html', {'mensaje': mensaje,'mensajeE': mensajeE, 'form': form })
 
@@ -192,8 +194,7 @@ def registro_usuario(request):
     return render(request, 'registrar-usuario.html', {'form': form, 'mensaje': mensaje,  'ocultar':ocultar})
 
 def principal(request):
-    form = FormularioLogin()
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'index.html')
 
 
 def confirmar_registro(request, activation_key=None):
