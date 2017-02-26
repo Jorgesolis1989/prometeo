@@ -29,7 +29,7 @@ def login_user(request):
     mensaje = ""
     mensajeE = ""
     if request.user.is_authenticated() and not request.user.is_superuser:
-        return render(request, 'base-usuario.html')
+        return render(request, 'base-principal.html')
 
     elif request.method == 'POST':
         form = FormularioLogin(request.POST)
