@@ -192,7 +192,8 @@ def registro_usuario(request):
     return render(request, 'registrar-usuario.html', {'form': form, 'mensaje': mensaje,  'ocultar':ocultar})
 
 def principal(request):
-    return render(request, 'index.html')
+    form = FormularioLogin()
+    return render(request, 'login.html', {'form': form})
 
 
 def confirmar_registro(request, activation_key=None):

@@ -378,6 +378,7 @@ h6,
   padding: 20px 15px 15px;
   padding-top: 10vh;
   position: relative;
+  height: auto;
 }
 .cls-content .error-code {
   font-size: 120px;
@@ -397,10 +398,12 @@ h6,
   background-color: transparent;
   border: 0;
   box-shadow: none;
+  height: auto;
 }
 @media (min-width: 768px) {
   .cls-content .cls-content-sm {
     width: 350px;
+    height:auto;
   }
   .cls-content .cls-content-lg {
     width: 550px;

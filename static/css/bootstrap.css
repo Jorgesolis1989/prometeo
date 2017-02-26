@@ -1587,20 +1587,24 @@ pre code {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+  height: auto;
 }
 @media (min-width: 768px) {
   .container {
     width: 750px;
+    height: auto;
   }
 }
 @media (min-width: 992px) {
   .container {
     width: 970px;
+    height: auto;
   }
 }
 @media (min-width: 1200px) {
   .container {
     width: 1170px;
+    height: auto;
   }
 }
 .container-fluid {
