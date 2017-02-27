@@ -1,12 +1,16 @@
-{% extends "admin/base_site.html" %}
+{% extends "base-usuario.html" %}
 {% load i18n %}
-
-{% block breadcrumbs %}<div class="breadcrumbs"><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a></div>{% endblock %}
-
 {% block content %}
-
-<p>{% trans "Thanks for spending some quality time with the Web site today." %}</p>
-
-<p><a href="{% url 'admin:index' %}">{% trans 'Log in again' %}</a></p>
-
+    <div id="container" class="cls-container">
+		<div class="cls-content">
+		    <div class="cls-content-sm panel">
+		        <div class="panel-body">
+		            <div class="mar-ver pad-btm">
+                    <p>{% trans "Gracias por pasar algún tiempo de calidad con el sitio Web de hoy." %}</p>
+                    <p><a href="{% url 'admin:index' %}">{% trans 'Iniciar sesión nuevamente' %}</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

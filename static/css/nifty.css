@@ -600,10 +600,10 @@ h6,
 .brand-title,
 .brand-icon {
   display: block;
-  line-height: 40px;
+  line-height: 100px;
 }
 .brand-icon {
-  width: 40px;
+  width: 100px;
   height: 40px;
   float: left;
   margin: 0 5px;
