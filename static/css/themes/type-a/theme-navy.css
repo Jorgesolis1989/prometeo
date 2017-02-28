@@ -25,7 +25,7 @@ body,
 /*======================================*/
 .searchbox .custom-search-form .input-group-btn:before,
 .pace .pace-activity {
-  background-color: #445b71;
+  background-color: #f8ac1a;
 }
 /* BACKGROUND COLOR - BODY BACKGROUND */
 /*======================================*/
@@ -36,11 +36,11 @@ body,
 }
 /* MIX COMPONENTS  */
 ::selection {
-  background-color: #445b71;
+  background-color: #f8ac1a;
   color: #fff;
 }
 ::-moz-selection {
-  background-color: #445b71;
+  background-color: #f8ac1a;
   color: #fff;
 }
 /* CONTAINER */
@@ -74,7 +74,7 @@ body,
   background-color: #273541;
 }
 .pace .pace-progress-inner {
-  box-shadow: 0 0 10px #445b71, 0 0 5px #445b71;
+  box-shadow: 0 0 10px #f8ac1a, 0 0 5px #f8ac1a;
 }
 /* NAVBAR
 /*====================================*/
@@ -87,7 +87,7 @@ body,
   background-color: #fff;
 }
 .navbar-content {
-  background-color: #e8a018;
+  background-color: #f8ac1a;
 }
 .navbar-aside-icon > i:before {
   background-color: #dbdbdb !important;
@@ -117,12 +117,12 @@ body,
   color: #dbdbdb;
 }
 .navbar-top-links > li > a:hover {
-  background-color: #2d3c4b;
+  background-color: #f8ac1a;
   color: #d3d3d3;
 }
 .navbar-top-links > .open > a,
 .navbar-top-links > .open > a:focus {
-  background-color: #2d3c4b;
+  background-color: #f8ac1a;
   color: #dbdbdb;
 }
 .navbar-top-links .tgl-menu-btn > a,
@@ -137,7 +137,7 @@ body,
     background-color: #fff;
   }
   #navbar-container {
-    background-color: #e8a018;
+    background-color: #f8ac1a;
   }
   #container.mainnav-in .brand-title,
   #container.mainnav-sm .brand-title,
@@ -190,12 +190,12 @@ body,
 #mainnav-menu > li > a.hover {
   color: #404040;
   background-color: #ffffff;
-  box-shadow: inset 2px 0 0 0 #445b71;
+  box-shadow: inset 2px 0 0 0 #f8ac1a;
 }
 #mainnav-menu > .active-link > a,
 #mainnav-menu > .active-link > a:hover {
   color: #404040;
-  box-shadow: inset 2px 0 0 0 #445b71;
+  box-shadow: inset 2px 0 0 0 #f8ac1a;
 }
 #mainnav-menu > .active-sub > a,
 #mainnav-menu > .active-sub > a:hover {
@@ -217,13 +217,13 @@ body,
 }
 #mainnav-menu ul .active-link a,
 .menu-popover .sub-menu ul .active-link a {
-  box-shadow: inset 2px 0 0 0 #445b71;
+  box-shadow: inset 2px 0 0 0 #f8ac1a;
 }
 #container.mainnav-sm #mainnav-menu > .active-link > a,
 #container.mainnav-sm #mainnav-menu > .active-sub > a,
 #container.mainnav-sm #mainnav-menu > .active-link a:hover,
 #container.mainnav-sm #mainnav-menu > .active-sub a:hover {
-  background-color: #445b71;
+  background-color: #f8ac1a;
   box-shadow: none;
 }
 /* NAVIGATION - SHORTCUT BUTTONS */
@@ -240,7 +240,7 @@ body,
 /*======================================*/
 @media (min-width: 768px) {
   #container.mainnav-sm .shortcut-grid:hover {
-    box-shadow: inset 2px 0 0 0 #445b71;
+    box-shadow: inset 2px 0 0 0 #f8ac1a;
   }
   #container.mainnav-sm .shortcut-grid:hover,
   #container.mainnav-sm .popover.mainnav-shortcut {
@@ -248,7 +248,7 @@ body,
     color: #404040;
   }
   #container.mainnav-sm #mainnav-menu a:hover {
-    box-shadow: inset 2px 0 0 0 #445b71;
+    box-shadow: inset 2px 0 0 0 #f8ac1a;
   }
   #container.mainnav-sm #mainnav-menu .active-link > a,
   #container.mainnav-sm #mainnav-menu .active-sub > a {
@@ -262,7 +262,7 @@ body,
   }
   #container.mainnav-sm #mainnav .mainnav-widget > .show-small a:hover {
     color: #404040;
-    box-shadow: inset 2px 0 0 0 #445b71;
+    box-shadow: inset 2px 0 0 0 #f8ac1a;
   }
   #container.mainnav-sm #mainnav .mainnav-widget .hover {
     color: #404040;
@@ -356,10 +356,10 @@ body,
   background-color: #43586e;
 }
 #aside-container #aside .nav-tabs li > a:before {
-  background: #445b71;
+  background: #f8ac1a;
 }
 #aside-container #aside .nav-tabs .active a:before {
-  background: #445b71;
+  background: #f8ac1a;
 }
 #container.aside-bright #aside .nav-tabs li {
   border-bottom: 1px solid #f2f2f2;
@@ -581,7 +581,7 @@ body,
   border-top-color: #afb9c3;
 }
 .select select:focus {
-  border-color: #445b71;
+  border-color: #f8ac1a;
 }
 .pci-hor-dots:before,
 .pci-ver-dots:before {
@@ -597,15 +597,15 @@ body,
 /* FORM CONTROL  */
 /*======================================*/
 .form-control:focus {
-  border-color: #445b71;
+  border-color: #f8ac1a;
 }
 /* LIST GROUP */
 /*======================================*/
 .list-group-item.active,
 .list-group-item.active:hover,
 .list-group-item.active:focus {
-  background-color: #445b71;
-  border-color: #445b71;
+  background-color: #f8ac1a;
+  border-color: #f8ac1a;
   color: #fff;
 }
 .list-group-item.active .list-group-item-text,
@@ -616,7 +616,7 @@ body,
 /* DROPDOWN */
 /*======================================*/
 .dropdown-menu > li > a:hover {
-  background-color: #445b71;
+  background-color: #f8ac1a;
   color: #fff;
 }
 /*======================================*/
@@ -625,9 +625,9 @@ body,
 .pager li > a:hover,
 .pager li > a:focus {
   background-color: #fff;
-  border-color: #445b71;
-  color: #445b71;
-  box-shadow: inset 0 0 1px #445b71;
+  border-color: #f8ac1a;
+  color: #f8ac1a;
+  box-shadow: inset 0 0 1px #f8ac1a;
   z-index: 2;
 }
 /*======================================*/
@@ -635,9 +635,9 @@ body,
 /*======================================*/
 .pagination > li a:hover,
 .pagination > li a:focus {
-  border-color: #445b71;
-  color: #445b71;
-  box-shadow: inset 0 0 1px #445b71;
+  border-color: #f8ac1a;
+  color: #f8ac1a;
+  box-shadow: inset 0 0 1px #f8ac1a;
 }
 .pagination > .active > a,
 .pagination > .active > span,
@@ -645,8 +645,8 @@ body,
 .pagination > .active > span:hover,
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
-  background-color: #445b71;
-  border-color: #445b71;
+  background-color: #f8ac1a;
+  border-color: #f8ac1a;
 }
 /* TAB */
 /*======================================*/
@@ -656,14 +656,14 @@ body,
   border-color: #eff3f7;
 }
 .tab-base .nav-tabs > li:not(.active) > a:hover {
-  border-color: #445b71;
+  border-color: #f8ac1a;
 }
 .tab-stacked-left.tab-base .nav-tabs > li:not(.active) a:hover {
-  border-color: #445b71;
+  border-color: #f8ac1a;
   border-right-color: transparent;
 }
 .tab-stacked-right.tab-base .nav-tabs > li:not(.active) a:hover {
-  border-color: #445b71;
+  border-color: #f8ac1a;
   border-left-color: transparent;
 }
 /* BUTTONS */
@@ -682,6 +682,6 @@ body,
 /* SCROLL TO TOP BUTTON */
 /*======================================*/
 .scroll-top.in {
-  background-color: #445b71;
+  background-color: #f8ac1a;
   color: #fff;
 }
