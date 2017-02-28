@@ -1,4 +1,4 @@
-from django.db import models
+
 from django.utils import timezone
 from django.utils.timezone import activate
 from django.conf import settings
@@ -32,13 +32,18 @@ class Usuario_Web(models.Model):
     tlno_fjo = models.CharField(max_length=20)
     tlfno_mvil = models.CharField(max_length=20)
     cdgo_prfil = models.IntegerField(null=True)
+    nit_empresa = models.IntegerField(default=0, null=False)
     estdo_usrio = models.IntegerField(null=False , default= 0)
     fcha_crcion_date = models.DateTimeField( default=timezone.now)
     actvo = models.IntegerField(null=False, default= 0)
 
+    def __str__(self):
+        return self.email_usrio
+
     class Meta:
         verbose_name_plural= u'Usuarios_Web'
         db_table = 'usrios_web'
+
 
 class Usuario_Web_Vinculacion_Empresa(models.Model):
     email_usrio = models.ForeignKey(Usuario_Web, db_column='email_usrio' , null=False)
@@ -49,3 +54,6 @@ class Usuario_Web_Vinculacion_Empresa(models.Model):
     class Meta:
         verbose_name_plural= u'Usuarios_Web_Vinculacion_Empresas'
         db_table = 'usrios_web_vnclcnes_emprsas'
+
+    def __str__(self):
+        return '%s - %s'  %(self.email_usrio, self.id_emprsa)

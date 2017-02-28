@@ -1,4 +1,5 @@
 from django.http import HttpResponseRedirect, HttpResponse
+from empresas.models import Empresa
 from django.contrib.auth.models import User
 from django.shortcuts import render, render_to_response, redirect,  get_object_or_404
 from usuarios.forms import FormularioLogin, FormularioRegistroUsuario , FormularioActualizarUsuario , FormularioCambiarContrasena
@@ -29,8 +30,10 @@ def login_user(request):
     mensaje = ""
     mensajeE = ""
 
+    empresas = Empresa.objects.all()
+    print(empresas)
     if request.user.is_authenticated() and not request.user.is_superuser:
-        return render(request, 'base-principal.html')
+        return render(request, 'base-principal.html', {'empresas': empresas})
 
     elif request.method == 'POST':
         form = FormularioLogin(request.POST)
@@ -40,8 +43,10 @@ def login_user(request):
             if usuario is not None:
                 if usuario.is_active:
                     login(request, usuario)
+
+
                     #Redireccionar
-                    return render(request, 'base-principal.html')
+                    return render(request, 'base-principal.html', {'empresas': empresas})
                 else:
                    mensajeE = "Usuario no activado"
             else:
@@ -148,15 +153,17 @@ def registro_usuario(request):
                     usuario_web.email_altrntvo = cd["email_alternativo"]
                     usuario_web.tlfno_mvil = cd["tel_movil"]
                     usuario_web.tlno_fjo = cd["tel_fijo"]
-
+                    usuario_web.nit_empresa = cd['nit_empresa']
 
                     try:
                         usuario_web.save()
                         # Guardando información de las empresas
+                        """
                         usuario_web_vinculacion_empresa = Usuario_Web_Vinculacion_Empresa()
                         usuario_web_vinculacion_empresa.id_emprsa = 10
                         usuario_web_vinculacion_empresa.email_usrio = usuario_web
                         usuario_web_vinculacion_empresa.save()
+                        """
                     except Exception as e:
                         print(e)
 
@@ -211,7 +218,7 @@ def confirmar_registro(request, activation_key=None):
         print(utc_to_local(timezone.now()))
         if perfil_usuario.key_expires < utc_to_local(timezone.now()):
             print("perfil_usuario.key_expires", perfil_usuario.key_expires)
-            print("es menor a ")
+
             print("timezone ---", utc_to_local(timezone.now()))
 
 
@@ -247,6 +254,7 @@ def actualizar_usuario(request):
         if form.is_valid():
             usuario.first_name = form.cleaned_data['first_name']
             usuario.last_name = form.cleaned_data['last_name']
+
 
 
             usuario_web.email_altrntvo = form.cleaned_data['email_alternativo']

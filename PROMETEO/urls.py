@@ -18,9 +18,7 @@ from django.contrib import admin
 from usuarios import views
 from django.contrib.auth.views import logout
 
-
 urlpatterns = [
-    #url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.principal, name="principal"),
     url(r'^login$', views.login_user, name="login_user"),
@@ -33,7 +31,6 @@ urlpatterns = [
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm', name='password_reset_confirm'),
     url(r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete', name='password_reset_complete'),
     url(r'^usuarios/$', include('usuarios.urls')),
-    url(r'^register_user', views.registro_usuario, name="register_user"),
     url(r'^register_success/', views.confirmar_registro),
     url(r'^activate/(?P<activation_key>\w+)/',views.confirmar_registro, name="register_confirm"),
 ]

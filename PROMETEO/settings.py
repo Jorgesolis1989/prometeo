@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'usuarios',
+    'empresas',
 
 )
 
@@ -95,6 +96,8 @@ DATABASES = {
 
 STATIC_URL = '/static/'
 
+MEDIA_ROOT = 'PROMETEO/media/'
+MEDIA_URL = 'http://localhost:8000/PROMETEO/media/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
