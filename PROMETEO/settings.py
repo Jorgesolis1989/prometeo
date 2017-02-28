@@ -97,7 +97,7 @@ DATABASES = {
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = 'PROMETEO/media/'
-MEDIA_URL = 'http://localhost:8000/PROMETEO/media/'
+MEDIA_URL = 'http://54.200.145.159:8080/PROMETEO/media/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
