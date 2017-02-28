@@ -3,11 +3,14 @@
 {% block content %}
     <div id="container" class="cls-container">
 		<div class="cls-content">
-		    <div class="cls-content-sm panel">
+		    <div class="cls-content-sm panel" style="background-color: #ffffff">
 		        <div class="panel-body">
 		            <div class="mar-ver pad-btm">
-                    <p>{% trans "Gracias por pasar algún tiempo de calidad con el sitio Web de hoy." %}</p>
+                    <p>{% trans "Gracias por visitar nuestro sitio Web." %}</p>
                     <p><a href="{% url 'admin:index' %}">{% trans 'Iniciar sesión nuevamente' %}</a></p>
+                    </div>
+                    <div class="col-sm-4 col-sm-offset-4">
+                        <button style="background-color: #e8a018; border-color: #d5d3d0" class="btn btn-primary btn-block" type="submit"><b>Ingresar</b></button>
                     </div>
                 </div>
             </div>
