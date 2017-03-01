@@ -3,7 +3,7 @@ from empresas.models import Empresa
 from django.contrib.auth.models import User
 from django.shortcuts import render, render_to_response, redirect,  get_object_or_404
 from usuarios.forms import FormularioLogin, FormularioRegistroUsuario , FormularioActualizarUsuario , FormularioCambiarContrasena
-from usuarios.models import  Perfil_Usuario , Usuario_Web, Usuario_Web_Vinculacion_Empresa
+from usuarios.models import Perfil_Usuario, Usuario_Web, Usuario_Web_Vinculacion_Empresa
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
 from django.template.context import RequestContext
