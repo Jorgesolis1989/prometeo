@@ -213,15 +213,13 @@ def confirmar_registro(request, activation_key=None):
     # Verifica que el token de activación sea válido y sino retorna un 404
     try:
         perfil_usuario = get_object_or_404(Perfil_Usuario, activation_key=activation_key)
-        print("timezone ---", utc_to_local(timezone.now()))
-        print("perfil_usuario.key_expires", perfil_usuario.key_expires)
-        print(utc_to_local(timezone.now()))
+        #print("timezone ---", utc_to_local(timezone.now()))
+        #print("perfil_usuario.key_expires", perfil_usuario.key_expires)
+        #print(utc_to_local(timezone.now()))
         if perfil_usuario.key_expires < utc_to_local(timezone.now()):
-            print("perfil_usuario.key_expires", perfil_usuario.key_expires)
+        #    print("perfil_usuario.key_expires", perfil_usuario.key_expires)
 
-            print("timezone ---", utc_to_local(timezone.now()))
-
-
+        #    print("timezone ---", utc_to_local(timezone.now()))
             return render_to_response('registration/registro_expirado.html')
 
         # Si el token no ha expirado, se activa el usuario y se muestra el html de confirmación
@@ -230,6 +228,7 @@ def confirmar_registro(request, activation_key=None):
         usuario.is_active = True
         usuario.save()
 
+        # Aquí estamos
         usuario_web = Usuario_Web.objects.get(email_usrio=usuario.email)
         usuario_web.actvo = 1
         usuario_web.estdo_usrio = 1
