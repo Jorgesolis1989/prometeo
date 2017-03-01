@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
 # Application definition
 
 INSTALLED_APPS = (
@@ -96,8 +97,10 @@ DATABASES = {
 
 STATIC_URL = '/static/'
 
+
+HOSTNAME = '54.200.145.159:8080'
 MEDIA_ROOT = 'PROMETEO/media/'
-MEDIA_URL = 'http://54.200.145.159:8080/PROMETEO/media/'
+MEDIA_URL = 'http://%s/PROMETEO/media/'%(HOSTNAME)
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),

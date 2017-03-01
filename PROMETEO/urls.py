@@ -17,6 +17,10 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from usuarios import views
 from django.contrib.auth.views import logout
+import os
+
+from django.conf import settings
+from django.conf.urls import include, patterns, url
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -33,4 +37,5 @@ urlpatterns = [
     url(r'^usuarios/$', include('usuarios.urls')),
     url(r'^register_success/', views.confirmar_registro),
     url(r'^activate/(?P<activation_key>\w+)/',views.confirmar_registro, name="register_confirm"),
+    url(r'^PROMETEO/media/(.*)$', 'django.views.static.serve', {'document_root' : os.path.join(os.path.dirname(__file__), 'media')}),
 ]
