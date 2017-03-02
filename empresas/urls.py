@@ -3,5 +3,5 @@ from django.contrib import admin
 from empresas import views
 
 urlpatterns = patterns('',
-                       url(r'^selection_concept', views.selection_concepto, name="selection_concept"),
+                       url(r'^selection_concepto', views.selection_concepto, name="selection_concepto"),
                        )

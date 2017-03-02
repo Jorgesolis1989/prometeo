@@ -89,7 +89,7 @@ def cambio_contrasena(request):
         form = FormularioCambiarContrasena()
         print()
 
-    return render(request, 'cambiar_contrasena.html', {'form': form , 'mensaje': mensaje})
+    return render(request, 'cambiar_contrasena.html', {'form': form , 'mensaje': mensaje , 'empresas': Empresa.objects.all()})
 
 
 
@@ -279,4 +279,4 @@ def actualizar_usuario(request):
         form.initial = {'first_name': usuario.first_name, 'last_name': usuario.last_name , 'email': usuario.email,  'email_alternativo': usuario_web.email_altrntvo,
                         'tel_fijo': usuario_web.tlno_fjo, 'tel_movil': usuario_web.tlfno_mvil}
         form.fields['email'].widget.attrs['readonly'] = True
-    return render(request, 'actualizar-usuario.html', {'form': form , 'mensaje': mensaje})
+    return render(request, 'actualizar-usuario.html', {'form': form , 'mensaje': mensaje , 'empresas': Empresa.objects.all()})
