@@ -40,4 +40,4 @@ class Empresa(models.Model):
 
     class Meta:
         verbose_name_plural=u'Empresas'
-        db_table = 'emprsas'
+        db_table = 'empresas'
