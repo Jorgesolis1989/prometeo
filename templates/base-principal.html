@@ -259,7 +259,7 @@
                                             {% for empresa in empresas %}
 					                        <a href="{% url 'selection_concepto' %}" class="list-group-item">
 					                            <div class="media-left pos-rel">
-					                                <img class="img-circle img-xs" src="" alt="">
+					                                <img class="img-circle img-xs" src="{{ MEDIA_URL }}{{empresa.lgtpo_emprsa.url}}" alt="">
 					                                <i class="badge badge-success badge-stat badge-icon pull-left"></i>
 					                            </div>
 					                            <div class="media-body">
