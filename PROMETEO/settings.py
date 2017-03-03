@@ -109,9 +109,9 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-LOGIN_URL = reverse_lazy('login')
-LOGIN_REDIRECT_URL = reverse_lazy('home')
-LOGOUT_URL = reverse_lazy('login')
+LOGIN_URL = reverse_lazy('login_user')
+LOGIN_REDIRECT_URL = reverse_lazy('principal')
+LOGOUT_URL = reverse_lazy('login_user')
 
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend', "usuarios.backends.BackendUsuarios")
 
