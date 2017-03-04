@@ -19,9 +19,6 @@ class FormularioRegistroUsuario(forms.Form):
     first_name = forms.CharField(
         widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí sus nombres', 'required':'true'}))
 
-    last_name = forms.CharField(
-        widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí sus apellidos', 'required':'true'}))
-
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí su correo electrónico', 'required':'true', 'id': 'password1'}))
 
@@ -74,8 +71,9 @@ class FormularioActualizarUsuario(forms.Form):
     first_name = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí su nombre', 'required':'true'}))
 
-    last_name = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí su apellido', 'required':'true'}))
+
+    nit_empresa = forms.IntegerField(
+       widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí el NIT sin digito de Verficación   ', 'min':'1' , 'required':'true'}))
 
 
     email = forms.CharField(

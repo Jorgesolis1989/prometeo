@@ -17,6 +17,16 @@
     {% csrf_token %}
     <div class="row">
          <div class="col-sm-10">
+
+             <fieldset>
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">Email: </label>
+                    <div class="col-lg-8">
+                        {{ form.email}}
+                    </div>
+                </div>
+            </fieldset>
+
              <fieldset>
                 <div class="form-group">
                     <label class="col-lg-4 control-label">Nombres: </label>
@@ -28,21 +38,13 @@
 
              <fieldset>
                 <div class="form-group">
-                    <label class="col-lg-4 control-label">Apellidos: </label>
+                    <label class="col-lg-4 control-label">NIT: </label>
                     <div class="col-lg-8">
-                        {{ form.last_name}}
+                        {{ form.nit_empresa}}
                     </div>
                 </div>
             </fieldset>
 
-             <fieldset>
-                <div class="form-group">
-                    <label class="col-lg-4 control-label">Email: </label>
-                    <div class="col-lg-8">
-                        {{ form.email}}
-                    </div>
-                </div>
-            </fieldset>
 
              <fieldset>
                 <div class="form-group">
