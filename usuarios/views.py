@@ -8,6 +8,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
 from django.template.context import RequestContext
 from django.core.mail import send_mail
+from PasswordValidator import PasswordValidator
 
 
 from django.core.validators import validate_email
@@ -134,7 +135,10 @@ def registro_usuario(request):
                     usuario.last_name = cd["last_name"]
                     usuario.email = cd["email"]
                     usuario.username = '12'
-                    usuario.set_password(cd["password"])
+                    if validarContrasena(cd["password"]):
+                        usuario.set_password(cd["password"])
+                    else:
+                         render(request, 'registrar-usuario.html', {'form': form, 'mensaje': mensaje,  'ocultar':ocultar})
                     usuario.is_active = False
                     integer = int(User.objects.latest('id').id)
                     usuario.username = integer + 1
@@ -280,3 +284,10 @@ def actualizar_usuario(request):
                         'tel_fijo': usuario_web.tlno_fjo, 'tel_movil': usuario_web.tlfno_mvil}
         form.fields['email'].widget.attrs['readonly'] = True
     return render(request, 'actualizar-usuario.html', {'form': form , 'mensaje': mensaje , 'empresas': Empresa.objects.all()})
+
+def validarContrasena(password):
+    passwordValidator = PasswordValidator()
+    if passwordValidator.hasMinimumLength(password, 4):
+        return True;
+    else:
+        return False

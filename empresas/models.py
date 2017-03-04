@@ -23,7 +23,7 @@ class Empresa(models.Model):
     """
 
     id_clnte = models.BigIntegerField()
-    id_emprsa = models.BigIntegerField(primary_key=True)
+    id_emprsa = models.BigIntegerField(primary_key=True, unique=True)
     nmbre_rzon_scial = models.CharField(max_length=80)
     cdgo_pais = models.IntegerField(default=57)
     cdgo_dpto = models.IntegerField(null=True)
@@ -41,3 +41,5 @@ class Empresa(models.Model):
     class Meta:
         verbose_name_plural=u'Empresas'
         db_table = 'emprsas'
+
+
