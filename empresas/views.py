@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404
 
 
 def selection_concepto(request):
-    return render(request, 'seleccion-concepto.html', {'empresas': Empresa.objects.all()})
+    return render(request, 'seleccion-concepto.html', {'empresas': cargar_empresas_vinculadas(request)})
 
 def cargar_empresas_vinculadas(request):
         usuario_web = get_object_or_404(Usuario_Web, email_usrio=request.user.email)

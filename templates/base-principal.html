@@ -174,7 +174,7 @@
                                     <!--<img class="img-circle img-user media-object" src="img/profile-photos/1.png" alt="Profile Picture">-->
                                     <i class="demo-pli-male ic-user"></i>
                                 </span>
-                                <div class="username hidden-xs" style="color: #000000; border-color: #d5d3d0" > {{ request.user.first_name }} </div>
+                                <div class="username hidden-xs" style="color: #000000; border-color: #d5d3d0" > {{ request.user.first_name   }} </div>
                             </a>
 
 
@@ -259,7 +259,7 @@
                                             {% for empresa in empresas %}
 					                        <a href="{% url 'selection_concepto' %}" class="list-group-item">
 					                            <div class="media-left pos-rel">
-					                                <img class="img-circle img-xs" src="{{ MEDIA_URL }}{{empresa.lgtpo_emprsa.url}}" alt="">
+					                                <img class="img-circle img-xs" src="" alt="">
 					                                <i class="badge badge-success badge-stat badge-icon pull-left"></i>
 					                            </div>
 					                            <div class="media-body">
