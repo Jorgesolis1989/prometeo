@@ -1,13 +1,16 @@
 from django.http import HttpResponseRedirect, HttpResponse
-from empresas.models import Empresa
+from modelos_existentes.models import Empresa
 from django.contrib.auth.models import User
 from django.shortcuts import render, render_to_response, redirect,  get_object_or_404
 from usuarios.forms import FormularioLogin, FormularioRegistroUsuario , FormularioActualizarUsuario , FormularioCambiarContrasena
-from usuarios.models import Perfil_Usuario, Usuario_Web, Usuario_Web_Vinculacion_Empresa
+from modelos_existentes.models import  Usuario_Web, Usuario_Web_Vinculacion_Empresa
+from usuarios.models import Perfil_Usuario
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
 from django.template.context import RequestContext
 from django.core.mail import send_mail
+
+from empresas.views import cargar_empresas_vinculadas
 
 
 from django.core.validators import validate_email
@@ -30,10 +33,10 @@ def login_user(request):
     mensaje = ""
     mensajeE = ""
 
-    empresas = Empresa.objects.all()
-    print(empresas)
+
     if request.user.is_authenticated() and not request.user.is_superuser:
-        return render(request, 'base-principal.html', {'empresas': empresas})
+        empresas_vinculadas = cargar_empresas_vinculadas(request)
+        return render(request, 'base-principal.html', {'empresas': empresas_vinculadas})
 
     elif request.method == 'POST':
         form = FormularioLogin(request.POST)
@@ -43,10 +46,10 @@ def login_user(request):
             if usuario is not None:
                 if usuario.is_active:
                     login(request, usuario)
-
+                    empresas_vinculadas = cargar_empresas_vinculadas(request)
 
                     #Redireccionar
-                    return render(request, 'base-principal.html', {'empresas': empresas})
+                    return render(request, 'base-principal.html', {'empresas': empresas_vinculadas})
                 else:
                    mensajeE = "Usuario no activado"
             else:
@@ -60,6 +63,7 @@ def login_user(request):
 # Este metodo se utiliza para el cambio de contrasena del usuario
 def cambio_contrasena(request):
 
+    empresas_vinculadas = cargar_empresas_vinculadas(request)
     mensaje = ""
 
     if request.method == 'POST' and 'btnCambiarContrasena':
@@ -89,7 +93,7 @@ def cambio_contrasena(request):
         form = FormularioCambiarContrasena()
         print()
 
-    return render(request, 'cambiar_contrasena.html', {'form': form , 'mensaje': mensaje , 'empresas': Empresa.objects.all()})
+    return render(request, 'cambiar_contrasena.html', {'form': form , 'mensaje': mensaje , 'empresas': empresas_vinculadas})
 
 
 
@@ -131,7 +135,6 @@ def registro_usuario(request):
                     # Creando el usuario en la tabla auth_user de django
                     usuario = User()
                     usuario.first_name = cd["first_name"]
-                    usuario.last_name = cd["last_name"]
                     usuario.email = cd["email"]
                     usuario.username = '12'
                     usuario.set_password(cd["password"])
@@ -147,13 +150,13 @@ def registro_usuario(request):
 
                     # Creando el usuario web en la base de datos de Prometeo tabla usrios_web
                     usuario_web = Usuario_Web()
-                    usuario_web.nmbre_usrio = usuario.get_full_name()
+                    usuario_web.nmbre_usrio = usuario.first_name
                     usuario_web.email_usrio = usuario.email
-                    usuario_web.clve_accso = make_password(cd["password"])
+                    usuario_web.clve_accso = '123'
                     usuario_web.email_altrntvo = cd["email_alternativo"]
                     usuario_web.tlfno_mvil = cd["tel_movil"]
                     usuario_web.tlno_fjo = cd["tel_fijo"]
-                    usuario_web.nit_empresa = cd['nit_empresa']
+                    usuario_web.nit_tcro_ascdo = cd['nit_empresa']
 
                     try:
                         usuario_web.save()
@@ -242,20 +245,19 @@ def confirmar_registro(request, activation_key=None):
 
 # Este metodo se utiliza para el cambio de contrasena del usuario
 def actualizar_usuario(request):
+
+    empresas_vinculadas = cargar_empresas_vinculadas(request)
     mensaje = ""
     usuario = get_object_or_404(User, email=request.user.email)
     usuario_web = Usuario_Web.objects.get(email_usrio= usuario.email)
-
 
     if request.method == 'POST' and "btnUpdate":
         form = FormularioActualizarUsuario(request.POST)
 
         if form.is_valid():
             usuario.first_name = form.cleaned_data['first_name']
-            usuario.last_name = form.cleaned_data['last_name']
-
-
-
+            usuario_web.nit_tcro_ascdo = form.cleaned_data['nit_empresa']
+            usuario_web.nmbre_usrio = usuario.first_name
             usuario_web.email_altrntvo = form.cleaned_data['email_alternativo']
             usuario_web.tlfno_mvil  = form.cleaned_data['tel_movil']
             usuario_web.tlno_fjo= form.cleaned_data['tel_fijo']
@@ -276,7 +278,7 @@ def actualizar_usuario(request):
     else:
 
         form = FormularioActualizarUsuario()
-        form.initial = {'first_name': usuario.first_name, 'last_name': usuario.last_name , 'email': usuario.email,  'email_alternativo': usuario_web.email_altrntvo,
+        form.initial = {'first_name': usuario.first_name, 'nit_empresa': usuario_web.nit_tcro_ascdo , 'email': usuario.email,  'email_alternativo': usuario_web.email_altrntvo,
                         'tel_fijo': usuario_web.tlno_fjo, 'tel_movil': usuario_web.tlfno_mvil}
         form.fields['email'].widget.attrs['readonly'] = True
-    return render(request, 'actualizar-usuario.html', {'form': form , 'mensaje': mensaje , 'empresas': Empresa.objects.all()})
+    return render(request, 'actualizar-usuario.html', {'form': form , 'mensaje': mensaje , 'empresas': empresas_vinculadas})
