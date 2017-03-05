@@ -143,7 +143,11 @@ def registro_usuario(request):
                     else:
                          render(request, 'registrar-usuario.html', {'form': form, 'mensaje': mensaje,  'ocultar':ocultar})
                     usuario.is_active = False
-                    integer = int(User.objects.latest('id').id)
+
+                    try:
+                       integer = int(User.objects.latest('id'))
+                    except Exception as e:
+                        integer = 0
                     usuario.username = integer + 1
 
                     #Crea el usuario en la BD si hay excepcion
