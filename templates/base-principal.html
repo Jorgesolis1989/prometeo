@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %} {% endblock title%}| PROMETEO</title>
+    <title>{% block title %}PROMETEO {% endblock title %}| SQL Soluciones S.A </title>
 
 
     <!--STYLESHEET-->
@@ -29,8 +29,6 @@
 
     <!--Demo [ DEMONSTRATION ]-->
     <link href="{% static 'css/demo/nifty-demo.min.css'%}" rel="stylesheet">
-
-    <link href="{% static 'path-to-the-color-scheme.css'%}" rel="stylesheet">
 
     <link href="{% static 'css/themes/type-a/theme-navy.css'%}" rel="stylesheet">
 
@@ -235,8 +233,8 @@
 
                 <!--Page Title-->
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                <div id="page-title">
-                    <!--<h1 class="page-header text-overflow"></h1>-->
+                <!--<div id="page-title">
+                    <h1 class="page-header text-overflow"></h1>
 
                     <!--Searchbox
                     <div class="searchbox">
@@ -428,11 +426,9 @@
 												<strong>Gestión de Datos</strong>
 											</span>
 						                </a>
-
 						                <!--Submenu-->
 						                <ul class="collapse">
 						                    <li><a class="list-group-item  list-item-sm active" href="{% url 'update_user' %}">Datos usuario</a></li>
-                                            <li class="list-divider"></li>
 											<li><a class="list-group-item  list-item-sm active" href="{% url 'change_password' %}">Contraseña</a></li>
 						                </ul>
 						            </li>
@@ -542,9 +538,9 @@
 
 
 
-    </div>
-    <!--===================================================-->
-    <!-- END OF CONTAINER -->
+        </div>
+        <!--===================================================-->
+        <!-- END OF CONTAINER -->
 
 
 

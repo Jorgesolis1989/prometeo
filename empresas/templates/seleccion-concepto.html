@@ -1,8 +1,8 @@
 {% extends "base-principal.html" %}
     {%block breadcrumb %}
         <ol class="breadcrumb">
-            <li><a href="#">Atrás</a></li>
-            <li><a href="#" class="active">Selección del Concepto</a></li>
+            <li><a href="{% url 'login_user' %}">Atrás</a></li>
+            <li><a href="{% url 'selection_concept' %}" class="active">Selección del Concepto</a></li>
         </ol>
     {%endblock breadcrumb %}
 {%block title %}Selección del Concepto{%endblock title %}
