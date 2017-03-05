@@ -37,6 +37,13 @@ class FormularioRegistroUsuario(forms.Form):
     tel_movil = forms.IntegerField(
        widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí un teléfono móvil', 'min':'1' , 'required':'true'}))
 
+    def clean_password(self):
+        password = self.cleaned_data['password']
+
+        if len(password) < 4:
+            self._errors["password"] = "La contraseña no puede tener menos de 4 caracteres" # Will raise a error message
+        return self.cleaned_data
+
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'username', 'password')

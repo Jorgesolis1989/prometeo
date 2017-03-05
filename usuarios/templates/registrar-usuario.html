@@ -54,6 +54,8 @@
                                         <label class="col-lg-4 control-label">Email alternativo: </label>
                                         <div class="col-lg-8">
                                             {{ form.email_alternativo}}
+                                              <p class="text-danger text-bold ">{{ form.email_alternativo.errors}}</p>
+
                                         </div>
                                     </div>
                                 </fieldset>
@@ -85,6 +87,7 @@
                                                 <input id="demo-sw-clr4" type="checkbox" checked
                                                        onchange="document.getElementById('password1').type = this.checked ? 'text' : 'password'">
                                                 <label for="demo-form-checkbox">Mostrar la contraseña<a href="#" class="btn-link"></a></label>
+                                                <p class="text-danger text-bold ">{{ form.password.errors}}</p>
                                             </div>
                                         </div>
                                     </div>
