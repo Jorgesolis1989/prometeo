@@ -49,23 +49,6 @@
                                     </div>
                                 </fieldset>
 
-		                        <fieldset>
-                                    <div class="form-group">
-                                        <label class="col-lg-4 control-label">Contraseña: </label>
-                                        <div class="col-lg-8">
-                                            {{ form.password}}
-                                        </div>
-                                        <div class="checkbox pad-btm text-left">
-                                            <li class="mar-btm">
-                                                <input id="demo-sw-clr4" type="checkbox" checked
-                                                       onchange="document.getElementById('password1').type = this.checked ? 'text' : 'password'">
-                                                <label for="demo-form-checkbox">Mostrar la contraseña<a href="#" class="btn-link"></a></label>
-
-                                            </li>
-                                        </div>
-                                    </div>
-                                </fieldset>
-
                                  <fieldset>
                                     <div class="form-group">
                                         <label class="col-lg-4 control-label">Email alternativo: </label>
@@ -89,6 +72,20 @@
                                         <label class="col-lg-4 control-label">Teléfono móvil : </label>
                                         <div class="col-lg-8">
                                             {{ form.tel_movil}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                 <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Contraseña: </label>
+                                        <div class="col-lg-8">
+                                            {{ form.password}}
+                                            <div class="checkbox pad-btm text-left">
+                                                <input id="demo-panel-w-switch" class="toggle-switch" type="checkbox">
+                                                <input id="demo-sw-clr4" type="checkbox" checked
+                                                       onchange="document.getElementById('password1').type = this.checked ? 'text' : 'password'">
+                                                <label for="demo-form-checkbox">Mostrar la contraseña<a href="#" class="btn-link"></a></label>
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>

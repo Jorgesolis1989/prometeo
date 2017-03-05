@@ -138,10 +138,7 @@ def registro_usuario(request):
                     usuario.first_name = cd["first_name"]
                     usuario.email = cd["email"]
                     usuario.username = '12'
-                    if validarContrasena(cd["password"]):
-                        usuario.set_password(cd["password"])
-                    else:
-                         render(request, 'registrar-usuario.html', {'form': form, 'mensaje': mensaje,  'ocultar':ocultar})
+                    usuario.set_password(cd["password"])
                     usuario.is_active = False
                     integer = int(User.objects.latest('id').id)
                     usuario.username = integer + 1
@@ -287,12 +284,3 @@ def actualizar_usuario(request):
         form.fields['email'].widget.attrs['readonly'] = True
 
     return render(request, 'actualizar-usuario.html', {'form': form , 'mensaje': mensaje , 'empresas': empresas_vinculadas})
-
-
-
-def validarContrasena(password):
-    passwordValidator = PasswordValidator()
-    if passwordValidator.hasMinimumLength(password, 4):
-        return True;
-    else:
-        return False
