@@ -56,7 +56,6 @@ def login_user(request):
             else:
                    mensajeE = "Datos erróneos. Por favor, inténtelo otra vez.    "
     else:
-        print("else")
         form = FormularioLogin()
     return render(request, 'login.html', {'mensaje': mensaje,'mensajeE': mensajeE, 'form': form })
 
@@ -121,6 +120,7 @@ def registro_usuario(request):
 
     if request.method == 'POST' and "btnRegister":
         form = FormularioRegistroUsuario(request.POST)
+
         #Si el formulario es valido y tiene datos
         if form.is_valid():
             cd = form.cleaned_data
@@ -142,9 +142,11 @@ def registro_usuario(request):
                     usuario.is_active = False
 
                     try:
-                       integer = int(User.objects.latest('id'))
+                       integer = int(User.objects.latest('id').id)
                     except Exception as e:
-                        integer = 0
+                        print(e)
+                        integer = 100
+
                     usuario.username = integer + 1
 
                     #Crea el usuario en la BD si hay excepcion
@@ -278,7 +280,7 @@ def actualizar_usuario(request):
 
         else:
             mensaje = "Formulario con campos sin diligenciar"
-            print(form)
+
             form = FormularioActualizarUsuario()
     else:
 
