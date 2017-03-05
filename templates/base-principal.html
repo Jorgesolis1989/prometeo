@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %} {% endblock title%}| CREDIWEB ONLINE</title>
+    <title>{% block title %} {% endblock title%}| PROMETEO</title>
 
 
     <!--STYLESHEET-->
@@ -212,11 +212,11 @@
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <!--End user dropdown-->
 
-                        <li>
+                        <!--<li>
                             <a href="#" class="aside-toggle navbar-aside-icon">
                                 <i class="pci-ver-dots"></i>
                             </a>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
                 <!--================================-->
@@ -236,9 +236,9 @@
                 <!--Page Title-->
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <div id="page-title">
-                    <h1 class="page-header text-overflow">CERTIWEB ONLINE</h1>
+                    <!--<h1 class="page-header text-overflow"></h1>-->
 
-                    <!--Searchbox-->
+                    <!--Searchbox
                     <div class="searchbox">
                         <div class="input-group custom-search-form">
                             <input type="text" class="form-control" placeholder="Buscar..">
@@ -247,7 +247,7 @@
                             </span>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <!--End page title-->
 
@@ -279,7 +279,7 @@
 					                    </div>
 					                    <div class="list-group bg-trans">
                                             {% for empresa in empresas %}
-					                        <a href="{% url 'selection_concepto' %}" class="list-group-item">
+					                        <a href="{% url 'selection_concept' %}" class="list-group-item">
 					                            <div class="media-left pos-rel">
 					                                <img class="img-circle img-xs" src="" alt="">
 					                                <i class="badge badge-success badge-stat badge-icon pull-left"></i>
@@ -438,7 +438,7 @@
 						            </li>
                                     <br>
                                     <li>
-						                <a href="#" style="background-color: #f9c769; color: #000000; border-color: #d5d3d0">
+						                <a href="{% url 'vinculate_enterprise' %}" style="background-color: #f9c769; color: #000000; border-color: #d5d3d0">
 						                    <i class="demo-pli-building "></i>
 						                    <span class="menu-title" >
 												<strong>Vincular Empresas</strong>

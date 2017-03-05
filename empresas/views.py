@@ -6,7 +6,7 @@ from modelos_existentes.models import Usuario_Web
 from django.shortcuts import render, get_object_or_404
 
 
-def selection_concepto(request):
+def seleccion_concepto(request):
     return render(request, 'seleccion-concepto.html', {'empresas': cargar_empresas_vinculadas(request)})
 
 def cargar_empresas_vinculadas(request):
@@ -15,3 +15,7 @@ def cargar_empresas_vinculadas(request):
         return Empresa.objects.filter(id_emprsa__in=Empresas_Vinculadas)
 
      #   return Logo_Empresa.objects.filter(empresa__id_empresa__in=Empresas_Vinculadas)
+
+
+def vincular_empresas(request):
+    return render(request, 'vincular_empresas.html')

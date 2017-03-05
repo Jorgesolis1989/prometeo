@@ -1,0 +1,35 @@
+{% extends "base-principal.html" %}
+    {%block breadcrumb %}
+        <ol class="breadcrumb">
+            <li><a href="#">Atrás</a></li>
+            <li><a href="#" class="active">Vincular Empresas</a></li>
+        </ol>
+    {%endblock breadcrumb %}
+{%block title %}Vincular Empresas{%endblock title %}
+{%block content %}
+    <div class="row">
+        <div class="eq-height">
+            <div class="col-md-6 col-lg-4 eq-box-lg">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">SELECCIONE LA EMPRESA</h3>
+                    </div>
+                    <div class="panel-body">
+
+                        <!--Small-->
+                        <!--===================================================-->
+
+                        <div class="list-group">
+                            <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox">
+                            <a class="list-group-item  list-item-sm active" href="#">Almancenes Zarha</a>
+                            <a class="list-group-item list-item-sm" href="#">Auto Fiat</a>
+                            <a class="list-group-item list-item-sm" href="#">Casa Renault</a>
+                        </div>
+                        <!--===================================================-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%endblock content%}

@@ -93,13 +93,13 @@ class FormularioActualizarUsuario(forms.Form):
 class FormularioCambiarContrasena(forms.Form):
 
     old_password = forms.CharField(
-        widget= forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí su contraseña anterior', 'required':'true'}))
+        widget= forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí su contraseña anterior', 'required':'true', 'id': 'passwordA'}))
 
     new_password = forms.CharField(
-        widget= forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí su contraseña nueva', 'required':'true'}))
+        widget= forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí su contraseña nueva', 'required':'true', 'id': 'passwordN',}))
 
     confirm_password = forms.CharField(
-        widget= forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirme su contraseña nueva    ', 'required':'true'}))
+        widget= forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirme su contraseña nueva    ', 'required':'true', 'id': 'passwordC',}))
 
     def clean(self):
         new_password = self.cleaned_data['new_password']
