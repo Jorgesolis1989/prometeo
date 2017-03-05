@@ -140,7 +140,11 @@ def registro_usuario(request):
                     usuario.username = '12'
                     usuario.set_password(cd["password"])
                     usuario.is_active = False
-                    integer = int(User.objects.latest('id').id)
+
+                    try:
+                       integer = int(User.objects.latest('id'))
+                    except Exception as e:
+                        integer = 0
                     usuario.username = integer + 1
 
                     #Crea el usuario en la BD si hay excepcion
