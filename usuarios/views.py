@@ -9,7 +9,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
 from django.template.context import RequestContext
 from django.core.mail import send_mail
-from PasswordValidator import PasswordValidator
+
 
 from empresas.views import cargar_empresas_vinculadas
 
