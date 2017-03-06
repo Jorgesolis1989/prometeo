@@ -1,0 +1,49 @@
+{% extends "base-principal.html" %}
+{%block title %}Vincular Empresas{%endblock title %}
+    {%block breadcrumb %}
+        <ol class="breadcrumb">
+            <li><a href="{% url 'login_user' %}">Atrás</a></li>
+            <li><a href="{% url 'vinculate_enterprise' %}" class="active">Vincular Empresas</a></li>
+        </ol>
+    {%endblock breadcrumb %}
+{%block content %}
+    <div class="row">
+        <div class="eq-height">
+            <div class="col-md-6 col-lg-4 eq-box-lg">
+                <div class="panel">
+                    <div class="panel" style="background-color: #f9c769; border-color: #d5d3d0">
+                        <div class="mar-top clearfix">
+                            <h3 class="h3 mar-no text-center" >Vincular Empresas</h3>
+                            <br>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="panel-body">
+                        <!--Small-->
+                        <!--===================================================-->
+                        <div class="list-group">
+                            <a class="list-group-item  list-item-sm" href="#">
+                                <div class="checkbox">
+                                    <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox">
+                                    <label for="demo-form-checkbox">Almancenes Zarha</label>
+                                </div>
+                            </a>
+                            <a class="list-group-item  list-item-sm " href="#">
+                                <div class="checkbox">
+                                    <input id="demo-form-checkbox-1" class="magic-checkbox" type="checkbox">
+                                    <label for="demo-form-checkbox-1">Auto Fiat</label>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-2 col-sm-offset-5">
+                            <div class="form-group">
+                                <button style="background-color: #e8a018; border-color: #d5d3d0" class="btn btn-primary btn-block" type="submit" name="btnSave">Guardar</button>
+                            </div>
+                        </div>
+                        <!--===================================================-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%endblock content%}

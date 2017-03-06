@@ -1,13 +1,12 @@
 {% extends "base-principal.html" %}
+{% block title %}Cambiar contraseña {% endblock title %}
     {%block breadcrumb %}
         <ol class="breadcrumb">
-            <li><a href="#">Atrás</a></li>
-            <li><a href="#" class="active">Cambiar contraseña</a></li>
+            <li><a href="{% url 'login_user' %}">Atrás</a></li>
+            <li><a href="{% url 'change_password' %}" class="active">Cambiar contraseña</a></li>
         </ol>
     {%endblock breadcrumb %}
-{% block title %}Cambiar contraseña {% endblock title %}
 {%block content %}
-
     <div class="mar-top clearfix">
         <h3 class="h3 mar-no text-center">Cambiar Contraseña</h3>
     </div>
@@ -42,12 +41,16 @@
                         {{ form.confirm_password}}
                         <p class="text-danger text-bold ">{{ form.new_password.errors}}</p>
                     </div>
+                    <div class="checkbox pad-btm text-left col-sm-4  col-sm-offset-4">
+                        <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox" onclick="showPassword()">
+                        <label for="demo-form-checkbox">Mostrar contraseñas<a href="#" class="btn-link"></a></label>
+                    </div>
                 </div>
+
             </fieldset>
 
-
              <div class="row">
-                    <div class="col-sm-7 col-sm-offset-7">
+                    <div class="col-sm-3 col-sm-offset-6">
                         <div class="form-group">
                             <button  style="background-color: #e8a018; border-color: #d5d3d0" class="btn btn-primary btn-block" type="submit" name="btnRegister">Actualizar Contraseña </button>
                         </div>

@@ -1,8 +1,8 @@
 {% extends "base-principal.html" %}
     {%block breadcrumb %}
         <ol class="breadcrumb">
-            <li><a href="#">Atrás</a></li>
-            <li><a href="#" class="active">Selección del Concepto</a></li>
+            <li><a href="{% url 'login_user' %}">Atrás</a></li>
+            <li><a href="{% url 'selection_concept' %}" class="active">Selección del Concepto</a></li>
         </ol>
     {%endblock breadcrumb %}
 {%block title %}Selección del Concepto{%endblock title %}
@@ -11,8 +11,10 @@
         <div class="eq-height">
             <div class="col-md-6 col-lg-4 eq-box-lg">
                 <div class="panel">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">SELECCIONE EL CONCEPTO</h3>
+                   <div class="panel" style="background-color: #f9c769; border-color: #d5d3d0">
+                        <div class="mar-top clearfix">
+                            <h3 class="h3 mar-no text-center" >Seleccione el Concepto</h3>
+                        </div>
                     </div>
                     <div class="panel-body">
 
@@ -24,7 +26,11 @@
                             <a class="list-group-item list-item-sm" href="#">03 - Certificado de RETECREE</a>
                         </div>
                         <!--===================================================-->
-
+                        <div class="col-sm-2 col-sm-offset-5">
+                            <div class="form-group">
+                                <button style="background-color: #e8a018; border-color: #d5d3d0" class="btn btn-primary btn-block" type="submit" name="btnGenerer">Generar</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
