@@ -68,7 +68,6 @@ def cambio_contrasena(request):
 
     if request.method == 'POST' and 'btnCambiarContrasena':
         usuario = User.objects.get(email = request.user.email)
-        print(usuario)
         form = FormularioCambiarContrasena(request.POST)
         #Si el formulario es valido y tiene datos
 

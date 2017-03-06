@@ -29,7 +29,7 @@ class FormularioRegistroUsuario(forms.Form):
         widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí el NIT de empresa sin digito de verificacion', 'required':'true'}))
 
     email_alternativo = forms.EmailField(
-        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí un correo electrónico alternativo', 'required':'true'}))
+        widget=forms.EmailInput(attrs={'id': 'demo-vs-warinpu   ' ,'class': 'form-control', 'placeholder': 'Escriba aquí un correo electrónico alternativo', 'required':'true'}))
 
     tel_fijo = forms.IntegerField(
        widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí un teléfono fijo', 'min':'1' , 'required':'true'}))
@@ -43,6 +43,19 @@ class FormularioRegistroUsuario(forms.Form):
         if len(password) < 4:
             self._errors["password"] = "La contraseña no puede tener menos de 4 caracteres" # Will raise a error message
         return self.cleaned_data
+
+
+    def clean_email_alternativo(self):
+        email_alternativo = self.cleaned_data['email_alternativo']
+        usuario = User.objects.filter(email = email_alternativo)
+
+        if usuario:
+            self.email_alternativo.widget.attrs['id'] = 'demo-vs-warinpu'
+
+
+        return self.cleaned_data
+
+
 
     class Meta:
         model = User
@@ -85,6 +98,7 @@ class FormularioActualizarUsuario(forms.Form):
 
     email = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Escriba aquí su correo electrónico'}), required= False)
+
 
 
     email_alternativo = forms.EmailField(
