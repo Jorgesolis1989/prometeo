@@ -83,8 +83,9 @@
                                         <div class="col-lg-8">
                                             {{ form.password}}
                                             <div class="checkbox pad-btm text-left">
-                                                <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox">
-                                                <label for="demo-form-checkbox">Mostrar la contraseña<a href="#" class="btn-link"></a></label>
+                                                <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox"
+                                                       onchange="document.getElementById('password1').type = this.checked ? 'text' : 'password'">
+                                                <label for="demo-form-checkbox">Mostrar contraseña<a href="#" class="btn-link"></a></label>
                                                 <p class="text-danger text-bold ">{{ form.password.errors}}</p>
                                             </div>
                                         </div>

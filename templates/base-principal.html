@@ -70,6 +70,9 @@
     <!--Background Image [ DEMONSTRATION ]-->
     <script src="{% static 'js/demo/bg-images.js' %}"></script>
 
+    <!--Validations field [ DEMONSTRATION ]-->
+    <script src="{% static 'js/validationsFields.js' %}"></script>
+
     <!--=================================================
 
     REQUIRED
@@ -267,14 +270,14 @@
 					        <div class="fixed-fluid">
 					            <div class="fixed-lg-300 pull-lg-right">
 					                <div class="panel">
-					                    <div class="panel-heading" style="background-color: #f9c769; color: #000000; border-color: #d5d3d0">
-                                            <ul>
-                                                <i class="demo-pli-checked-user icon-fw"></i>
-                                                <span class="menu-title">
-                                                    <strong>Clientes Vinculados</strong>
+                                        <div class="panel-heading" style="background-color: #f9c769;">
+                                            <br>
+                                            <center><i class="demo-pli-building"></i>
+                                                <span>
+                                                    <strong>Empresas Vinculadas</strong>
                                                 </span>
-                                            </ul>
-					                    </div>
+                                            </center>
+                                        </div>
 					                    <div class="list-group bg-trans">
                                             {% for empresa in empresas %}
 					                        <a href="{% url 'selection_concept' %}" class="list-group-item">

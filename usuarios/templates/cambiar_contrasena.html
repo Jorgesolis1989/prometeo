@@ -42,8 +42,7 @@
                         <p class="text-danger text-bold ">{{ form.new_password.errors}}</p>
                     </div>
                     <div class="checkbox pad-btm text-left col-sm-4  col-sm-offset-4">
-                        <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox"
-                               onchange="document.getElementById('passwordA').type = this.checked ? 'text' : 'password'">
+                        <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox" onclick="showPassword()">
                         <label for="demo-form-checkbox">Mostrar contraseñas<a href="#" class="btn-link"></a></label>
                     </div>
                 </div>
