@@ -37,7 +37,7 @@ def login_user(request):
 
     if request.user.is_authenticated() and not request.user.is_superuser:
         empresas_vinculadas = cargar_empresas_vinculadas(request)
-        return render(request, 'base-principal.html', {'empresas': empresas_vinculadas})
+        return render(request, 'base-principal.html', {'empresas_vinculadas': empresas_vinculadas})
 
     elif request.method == 'POST':
         form = FormularioLogin(request.POST)
@@ -50,7 +50,7 @@ def login_user(request):
                     empresas_vinculadas = cargar_empresas_vinculadas(request)
 
                     #Redireccionar
-                    return render(request, 'base-principal.html', {'empresas': empresas_vinculadas})
+                    return render(request, 'base-principal.html', {'empresas_vinculadas': empresas_vinculadas})
                 else:
                    mensajeE = "Usuario no activado"
             else:
