@@ -34,7 +34,6 @@ def login_user(request):
     mensaje = ""
     mensajeE = ""
 
-
     if request.user.is_authenticated() and not request.user.is_superuser:
         empresas_vinculadas = cargar_empresas_vinculadas(request)
         return render(request, 'base-principal.html', {'empresas_vinculadas': empresas_vinculadas})
@@ -136,7 +135,6 @@ def registro_usuario(request):
                     usuario = User()
                     usuario.first_name = cd["first_name"]
                     usuario.email = cd["email"]
-                    usuario.username = '12'
                     usuario.set_password(cd["password"])
                     usuario.is_active = False
 
@@ -157,7 +155,7 @@ def registro_usuario(request):
                     # Creando el usuario web en la base de datos de Prometeo tabla usrios_web
                     usuario_web = Usuario_Web()
                     usuario_web.nmbre_usrio = usuario.first_name
-                    usuario_web.email_usrio = usuario.email
+                    usuario_web.email_usrio = cd["email"]
                     usuario_web.clve_accso = '123'
                     usuario_web.email_altrntvo = cd["email_alternativo"]
                     usuario_web.tlfno_mvil = cd["tel_movil"]
@@ -165,6 +163,7 @@ def registro_usuario(request):
                     usuario_web.nit_tcro_ascdo = cd['nit_empresa']
 
                     try:
+
                         usuario_web.save()
                         # Guardando información de las empresas
                         """

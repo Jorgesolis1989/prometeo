@@ -9,6 +9,7 @@ class BackendUsuarios(object):
 			usuario = User.objects.get(email=username)
 			if usuario is not None:
 				if check_password(password, usuario.password):
+					print()
 					return usuario
 				# Si el password es incorrecto
 				else:
