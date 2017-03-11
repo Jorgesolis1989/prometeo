@@ -28,7 +28,7 @@ def vincular_empresas(request):
         for display in display_type:
             display
 
-    else:
-        #empresas = Empresa.objects.filter(actvo=True)
+    #else:
+    #   empresas = Empresa.objects.filter(actvo=True)
 
     return render(request, 'vincular_empresas.html', {'todas_las_empresas':  empresas , 'empresas_vinculadas': cargar_empresas_vinculadas(request)})
