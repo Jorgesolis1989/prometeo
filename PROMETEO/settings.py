@@ -102,7 +102,7 @@ DATABASES = {
 STATIC_URL = '/static/'
 
 
-HOSTNAME = 'localhost:8000'
+HOSTNAME = 'http://54.200.145.159:8080'
 MEDIA_ROOT = 'PROMETEO/media/'
 MEDIA_URL = 'http://%s/PROMETEO/media/' %(HOSTNAME)
 
