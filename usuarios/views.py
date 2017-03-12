@@ -1,14 +1,10 @@
-from django.http import HttpResponseRedirect, HttpResponse
-from modelos_existentes.models import Empresa
 from django.contrib.auth.models import User
-from django.shortcuts import render, render_to_response, redirect,  get_object_or_404
+from django.shortcuts import render, render_to_response,  get_object_or_404
 from usuarios.forms import FormularioLogin, FormularioRegistroUsuario , FormularioActualizarUsuario , FormularioCambiarContrasena
-from modelos_existentes.models import  Usuario_Web, Usuario_Web_Vinculacion_Empresa
+from modelos_existentes.models import Usuario_Web, Usuario_Web_Vinculacion_Empresa
 from usuarios.models import Perfil_Usuario
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
-from django.template.context import RequestContext
-from django.core.mail import send_mail
 
 
 from empresas.views import cargar_empresas_vinculadas
@@ -125,10 +121,11 @@ def registro_usuario(request):
             cd = form.cleaned_data
             #Capture correo
             email = cd["email"]
+            email_alternativo = cd["email_alternativo"]
+            print(email_alternativo)
             try:
                 #Consultando el usuario en la base de datos.
                 email_usuario = User.objects.get(email=email)
-                print("email" + str(email_usuario))
 
             #Si el usuario no existe, lo crea
             except User.DoesNotExist:
@@ -162,7 +159,6 @@ def registro_usuario(request):
                     usuario_web.tlfno_mvil = cd["tel_movil"]
                     usuario_web.tlno_fjo = cd["tel_fijo"]
                     usuario_web.nit_tcro_ascdo = cd['nit_empresa']
-
                     try:
 
                         usuario_web.save()
@@ -194,7 +190,7 @@ def registro_usuario(request):
                     #email_subject = 'Confirmación de Cuenta "PROMETEO"'
                     #email_body = "Señor(a)%s, Gracias por registrarte.\n Para activar tu cuenta da click en el siguiente enlace " \
                                  #"en menos de 48 horas: http://%s/activate/%s" % (usuario.get_full_name(),str(request.META['HTTP_HOST']) , activation_key)
-                    print(usuario.email)
+
                     subject = 'Confirmación de Cuenta "PROMETEO"'
                     text_content = ''
                     html_content = "<!DOCTYPE>" \
@@ -268,13 +264,17 @@ def registro_usuario(request):
                                     "                <img src='http://54.200.145.159:8080/static/images/logo.png' width=\"300\" height=\"100\" alt='alt_text' border='0' align='center' >" \
                                     "            </td>" \
                                     "            <td align=\"right\" style=\"padding: 20px;\">" \
-                                    "                <img src='http://54.200.145.159:8080/static/images/sql_soluciones.png' alt='alt_text' border='0' top='15px' width='60' style='top: 45px;right: -50px;'>" \
+                                    "                <img src='http://54.200.145.159:8080/static/images/sql_soluciones.png' alt='alt_text' border='0' top='15px' width='150' style='top: 45px;right: -50px;'>" \
                                     "            </td>" \
                                     "        </tr>" \
                                     "        <tr>" \
                                     "            <td colspan=\"3\" style='padding: 10px; text-align: justify; font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #555555;'>" \
                                     "                <hr>" \
-                                    "                Estimado(a) Señor(a)" + str(usuario.get_full_name())+". Gracias por registrarse."  \
+                                    "                Estimado(a) Señor(a)" \
+                                                    "<br>" \
+                                                    + str(usuario.get_full_name())+ ""\
+                                                    "<br>" \
+                                                    "<b>Gracias por registrarse</b>" \
                                     "                <br>" \
                                     "                <br>" \
                                     "                Para activar tu cuenta da click en el siguiente enlace en menos de 48 horas: <b>http://"+ str(request.META['HTTP_HOST'])+"/activate/"+ str(activation_key)+ "" \
@@ -296,7 +296,7 @@ def registro_usuario(request):
                                     "            <tr>" \
                                     "                <td style='padding: 20px; width: 100%;font-size: 12px; font-family: sans-serif; mso-height-rule: exactly; line-height:18px; text-align: center; color: #585858; font-weight:bold;'>" \
                                     "                    PROMETEO<br>" \
-                                    "                    <a href=\"http://54.200.145.159:8080\">SQL Soluciones S.A</a> - 2017" \
+                                    "                    <a href=\"http://www.sqlsolucionesinformaticas.com/\">SQL Soluciones S.A</a> - 2017" \
                                     "                </td>" \
                                     "            </tr>" \
                                     "        </table>" \
@@ -310,9 +310,17 @@ def registro_usuario(request):
                     msg.attach_alternative(html_content, "text/html")
                     msg.send()
 
-                    #send_mail(email_subject, email_body, 'settings.EMAIL_HOST_USER',[email], fail_silently=False)
+                    #Se valida que el email alternativo no sea usado por otro usuario
+                    try:
+                        email_alternativo_exist = Usuario_Web.objects.filter(email_altrntvo=email_alternativo,actvo=1)
+                        if email_alternativo_exist is not None:
+                            mensaje = "Advertencia:\n El correo alternativo ingresado ya existe para otro usuario.\n" \
+                                       "Por favor actualizarlo cuando inicie sesión."
+                    except Exception as e:
+                        print(e, "warning email")
 
-                    return render_to_response('registration/registro_exitoso.html')
+                    #return render_to_response('registration/registro_exitoso.html')
+                    return render(request, 'registration/registro_exitoso.html', {'form': form, 'mensaje': mensaje})
 
             else:
                 form = FormularioRegistroUsuario()
