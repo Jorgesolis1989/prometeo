@@ -303,9 +303,17 @@ def registro_usuario(request):
                     msg.attach_alternative(html_content, "text/html")
                     msg.send()
 
-                    #send_mail(email_subject, email_body, 'settings.EMAIL_HOST_USER',[email], fail_silently=False)
+                    #Se valida que el email alternativo no sea usado por otro usuario
+                    try:
+                        email_alternativo_exist = Usuario_Web.objects.filter(email_altrntvo=email_alternativo,actvo=1)
+                        if email_alternativo_exist is not None:
+                            mensaje = "Advertencia:\n El correo alternativo ingresado ya existe para otro usuario.\n" \
+                                       "Por favor actualizarlo cuando inicie sesión."
+                    except Exception as e:
+                        print(e, "warning email")
 
-                    return render_to_response('registration/registro_exitoso.html')
+                    #return render_to_response('registration/registro_exitoso.html')
+                    return render(request, 'registration/registro_exitoso.html', {'form': form, 'mensaje': mensaje})
 
             else:
                 form = FormularioRegistroUsuario()
