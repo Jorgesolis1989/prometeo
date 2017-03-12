@@ -24,6 +24,7 @@ activate(settings.TIME_ZONE)
 import hashlib, datetime, random
 import hmac
 import string
+from django.core.mail import EmailMultiAlternatives
 
 # Create your views here.
 def utc_to_local(utc_dt):
@@ -188,12 +189,128 @@ def registro_usuario(request):
                         perfil_usuario.save()
                     except Exception as e:
                         print("eror en perfil")
-                        print (e)
+                        print(e)
                     # Enviar un email de confirmación
-                    email_subject = 'Confirmación de Cuenta "PROMETEO"'
-                    email_body = "Señor(a)%s, Gracias por registrarte.\n Para activar tu cuenta da click en el siguiente enlace " \
-                                 "en menos de 48 horas: http://%s/activate/%s" % (usuario.get_full_name(),str(request.META['HTTP_HOST']) , activation_key)
-                    send_mail(email_subject, email_body, 'settings.EMAIL_HOST_USER',[email], fail_silently=False)
+                    #email_subject = 'Confirmación de Cuenta "PROMETEO"'
+                    #email_body = "Señor(a)%s, Gracias por registrarte.\n Para activar tu cuenta da click en el siguiente enlace " \
+                                 #"en menos de 48 horas: http://%s/activate/%s" % (usuario.get_full_name(),str(request.META['HTTP_HOST']) , activation_key)
+                    print(usuario.email)
+                    subject = 'Confirmación de Cuenta "PROMETEO"'
+                    text_content = ''
+                    html_content = "<!DOCTYPE>" \
+                                    "<html>" \
+                                    "<head>" \
+                                    "    <meta charset='utf-8'> " \
+                                    "    <meta name='viewport' content='width=device-width'> " \
+                                    "    <meta http-equiv='X-UA-Compatible' content='IE=edge'> " \
+                                    "    <title>Confirmación de Cuenta PROMETEO</title>" \
+                                    "    <style type='text/css'>" \
+                                    "        html," \
+                                    "        body {" \
+                                    "            margin: 0 auto !important;" \
+                                    "            padding: 0 !important;" \
+                                    "            width: 500px !important;" \
+                                    "            background-color: #56ACDE;" \
+                                    "        }" \
+                                    "        * {" \
+                                    "            -ms-text-size-adjust: 100%;" \
+                                    "            -webkit-text-size-adjust: 100%;" \
+                                    "        }" \
+                                    "        div[style*='margin: 16px 0'] {" \
+                                    "            margin:0 !important;" \
+                                    "        }" \
+                                    "        table," \
+                                    "        td {" \
+                                    "            mso-table-lspace: 0pt !important;" \
+                                    "            mso-table-rspace: 0pt !important;" \
+                                    "        }" \
+                                    "        table {" \
+                                    "            border-spacing: 0 !important;" \
+                                    "            border-collapse: collapse !important;" \
+                                    "            table-layout: fixed !important;" \
+                                    "            Margin: 0 auto !important;" \
+                                    "        }" \
+                                    "        table table table {" \
+                                    "            table-layout: auto;" \
+                                    "        }" \
+                                    "        img {" \
+                                    "            -ms-interpolation-mode:bicubic;" \
+                                    "        }" \
+                                    "        .yshortcuts a {" \
+                                    "            border-bottom: none !important;" \
+                                    "        }" \
+                                    "        .mobile-link--footer a," \
+                                    "        a[x-apple-data-detectors] {" \
+                                    "            color:inherit !important;" \
+                                    "            text-decoration: underline !important;" \
+                                    "        }" \
+                                    "    </style>" \
+                                    "    <style>" \
+                                    "        @media screen and (max-width: 500px) {" \
+                                    "            .email-container {" \
+                                    "                width: 100% !important;" \
+                                    "                margin: auto !important;" \
+                                    "            }" \
+                                    "        }" \
+                                    "    </style>" \
+                                    "</head>" \
+                                    "<body>" \
+                                    "<table cellpadding='0' cellspacing='0' width='500px' style='border-collapse:collapse; border-style: solid; border-width: 1px;'>" \
+                                    "    <table cellspacing='0' cellpadding='0' border='0' align='center' width='500px'  class='email-container'>" \
+                                    "        <tr>" \
+                                    "            <td style='padding: 10px 0;'>" \
+                                    "            </td>" \
+                                    "        </tr>" \
+                                    "    </table>" \
+                                    "    <table cellspacing='0' cellpadding='0' align='center' bgcolor='#ffffff' width='500px' class='email-container'>" \
+                                    "        <tr colspan=\"3\" style=\"border: hidden;\">" \
+                                    "            <td colspan=\"2\" align=\"right\">" \
+                                    "                <img src='http://54.200.145.159:8080/static/images/logo.png' width=\"300\" height=\"100\" alt='alt_text' border='0' align='center' >" \
+                                    "            </td>" \
+                                    "            <td align=\"right\" style=\"padding: 20px;\">" \
+                                    "                <img src='http://54.200.145.159:8080/static/images/sql_soluciones.png' alt='alt_text' border='0' top='15px' width='60' style='top: 45px;right: -50px;'>" \
+                                    "            </td>" \
+                                    "        </tr>" \
+                                    "        <tr>" \
+                                    "            <td colspan=\"3\" style='padding: 10px; text-align: justify; font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #555555;'>" \
+                                    "                <hr>" \
+                                    "                Estimado(a) Señor(a)" + str(usuario.get_full_name())+". Gracias por registrarse."  \
+                                    "                <br>" \
+                                    "                <br>" \
+                                    "                Para activar tu cuenta da click en el siguiente enlace en menos de 48 horas: <b>http://"+ str(request.META['HTTP_HOST'])+"/activate/"+ str(activation_key)+ "" \
+                                                    "<br>" \
+                                    "                <div align='center'>" \
+                                    "                <br>" \
+                                    "                <br>" \
+                                    "                </div>" \
+                                    "                En el siguiente enlace podr&aacute; conocer más sobre nosotros::" \
+                                    "                <br><br>" \
+                                    "                <div align='center'><b>http://"+str(request.META['HTTP_HOST'])+"</b></div>" \
+                                    "                <br>" \
+                                    "                Cualquier duda o informaci&oacute;n adicional escribir al correo electr&oacute;nico <a href=\"mailto:info@sqlsoluciones.com \">info@sqlsoluciones.com </a>" \
+                                    "            <hr>" \
+                                    "            </td>" \
+                                    "        </tr>" \
+                                    "    </table>" \
+                                    "    <table cellspacing='0' cellpadding='0' border='0' align='center' width='500px' style='margin: auto;' class='email-container'>" \
+                                    "            <tr>" \
+                                    "                <td style='padding: 20px; width: 100%;font-size: 12px; font-family: sans-serif; mso-height-rule: exactly; line-height:18px; text-align: center; color: #585858; font-weight:bold;'>" \
+                                    "                    PROMETEO<br>" \
+                                    "                    <a href=\"http://54.200.145.159:8080\">SQL Soluciones S.A</a> - 2017" \
+                                    "                </td>" \
+                                    "            </tr>" \
+                                    "        </table>" \
+                                    "</table>" \
+                                    "</body>" \
+                                    "</html>"
+
+                    from_email = '"PROMETEO" <sivore@correounivalle.edu.co>'
+                    to = usuario.email
+                    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+                    msg.attach_alternative(html_content, "text/html")
+                    msg.send()
+
+                    #send_mail(email_subject, email_body, 'settings.EMAIL_HOST_USER',[email], fail_silently=False)
 
                     return render_to_response('registration/registro_exitoso.html')
 
