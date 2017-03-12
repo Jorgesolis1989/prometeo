@@ -28,7 +28,7 @@
                             {% for empresa in todas_las_empresas %}
                             <a class="list-group-item  list-item-sm" href="#">
                                 <div class="checkbox">
-                                    <input name="empresas" id="{{ empresa.id_emprsa }}" class="magic-checkbox" type="checkbox"
+                                    <input name="empresas_checkbox[]" id="{{ empresa.id_emprsa }}" value="{{ empresa.id_emprsa }}" class="magic-checkbox" type="checkbox"
                                     {% for empresa_vinculada in empresas_vinculadas %}
                                         {% if empresa_vinculada.id_emprsa == empresa.id_emprsa  %}
                                         checked
