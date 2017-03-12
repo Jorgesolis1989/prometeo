@@ -1,21 +1,13 @@
-from django.http import HttpResponseRedirect, HttpResponse
-from modelos_existentes.models import Empresa
-
 from django.contrib.auth.models import User
-from django.shortcuts import render, render_to_response, redirect,  get_object_or_404
+from django.shortcuts import render, render_to_response,   get_object_or_404
 from usuarios.forms import FormularioLogin, FormularioRegistroUsuario , FormularioActualizarUsuario , FormularioCambiarContrasena
-from modelos_existentes.models import  Usuario_Web, Usuario_Web_Vinculacion_Empresa
+from modelos_existentes.models import  Usuario_Web
 from usuarios.models import Perfil_Usuario
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
-from django.template.context import RequestContext
-from django.core.mail import send_mail
 
+from empresas.views import cargar_empresas_vinculadas
 
-from empresas.views import cargar_empresas_vinculadas , cargar_logos_empresas
-
-
-from django.core.validators import validate_email
 
 from django.utils import timezone
 from django.utils.timezone import activate
@@ -51,7 +43,7 @@ def login_user(request):
                     empresas_vinculadas = cargar_empresas_vinculadas(request)
 
                     #Redireccionar
-                    return render(request, 'base-principal.html', {'empresas_vinculadas': empresas_vinculadas , 'logos_empresas': cargar_logos_empresas(request)})
+                    return render(request, 'base-principal.html', {'empresas_vinculadas': empresas_vinculadas})
                 else:
                    mensajeE = "Usuario no activado"
             else:
@@ -93,7 +85,7 @@ def cambio_contrasena(request):
         form = FormularioCambiarContrasena()
         print()
 
-    return render(request, 'cambiar_contrasena.html', {'form': form , 'mensaje': mensaje , 'empresas_vinculadas': empresas_vinculadas , 'logos_empresas': cargar_logos_empresas(request)})
+    return render(request, 'cambiar_contrasena.html', {'form': form , 'mensaje': mensaje , 'empresas': empresas_vinculadas})
 
 
 
@@ -405,4 +397,4 @@ def actualizar_usuario(request):
                         'tel_fijo': usuario_web.tlno_fjo, 'tel_movil': usuario_web.tlfno_mvil}
         form.fields['email'].widget.attrs['readonly'] = True
 
-    return render(request, 'actualizar-usuario.html', {'form': form , 'mensaje': mensaje , 'empresas_vinculadas': empresas_vinculadas , 'logos_empresas': cargar_logos_empresas(request)})
+    return render(request, 'actualizar-usuario.html', {'form': form , 'mensaje': mensaje , 'empresas': empresas_vinculadas})

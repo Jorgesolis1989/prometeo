@@ -1,6 +1,4 @@
 from django import forms
-from captcha.fields import ReCaptchaField
-from django.contrib.auth.models import User
 
 class FormularioLogin(forms.Form):
     username = forms.CharField(
@@ -43,16 +41,27 @@ class FormularioRegistroUsuario(forms.Form):
             self._errors["password"] = "La contraseña no puede tener menos de 4 caracteres" # Will raise a error message
         return password
 
+
 """
+    def validate_email_alternativo(self):
+        diccionario_limpio = self.cleaned_data
+        email_alternativo = diccionario_limpio.get('email_alternativo')
+        usuario = User.objects.filter(email=email_alternativo)
+
+        if usuario:
+            raise forms.ValidationError("El email alternativo ya existe con otro usuario")
+
+        return email_alternativo
+
     def clean_email_alternativo(self):
         email_alternativo = self.cleaned_data['email_alternativo']
         usuario = User.objects.filter(email = email_alternativo)
 
         if usuario is not None:
             self.email_alternativo.widget.attrs['id'] = 'demo-vs-warinpu'
-        return self.cleaned_data
-"""
+        return email_alternativo
 
+"""
 
 """
     #clean email field
