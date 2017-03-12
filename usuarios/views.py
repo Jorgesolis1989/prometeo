@@ -305,7 +305,7 @@ def registro_usuario(request):
 
                     #Se valida que el email alternativo no sea usado por otro usuario
                     try:
-                        email_alternativo_exist = Usuario_Web.objects.filter(email_altrntvo=email_alternativo,actvo=1)
+                        email_alternativo_exist = Usuario_Web.objects.filter(email_usrio=cd["email_alternativo"], actvo=1)
                         if email_alternativo_exist is not None:
                             mensaje = "Advertencia:\n El correo alternativo ingresado ya existe para otro usuario.\n" \
                                        "Por favor actualizarlo cuando inicie sesión."
