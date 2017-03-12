@@ -52,7 +52,7 @@ class Empresa(models.Model):
     cdgo_pstal = models.CharField(max_length=6, null=True)
     drccion = models.CharField(max_length=50)
     web_site = models.CharField(max_length=100 , null=True)
-    lgtpo_emprsa = models.ImageField(upload_to='logosEmpresas/', null=True)
+    lgtpo_emprsa = models.BinaryField( null=True)
     fcha_crcion = models.DateField(default=datetime.now, null=True)
     actvo = models.IntegerField(default=1)
 

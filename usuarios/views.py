@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from modelos_existentes.models import Empresa
+
 from django.contrib.auth.models import User
 from django.shortcuts import render, render_to_response, redirect,  get_object_or_404
 from usuarios.forms import FormularioLogin, FormularioRegistroUsuario , FormularioActualizarUsuario , FormularioCambiarContrasena
@@ -11,7 +12,7 @@ from django.template.context import RequestContext
 from django.core.mail import send_mail
 
 
-from empresas.views import cargar_empresas_vinculadas
+from empresas.views import cargar_empresas_vinculadas , cargar_logos_empresas
 
 
 from django.core.validators import validate_email
@@ -50,7 +51,7 @@ def login_user(request):
                     empresas_vinculadas = cargar_empresas_vinculadas(request)
 
                     #Redireccionar
-                    return render(request, 'base-principal.html', {'empresas_vinculadas': empresas_vinculadas})
+                    return render(request, 'base-principal.html', {'empresas_vinculadas': empresas_vinculadas , 'logos_empresas': cargar_logos_empresas(request)})
                 else:
                    mensajeE = "Usuario no activado"
             else:
@@ -92,7 +93,7 @@ def cambio_contrasena(request):
         form = FormularioCambiarContrasena()
         print()
 
-    return render(request, 'cambiar_contrasena.html', {'form': form , 'mensaje': mensaje , 'empresas': empresas_vinculadas})
+    return render(request, 'cambiar_contrasena.html', {'form': form , 'mensaje': mensaje , 'empresas_vinculadas': empresas_vinculadas , 'logos_empresas': cargar_logos_empresas(request)})
 
 
 
@@ -404,4 +405,4 @@ def actualizar_usuario(request):
                         'tel_fijo': usuario_web.tlno_fjo, 'tel_movil': usuario_web.tlfno_mvil}
         form.fields['email'].widget.attrs['readonly'] = True
 
-    return render(request, 'actualizar-usuario.html', {'form': form , 'mensaje': mensaje , 'empresas': empresas_vinculadas})
+    return render(request, 'actualizar-usuario.html', {'form': form , 'mensaje': mensaje , 'empresas_vinculadas': empresas_vinculadas , 'logos_empresas': cargar_logos_empresas(request)})
