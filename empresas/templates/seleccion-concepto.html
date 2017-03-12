@@ -2,7 +2,7 @@
     {%block breadcrumb %}
         <ol class="breadcrumb">
             <li><a href="{% url 'login_user' %}">Atrás</a></li>
-            <li><a href="{% url 'selection_concept' %}" class="active">Selección del Concepto</a></li>
+            <li><a href="#" class="active">Selección del Concepto</a></li>
         </ol>
     {%endblock breadcrumb %}
 {%block title %}Selección del Concepto{%endblock title %}
@@ -11,6 +11,9 @@
         <div class="eq-height">
             <div class="col-md-6 col-lg-4 eq-box-lg">
                 <div class="panel">
+                    <div class="alignleft">
+                        <img src="{{ MEDIA_URL }} {{logo_empresa.url }}" alt="" class="img-lg"/>
+                    </div>
                    <div class="panel" style="background-color: #f9c769; border-color: #d5d3d0">
                         <div class="mar-top clearfix">
                             <h3 class="h3 mar-no text-center" >Seleccione el Concepto</h3>

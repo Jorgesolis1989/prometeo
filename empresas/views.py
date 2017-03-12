@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from empresas.models import Empresa_Con_Logo
 from modelos_existentes.models import Empresa , Usuario_Web_Vinculacion_Empresa
 from django.contrib.auth.models import User
@@ -13,11 +13,19 @@ activate(settings.TIME_ZONE)
 
 
 def cargar_logos_empresas(request):
-    print(Empresa_Con_Logo.objects.filter(activo=1))
     return Empresa_Con_Logo.objects.filter(activo=1)
 
-def seleccion_concepto(request):
-    return render(request, 'seleccion-concepto.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) , 'logos_empresas': cargar_logos_empresas(request)})
+def seleccion_concepto(request, id_emprsa=None):
+    try:
+        empresa_logo = Empresa_Con_Logo.objects.get(id_emprsa=id_emprsa)
+    except Exception as e:
+        return redirect('login_user')
+
+    logo_empresa = empresa_logo.lgtpo_emprsa
+
+    return render(request, 'seleccion-concepto.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) ,
+                                                       'logos_empresas': cargar_logos_empresas(request),
+                                                       'logo_empresa':logo_empresa})
 
 def cargar_empresas_vinculadas(request):
         usuario_web = get_object_or_404(Usuario_Web, email_usrio=request.user.email ,)

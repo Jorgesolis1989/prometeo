@@ -278,9 +278,11 @@
                                                 </span>
                                             </center>
                                         </div>
+
 					                    <div class="list-group bg-trans">
+                                        <form method="post" action="" >
                                             {% for empresa in empresas_vinculadas %}
-					                        <a href="{% url 'selection_concept' %}" class="list-group-item">
+                                                <a href="/empresas/selection_concept/{{empresa.id_emprsa}}"  class="list-group-item" type="submit">
 					                            <div class="media-left pos-rel">
 
                                                     <img class="img-circle img-xs" src="
@@ -298,6 +300,7 @@
 					                            </div>
 					                        </a>
                                             {% endfor %}
+                                        </form>
 					                    </div>
 					                </div>
 					            </div>
@@ -314,13 +317,22 @@
 					                        <!-- Newsfeed Content -->
 					                        <!--===================================================-->
 					                        <div class="media-block">
-
                                                 <div class="media-body">
-
 					                                <div class="media">
-
 					                                    <div class="media-body">
-                                                            {% block content %}{% endblock content %}
+                                                            {% block content %}
+                                                                <h3 class="h2 mar-no text-center ">Bienvenidos a</h3>
+                                                                    <div id="container" class="cls-container">
+                                                                        <div class="cls-content-sm panel" style="background-color: #ffffff">
+                                                                            <div class="mar-ver pad-btm">
+
+                                                                                <hr>
+                                                                                <a href="http://54.200.145.159:8080/" target="_blank"><img src="{% static 'images/img-welcome.png' %}" alt=""></a>
+                                                                                <h3 class="text-danger text-bold">Nunca la información de sus proveedores,<br>clientes y empleados<br>estuvo tan cerca!</h3>
+                                                                             </div>
+                                                                        </div>
+                                                                    </div>
+                                                            {% endblock content %}
 					                                    </div>
 					                                </div>
 					                            </div>
