@@ -53,6 +53,8 @@ def login_user(request):
     return render(request, 'login.html', {'mensaje': mensaje,'mensajeE': mensajeE, 'form': form })
 
 
+
+
 # Este metodo se utiliza para el cambio de contrasena del usuario
 def cambio_contrasena(request):
 
