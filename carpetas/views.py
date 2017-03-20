@@ -14,7 +14,7 @@ def crear_carpeta(request):
         # Creando el Usuario Web Vinculacion folder
         usuario_web_vinculacion_folder = Usuario_Web_Vinculacion_Folder()
         usuario_web_vinculacion_folder.email_usrio = usuario_web
-        usuario_web_vinculacion_folder.nmbre_flder = request.POST['name_carpeta']
+        usuario_web_vinculacion_folder.nmbre_flder = request.POST['name_carpeta'][:60]
 
         # Numero de folder Autoincrement
         try:
@@ -39,12 +39,34 @@ def crear_carpeta(request):
 
     return render(request, 'base-principal.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) , 'logos_empresas':cargar_logos_empresas(request), 'carpetas': cargar_carpetas(request)})
 
+def editar_carpeta(request):
+
+    if request.POST:
+        usuario_web = Usuario_Web.objects.get(email_usrio=request.user.email)
+        id_carpeta = request.POST['id_carpeta']
+        nombre_carpeta = request.POST['name_carpeta']
+
+
+        usuario_carpeta = Usuario_Web_Vinculacion_Folder.objects.get(nmro_flder=id_carpeta)
+        usuario_carpeta.nmbre_flder = nombre_carpeta
+
+        try:
+            usuario_carpeta.save()
+        except Exception as e:
+            print(e)
+
+
+        return render(request, 'base-principal.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) , 'logos_empresas':cargar_logos_empresas(request), 'carpetas': cargar_carpetas(request)})
+
+
+
 def cargar_carpetas(request):
     usuario_web = Usuario_Web.objects.get(email_usrio=request.user.email)
     #print(usuario_web)
     carpetas = Usuario_Web_Vinculacion_Folder.objects.filter(email_usrio=usuario_web)
     #print(carpetas)
     return carpetas
+
 
 
 def eliminar_carpeta(request, id_folder=None):
@@ -57,6 +79,4 @@ def eliminar_carpeta(request, id_folder=None):
         except Exception as e:
             print(e)
     return render(request, 'base-principal.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) ,'logos_empresas':cargar_logos_empresas(request), 'carpetas': cargar_carpetas(request)})
-
-
 
