@@ -451,8 +451,11 @@
                                                     <!--Submenu-->
 
                                                     <ul class="collapse" aria-expanded="false">
+
                                                         <li><a id="{{carpeta.nmro_flder}}" name="{{ carpeta.nmbre_flder }}" class="modificar-carpeta">Modificar</a></li>
-                                                        <li><a href="forms-components.html">Eliminar</a></li>
+                                                        <li><a id="{{ carpeta.nmro_flder}}" name="{{ carpeta.nmbre_flder }}" class="demo-bootbox-confirm-delete"
+                                                           data-toggle="tooltip" href="#">Eliminar</a>
+                                                        </li>
 
                                                     </ul>
                                                 </li>
