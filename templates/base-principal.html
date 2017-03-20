@@ -73,6 +73,13 @@
     <!--Validations field [ DEMONSTRATION ]-->
     <script src="{% static 'js/validationsFields.js' %}"></script>
 
+        <!--Bootbox Modals [ OPTIONAL ]-->
+    <script src="{% static 'plugins/bootbox/bootbox.min.js' %}"></script>
+
+
+    <!--Modals [ SAMPLE ]-->
+    <script src="{% static 'js/demo/ui-modals.js' %}"></script>
+
     <!--=================================================
 
     REQUIRED
@@ -362,6 +369,8 @@
             <aside id="aside-container">
                 <div id="aside">
                     <div class="nano">
+                    <div class="nano-content">
+                    </div>
                     </div>
                 </div>
             </aside>
@@ -422,11 +431,12 @@
 						                    <i class="demo-psi-split-vertical-2"></i>
 						                    <span class="menu-title">
 												<strong>Carpetas</strong>
+
 											</span>
 											<i class="arrow"></i>
 						                </a>
                                         <ul>
-                                            <button class="btn btn-rounded "><i class="demo-pli-add icon-fw"></i>Crear carpeta</button>
+                                            <button id="demo-bootbox-prompt" class="btn btn-rounded "><i class="demo-pli-add icon-fw"></i>Crear carpeta</button>
                                             <li class="list-divider"></li>
                                         </ul>
 
