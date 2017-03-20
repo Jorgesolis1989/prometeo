@@ -451,7 +451,7 @@
                                                     <!--Submenu-->
 
                                                     <ul class="collapse" aria-expanded="false">
-                                                        <li><a href="forms-general.html">Modificar</a></li>
+                                                        <li><a id="{{carpeta.nmro_flder}}" name="{{ carpeta.nmbre_flder }}" class="modificar-carpeta">Modificar</a></li>
                                                         <li><a href="forms-components.html">Eliminar</a></li>
 
                                                     </ul>
@@ -460,7 +460,8 @@
 
                                                  <form name="formCarpeta" method="post" action="">
                                                       {% csrf_token %}
-                                                <input id="id_carpeta" name="name_carpeta" type="text" hidden>
+                                                    <input id="id_carpeta" name="id_carpeta" type="text" hidden>
+                                                    <input id="name_carpeta" name="name_carpeta" type="text" hidden>
                                             </form>
                                         </ul>
                                     <br>

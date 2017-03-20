@@ -9,21 +9,62 @@
 
  $(document).ready(function() {
 
-        // BOOTBOX - PROMPT MODAL
+
+
+
+        // CREAR CARPETA
     // =================================================================
-    // Require Bootbox
-    // http://bootboxjs.com/
+
     // =================================================================
     $('#crear-carpeta').on('click', function(){
         bootbox.prompt("Nombre de la carpeta", function(result) {
             if (result) {
-                $("#id_carpeta").val(result);
-                document.formCarpeta.action = "/carpetas/crear_carpeta"
+                $("#name_carpeta").val(result);
+                document.formCarpeta.action = "/folders/create_folder"
                 document.formCarpeta.submit()
             }else{
 
             };
         });
+    });
+
+       // MODIFICAR CARPETA
+    // =================================================================
+    // Require Bootbox
+    // http://bootboxjs.com/
+    // =================================================================
+    $('.modificar-carpeta').on('click', function(){
+        var id = $(this).attr('id')
+        var nombre = $(this).attr('name')
+
+        bootbox.dialog({
+            title: "Modificar nombre de carpeta",
+            message:'<div class="row"> ' + '<div class="col-md-12"> ' +
+                    '<form name="modified_folder" class="form-horizontal"> ' + '<div class="form-group"> ' +
+                    '<label class="col-md-4 control-label" for="name">Nombre</label> ' +
+                    '<div class="col-md-4"> ' +
+                    '<input id="name" name="name" type="text" value="'+nombre+'"' +
+                    'class="form-control input-md"> ' +
+                    '</div> ' +
+                    '</div> ' + '<div class="form-group"> ' +
+                    '<form> </div> </div><script></script>',
+            buttons: {
+                success: {
+                    label: "Guardar",
+                    className: "btn-purple",
+                     callback: function() {
+                        var name = $('#name').val();
+                         $("#id_carpeta").val(id);
+                         $("#name_carpeta").val(name);
+                        document.formCarpeta.action = "/folders/edit_folder"
+                        document.formCarpeta.submit()
+                    }
+
+                }
+            }
+        });
+
+        $(".demo-modal-radio").niftyCheck();
     });
 
 
