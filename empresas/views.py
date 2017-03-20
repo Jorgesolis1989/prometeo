@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from empresas.models import Empresa_Con_Logo
-from modelos_existentes.models import Empresa , Usuario_Web_Vinculacion_Empresa
+from modelos_existentes.models import Empresa , Usuario_Web_Vinculacion_Empresa , Usuario_Web_Vinculacion_Folder
 from django.contrib.auth.models import User
 from modelos_existentes.models import Usuario_Web
 from django.shortcuts import render, get_object_or_404
 import datetime
+
+
 from empresas.forms import FormularioVincularEmpresas
 
 from django.utils.timezone import activate
@@ -25,7 +27,8 @@ def seleccion_concepto(request, id_emprsa=None):
 
     return render(request, 'seleccion-concepto.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) ,
                                                        'logos_empresas': cargar_logos_empresas(request),
-                                                       'logo_empresa':logo_empresa})
+                                                       'logo_empresa':logo_empresa , 'carpetas': cargar_carpetas(request)
+                                                        })
 
 def cargar_empresas_vinculadas(request):
         usuario_web = get_object_or_404(Usuario_Web, email_usrio=request.user.email ,)
@@ -85,4 +88,13 @@ def vincular_empresas(request):
     #else:
     #   empresas = Empresa.objects.filter(actvo=True)
 
-    return render(request, 'vincular_empresas.html', {'todas_las_empresas':  empresas , 'empresas_vinculadas': empresas_vinculadas , 'logos_empresas': cargar_logos_empresas(request)})
+    return render(request, 'vincular_empresas.html', {'todas_las_empresas':  empresas , 'empresas_vinculadas': empresas_vinculadas , 'logos_empresas': cargar_logos_empresas(request), 'carpetas': cargar_carpetas(request)})
+
+
+
+def cargar_carpetas(request):
+    usuario_web = Usuario_Web.objects.get(email_usrio=request.user.email)
+    #print(usuario_web)
+    carpetas = Usuario_Web_Vinculacion_Folder.objects.filter(email_usrio=usuario_web)
+    #print(carpetas)
+    return carpetas
