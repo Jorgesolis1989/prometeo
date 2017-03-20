@@ -41,4 +41,8 @@ def crear_carpeta(request):
 
 def cargar_carpetas(request):
     usuario_web = Usuario_Web.objects.get(email_usrio=request.user.email)
-    return Usuario_Web_Vinculacion_Folder.objects.filter(email_usrio=usuario_web)
+    #print(usuario_web)
+    carpetas = Usuario_Web_Vinculacion_Folder.objects.filter(email_usrio=usuario_web)
+    #print(carpetas)
+    return carpetas
+

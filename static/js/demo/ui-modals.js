@@ -20,22 +20,8 @@
                 $("#id_carpeta").val(result);
                 document.formCarpeta.action = "/carpetas/crear_carpeta"
                 document.formCarpeta.submit()
-                $.niftyNoty({
-                    type: 'success',
-                    icon : 'pli-consulting icon-2x',
-                    message : 'Hi ' + result,
-                    container : 'floating',
-                    timer : 5000
-                });
-
             }else{
-                $.niftyNoty({
-                    type: 'danger',
-                    icon : 'pli-cross icon-2x',
-                    message : 'User declined dialog.',
-                    container : 'floating',
-                    timer : 5000
-                });
+
             };
         });
     });
