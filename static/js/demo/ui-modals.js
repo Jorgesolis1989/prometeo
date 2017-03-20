@@ -45,6 +45,21 @@
         });
     });
 
+     // BOOTBOX - CONFIRM MODAL - PARA ELIMINAR CARPETAS
+	// =================================================================
+	// Require Bootbox
+	// http://bootboxjs.com/
+	// =================================================================
+	$('.demo-bootbox-confirm-delete').on('click', function(){
+		var id = $(this).attr('id')
+		var name = $(this).attr('name')
+		bootbox.confirm("¿Quieres eliminar la carpeta '"+ name+ "'", function(result) {
+			if (result) {
+				document.formCarpeta.action = "/carpetas/delete_folder/"+id
+				document.formCarpeta.submit()
+			}
+		});
+	});
 
 
     // BOOTBOX - CONFIRM MODAL

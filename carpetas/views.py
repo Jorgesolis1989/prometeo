@@ -46,3 +46,17 @@ def cargar_carpetas(request):
     #print(carpetas)
     return carpetas
 
+
+def eliminar_carpeta(request, id_folder=None):
+    if request.POST:
+        try:
+            usuario_carpeta = Usuario_Web_Vinculacion_Folder.objects.filter(nmro_flder=id_folder)
+            print(usuario_carpeta)
+            usuario_carpeta.delete()
+
+        except Exception as e:
+            print(e)
+    return render(request, 'base-principal.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) ,'logos_empresas':cargar_logos_empresas(request), 'carpetas': cargar_carpetas(request)})
+
+
+
