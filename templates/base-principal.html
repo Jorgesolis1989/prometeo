@@ -12,7 +12,7 @@
     <!--=================================================-->
 
     <!--Open Sans Font [ OPTIONAL ]-->
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link href="{% static 'css/demo/fonts/font-google.css' %}" rel='stylesheet'>
 
     <!--Bootstrap Stylesheet [ REQUIRED ]-->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
@@ -36,6 +36,7 @@
     <!--Magic Checkbox [ OPTIONAL ]-->
     <link href="{% static 'plugins/magic-check/css/magic-check.min.css' %}" rel="stylesheet">
 
+
     <!--Font Awesome [ OPTIONAL ]-->
     <link href="{% static 'plugins/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
 
@@ -48,8 +49,56 @@
     <!--Bootstrap Select [ OPTIONAL ]-->
     <link href="{% static 'plugins/bootstrap-select/bootstrap-select.min.css' %}" rel="stylesheet">
 
-    <!--Page Load Progress Bar [ OPTIONAL ]-->
-    <link href="{% static 'plugins/pace/pace.min.css' %}" rel="stylesheet">
+    <!--Pace - Page Load Progress Par [OPTIONAL]-->
+    <link href="{% static 'plugins/pace/pace.min.css'%}" rel="stylesheet">
+
+    <!--=================================================-->
+
+    <!--SCRIPT-->
+    <!--=================================================-->
+    <!--jQuery [ REQUIRED ]-->
+    <script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
+
+
+    <!--BootstrapJS [ RECOMMENDED ]-->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+
+    <!--Fast Click [ OPTIONAL ]-->
+    <script src="{% static 'plugins/fast-click/fastclick.min.js' %}"></script>
+
+
+    <!--Switchery [ OPTIONAL ]-->
+    <script src="{% static 'plugins/switchery/switchery.min.js' %}"></script>
+
+
+    <!--Bootstrap Select [ OPTIONAL ]-->
+    <script src="{% static 'plugins/bootstrap-select/bootstrap-select.min.js' %}"></script>
+
+
+    <!--Bootbox Modals [ OPTIONAL ]-->
+    <script src="{% static 'plugins/bootbox/bootbox.min.js' %}"></script>
+
+
+
+    <!--Modals [ SAMPLE ]-->
+    <script src="{% static 'js/demo/ui-modals.js' %}"></script>
+
+
+    <!--Demo script [ DEMONSTRATION ]-->
+    <script src="{% static 'js/demo/nifty-demo.min.js' %}"></script>
+
+
+    <!--Background Image [ DEMONSTRATION ]-->
+    <script src="{% static 'js/demo/bg-images.js' %}"></script>
+
+    <!--Validations field [ DEMONSTRATION ]-->
+    <script src="{% static 'js/validationsFields.js' %}"></script>
+
+    <!--Bootbox Modals [ OPTIONAL ]-->
+    <script src="{% static 'plugins/bootbox/bootbox.js' %}"></script>
+
+    <script src="{% static 'plugins/pace/pace.min.js'%}"></script>
 
 </head>
 
@@ -312,6 +361,8 @@
             <aside id="aside-container">
                 <div id="aside">
                     <div class="nano">
+                        <div class="nano-content">
+                        </div>
                     </div>
                 </div>
             </aside>
@@ -934,7 +985,6 @@
     </div>
     <!--===================================================-->
     <!-- END SETTINGS -->
-
 
 </body>
 </html>
