@@ -435,8 +435,8 @@
 											</span>
 											<i class="arrow"></i>
 						                </a>
-                                        <ul>
-                                            <button id="demo-bootbox-prompt" class="btn btn-rounded "><i class="demo-pli-add icon-fw"></i>Crear carpeta</button>
+						                 <ul>
+                                            <button id="crear-carpeta" class="btn btn-rounded "><i class="demo-pli-add icon-fw"></i>Crear carpeta</button>
                                             <li class="list-divider"></li>
                                         </ul>
 
@@ -467,6 +467,10 @@
                                                     <li><a href="forms-components.html">Eliminar</a></li>
 
                                                 </ul>
+                                                <form name="formCarpeta" method="post" action="">
+                                                      {% csrf_token %}
+                                                <input id="id_carpeta" name="name_carpeta" type="text" hidden>
+                                            </form>
                                             </li>
                                         </ul>
                                     <br>

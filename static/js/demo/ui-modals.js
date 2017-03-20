@@ -9,6 +9,39 @@
 
  $(document).ready(function() {
 
+        // BOOTBOX - PROMPT MODAL
+    // =================================================================
+    // Require Bootbox
+    // http://bootboxjs.com/
+    // =================================================================
+    $('#crear-carpeta').on('click', function(){
+        bootbox.prompt("Nombre de la carpeta", function(result) {
+            if (result) {
+                $("#id_carpeta").val(result);
+                document.formCarpeta.action = "/carpetas/crear_carpeta"
+                document.formCarpeta.submit()
+                $.niftyNoty({
+                    type: 'success',
+                    icon : 'pli-consulting icon-2x',
+                    message : 'Hi ' + result,
+                    container : 'floating',
+                    timer : 5000
+                });
+
+            }else{
+                $.niftyNoty({
+                    type: 'danger',
+                    icon : 'pli-cross icon-2x',
+                    message : 'User declined dialog.',
+                    container : 'floating',
+                    timer : 5000
+                });
+            };
+        });
+    });
+
+
+
     // BOOTBOX - ALERT MODAL
     // =================================================================
     // Require Bootbox

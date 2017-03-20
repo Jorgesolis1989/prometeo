@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'usuarios',
     'empresas',
     'modelos_existentes',
+    'carpetas',
 
 )
 
