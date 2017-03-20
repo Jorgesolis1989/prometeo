@@ -435,16 +435,21 @@
 											</span>
 											<i class="arrow"></i>
 						                </a>
-                                        <ul>
-                                            <button id="demo-bootbox-prompt" class="btn btn-rounded "><i class="demo-pli-add icon-fw"></i>Crear carpeta</button>
-                                            <li class="list-divider"></li>
-                                        </ul>
 
-						                <!--Submenu-->
-						                <ul class="collapse">
-						                    <li><a href="#">Año 2017</a></li>
-                                            <li class="list-divider"></li>
-						                </ul>
+                                                <ul>
+                                                    <button id="crear-carpeta" class="btn btn-rounded "><i class="demo-pli-add icon-fw"></i>Crear carpeta</button>
+                                                    <li class="list-divider"></li>
+                                                </ul>
+
+                                                <!--Submenu-->
+                                                <ul class="collapse">
+                                                    <li><a href="#">Año 2017</a></li>
+                                                    <li class="list-divider"></li>
+                                                </ul>
+                                            <form name="formCarpeta" method="post" action="">
+                                                      {% csrf_token %}
+                                                <input id="id_carpeta" name="name_carpeta" type="text" hidden>
+                                            </form>
 						            </li>
                                     <br>
                                     <li>

@@ -31,8 +31,8 @@ class Usuario_Web(models.Model):
 
 class Usuario_Web_Vinculacion_Empresa(models.Model):
     email_usrio = models.ForeignKey(Usuario_Web, db_column='email_usrio' , null=False)
-    id_emprsa = models.IntegerField(primary_key=True)
-    fcha_crcion = models.DateTimeField( default=timezone.now)
+    id_emprsa = models.IntegerField()
+    fcha_crcion = models.DateTimeField(default=timezone.now)
     actvo = models.IntegerField(null=False, default=1)
 
     class Meta:
@@ -65,3 +65,17 @@ class Empresa(models.Model):
         db_table = 'emprsas'
         unique_together = (('id_clnte', 'id_emprsa'),)
 
+
+class Usuario_Web_Vinculacion_Folder(models.Model):
+    email_usrio = models.ForeignKey(Usuario_Web, db_column='email_usrio' , null=False)
+    nmro_flder =  models.AutoField(primary_key=True)
+    nmbre_flder = models.CharField(max_length=60)
+    nmro_orden =  models.IntegerField()
+
+    class Meta:
+        verbose_name_plural= u'Usuarios_Web_Vinculacion_Folders'
+        db_table = 'usrios_web_mnjo_flders_enc'
+        unique_together = (('email_usrio', 'nmro_flder'),)
+
+    def __str__(self):
+        return '%s - Folder  %s'  %(self.email_usrio, self.nmro_flder)

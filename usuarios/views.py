@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, render_to_response,   get_object_or_404
 from usuarios.forms import FormularioLogin, FormularioRegistroUsuario , FormularioActualizarUsuario , FormularioCambiarContrasena
-from modelos_existentes.models import  Usuario_Web
+from modelos_existentes.models import  Usuario_Web , Usuario_Web_Vinculacion_Folder
 from usuarios.models import Perfil_Usuario
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
@@ -40,10 +40,10 @@ def login_user(request):
             if usuario is not None:
                 if usuario.is_active:
                     login(request, usuario)
-                    empresas_vinculadas = cargar_empresas_vinculadas(request)
+
 
                     #Redireccionar
-                    return render(request, 'base-principal.html', {'empresas_vinculadas': empresas_vinculadas , 'logos_empresas':cargar_logos_empresas(request) })
+                    return render(request, 'base-principal.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) , 'logos_empresas':cargar_logos_empresas(request) })
                 else:
                    mensajeE = "Usuario no activado"
             else:
@@ -408,3 +408,4 @@ def actualizar_usuario(request):
         form.fields['email'].widget.attrs['readonly'] = True
 
     return render(request, 'actualizar-usuario.html', {'form': form , 'mensaje': mensaje , 'empresas_vinculadas': empresas_vinculadas , 'logos_empresas':cargar_logos_empresas(request) })
+
