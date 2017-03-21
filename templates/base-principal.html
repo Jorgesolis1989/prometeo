@@ -443,8 +443,9 @@
 						                <!--Submenu-->
 						                <ul class="collapse">
                                             {% for carpeta in carpetas %}
-                                                <li>
-                                                    <a href="#">
+                                                <li class="list-item-ms">
+                                                    <a href="#" class="list-group-item">
+                                                         <i class="demo-psi-tag icon-lg"></i>
                                                         <span class="menu-title"><strong>{{ carpeta.nmbre_flder }}</strong></span>
                                                         <i class="arrow"></i>
                                                     </a>
@@ -452,8 +453,8 @@
 
                                                     <ul class="collapse" aria-expanded="false">
 
-                                                        <li><a id="{{carpeta.nmro_flder}}" name="{{ carpeta.nmbre_flder }}" class="modificar-carpeta">Modificar</a></li>
-                                                        <li><a id="{{ carpeta.nmro_flder}}" name="{{ carpeta.nmbre_flder }}" class="demo-bootbox-confirm-delete"
+                                                        <li><a id="{{carpeta.nmro_flder}}" name="{{ carpeta.nmbre_flder }}" class="modificar-carpeta list-group-item" href="#">Modificar</a></li>
+                                                        <li><a id="{{ carpeta.nmro_flder}}" name="{{ carpeta.nmbre_flder }}" class="demo-bootbox-confirm-delete list-group-item"
                                                            data-toggle="tooltip" href="#">Eliminar</a>
                                                         </li>
 
@@ -477,8 +478,8 @@
 						                </a>
 						                <!--Submenu-->
 						                <ul class="collapse">
-						                    <li><a class="list-group-item  list-item-sm active" href="{% url 'update_user' %}">Datos usuario</a></li>
-											<li><a class="list-group-item  list-item-sm active" href="{% url 'change_password' %}">Contraseña</a></li>
+						                    <li><a class="list-group-item" href="{% url 'update_user' %}">Datos usuario</a></li>
+											<li><a class="list-group-item" href="{% url 'change_password' %}">Contraseña</a></li>
 						                </ul>
 						            </li>
                                     <br>
@@ -502,12 +503,12 @@
 
 						                <!--Submenu-->
 						                <ul class="collapse">
-											<li><a class="list-group-item  list-item-sm active" href="#">
+											<li><a class="list-group-item" href="#">
                                                 <i class="demo-pli-video"></i>
                                                 <span class="menu-title"><strong>Videos Tutoriales</strong></span>
 						                        </a>
                                             </li>
-                                            <li><a class="list-group-item  list-item-sm active" href="#">
+                                            <li><a class="list-group-item" href="#">
                                                 <i class="demo-pli-file icon-fw"></i>
                                                 <span class="menu-title"><strong>Instructivos pdf</strong></span>
 						                        </a>

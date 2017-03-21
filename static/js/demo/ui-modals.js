@@ -51,7 +51,7 @@
             buttons: {
                 success: {
                     label: "Guardar",
-                    className: "btn-purple",
+                    className: "btn-warning ",
                      callback: function() {
                         var name = $('#name').val();
                          $("#id_carpeta").val(id);
