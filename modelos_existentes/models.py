@@ -31,7 +31,7 @@ class Usuario_Web(models.Model):
 
 class Usuario_Web_Vinculacion_Empresa(models.Model):
     email_usrio = models.ForeignKey(Usuario_Web, db_column='email_usrio' , null=False)
-    id_emprsa = models.IntegerField()
+    id_emprsa = models.IntegerField(primary_key=True)
     fcha_crcion = models.DateTimeField(default=timezone.now)
     actvo = models.IntegerField(null=False, default=1)
 

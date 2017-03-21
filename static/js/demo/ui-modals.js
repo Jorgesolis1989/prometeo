@@ -41,10 +41,10 @@
             title: "Modificar nombre de carpeta",
             message:'<div class="row"> ' + '<div class="col-md-12"> ' +
                     '<form name="modified_folder" class="form-horizontal"> ' + '<div class="form-group"> ' +
-                    '<label class="col-md-4 control-label" for="name">Nombre</label> ' +
+                    '<label class="col-lg-4 control-label"  for="name">Nombre</label> ' +
                     '<div class="col-md-4"> ' +
                     '<input id="name" name="name" type="text" value="'+nombre+'"' +
-                    'class="form-control input-md"> ' +
+                    'class="form-control"> ' +
                     '</div> ' +
                     '</div> ' + '<div class="form-group"> ' +
                     '<form> </div> </div><script></script>',
