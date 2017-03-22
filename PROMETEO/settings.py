@@ -93,7 +93,7 @@ DATABASES = {
     'NAME': 'prometeo',
     'USER': 'postgres',
     'PASSWORD': 'postgres',
-    'HOST': '127.0.0.1',
+    'HOST': '52.40.50.14',
     'PORT': '5432',
     'CONN_MAX_AGE': 500,
     }
