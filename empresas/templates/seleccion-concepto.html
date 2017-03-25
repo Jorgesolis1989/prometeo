@@ -20,20 +20,33 @@
                         </div>
                     </div>
                     <div class="panel-body">
-
+                        <form name="FormularioEscogerCertificado" method="post">
+                            {% csrf_token %}
+                        <fieldset>
+                            <div class="col-sm-2 col-sm-offset-5">
+                                <div class="form-group">
+                                {{ FormularioEscogerCertificado.periodo }}
+                                </div>
+                           </div>
+                            <div class="col-sm-2 col-sm-offset-5">
+                                <div class="form-group">
+                                    {{ FormularioEscogerCertificado.tipo_certificado }}
+                                </div>
+                            </div>
+                        </fieldset>
                         <!--Small-->
                         <!--===================================================-->
-                        <div class="list-group">
-                            <a class="list-group-item  list-item-sm active" href="#">01 - Certificado de retención en la fuente</a>
-                            <a class="list-group-item list-item-sm" href="#">02 - Certificado de RETEIVA</a>
-                            <a class="list-group-item list-item-sm" href="#">03 - Certificado de RETECREE</a>
-                        </div>
-                        <!--===================================================-->
-                        <div class="col-sm-2 col-sm-offset-5">
+
+                            <div class="col-sm-2 col-sm-offset-5">
                             <div class="form-group">
                                 <button style="background-color: #e8a018; border-color: #d5d3d0" class="btn btn-primary btn-block" type="submit" name="btnGenerer">Generar</button>
                             </div>
                         </div>
+
+                        </form>
+                        </div>
+                        <!--===================================================-->
+
                     </div>
                 </div>
             </div>

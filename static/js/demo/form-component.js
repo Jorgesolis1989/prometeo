@@ -17,7 +17,7 @@ $(document).ready(function() {
     // =================================================================
     $('#demo-chosen-select').chosen();
     $('#demo-cs-multiselect').chosen({width:'100%'});
-
+    $('.demo-chosen-select').chosen();
 
 
     // DEFAULT RANGE SLIDER

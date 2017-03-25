@@ -79,3 +79,29 @@ class Usuario_Web_Vinculacion_Folder(models.Model):
 
     def __str__(self):
         return '%s - Folder  %s'  %(self.email_usrio, self.nmro_flder)
+
+class movimientos_formato_concepto(models.Model):
+    id_clnte = models.BigIntegerField()
+    id_emprsa = models.BigIntegerField(primary_key=True)
+    cdgo_frmto =  models.IntegerField()
+    cdgo_cncpto = models.IntegerField()
+    nmro_scncial = models.IntegerField()
+    ano_mes = models.CharField(max_length=7)
+    cnta_cntble = models.CharField(max_length=16)
+    id_trcro = models.CharField(max_length=7)
+    vlor_grvble = models.IntegerField(max_length=16)
+    cmpo_1 = models.IntegerField(max_length=16)
+    cmpo_2 = models.IntegerField(max_length=16)
+    cmpo_3 = models.IntegerField(max_length=16)
+    cmpo_4 = models.CharField(max_length=20)
+    cmpo_5 = models.CharField(max_length=20)
+    cmpo_6 = models.CharField(max_length=20)
+    fcha_prcso = models.DateTimeField()
+
+    class Meta:
+        verbose_name_plural= u'Mvmnto_Frmto_Cncpto'
+        db_table = 'mvmnto_frmto_cncpto'
+        unique_together = (('id_clnte', 'id_emprsa', 'cdgo_frmto', 'cdgo_cncpto', 'nmro_scncial', 'ano_mes'))
+
+    def __str__(self):
+        return '%s - Movimientos  %s' %(self.id_clnte, self.id_emprsa,self.cdgo_frmto, self.cdgo_cncpto,self.nmro_scncial,self.ano_mes)

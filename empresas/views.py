@@ -3,9 +3,10 @@ from empresas.models import Empresa_Con_Logo
 from modelos_existentes.models import Empresa , Usuario_Web_Vinculacion_Empresa , Usuario_Web_Vinculacion_Folder
 from django.contrib.auth.models import User
 from modelos_existentes.models import Usuario_Web
+from certificados.forms import FormularioEscogerCertificado
 from django.shortcuts import render, get_object_or_404
 import datetime
-
+from certificados.views import  generarPdf_general
 
 from empresas.forms import FormularioVincularEmpresas
 
@@ -18,6 +19,16 @@ def cargar_logos_empresas(request):
     return Empresa_Con_Logo.objects.filter(activo=1)
 
 def seleccion_concepto(request, id_emprsa=None):
+    # POST
+    if request.POST and "btnGenerer" in request.POST:
+        form = FormularioEscogerCertificado(request.POST)
+        print(form)
+        if form.is_valid():
+            tipo_certificado = form.cleaned_data["tipo_certificado"]
+            return generarPdf_general(request,tipo_certificado)
+        else:
+            print("no valido")
+
     try:
         empresa_logo = Empresa_Con_Logo.objects.get(id_emprsa=id_emprsa)
     except Exception as e:
@@ -27,7 +38,8 @@ def seleccion_concepto(request, id_emprsa=None):
 
     return render(request, 'seleccion-concepto.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) ,
                                                        'logos_empresas': cargar_logos_empresas(request),
-                                                       'logo_empresa':logo_empresa , 'carpetas': cargar_carpetas(request)
+                                                       'logo_empresa':logo_empresa , 'carpetas': cargar_carpetas(request) ,
+                                                        'FormularioEscogerCertificado': FormularioEscogerCertificado()
                                                         })
 
 def cargar_empresas_vinculadas(request):

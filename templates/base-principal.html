@@ -43,6 +43,15 @@
     <!--Bootstrap Markdown [ OPTIONAL ]-->
     <link href="{% static 'plugins/bootstrap-markdown/css/bootstrap-markdown.min.css' %}" rel="stylesheet">
 
+    <!--Chosen [ OPTIONAL ]-->
+    <link href="{% static 'plugins/chosen/chosen.min.css" rel="stylesheet'%}">
+
+    <!--Bootstrap Select [ OPTIONAL ]-->
+    <link href="{% static 'plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet'%}">
+
+    <!--Select2 [ OPTIONAL ]-->
+    <link href="{% static 'plugins/select2/css/select2.min.css" rel="stylesheet'%}">
+
     <!--JAVASCRIPT-->
     <!--=================================================-->
 
@@ -92,7 +101,14 @@
     <!--Bootstrap Markdown [ OPTIONAL ]-->
     <script src="{% static 'plugins/bootstrap-markdown/js/bootstrap-markdown.js' %}"></script>
 
+    <!--Chosen [ OPTIONAL ]-->
+    <script src="{% static 'plugins/chosen/chosen.jquery.min.js' %}"></script>
 
+    <!--Bootstrap Select [ OPTIONAL ]-->
+    <script src="{% static 'plugins/bootstrap-select/bootstrap-select.min.js' %}"></script>
+
+    <!--Select2 [ OPTIONAL ]-->
+    <script src="{% static 'plugins/select2/js/select2.min.js' %}"></script>
     <!--=================================================
 
     REQUIRED
@@ -299,7 +315,7 @@
                                             </center>
                                         </div>
 
-					                    <div class="list-group bg-trans" data-provide="markdown" overflow="scroll">
+					                    <div class="list-group bg-trans scroll" data-provide="markdown">
                                         <form method="post" action="" >
                                             {% for empresa in empresas_vinculadas %}
                                                 <a href="/empresas/selection_concept/{{empresa.id_emprsa}}"  class="list-group-item" type="submit">
@@ -567,6 +583,11 @@
             <div class="show-fixed pull-right">
                 You have <a href="#" class="text-bold text-main"><span class="label label-danger">3</span> pending action.</a>
             </div>
+
+            <div class="show-fixed pull-right">
+                <img src="{% static 'img/sql_soluciones.png' %}" alt="" class="brand-icon">
+            </div>
+
 
 
 
