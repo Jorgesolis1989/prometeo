@@ -14,36 +14,56 @@
                     <div class="alignleft">
                         <img src="{{ MEDIA_URL }} {{logo_empresa.url }}" alt="" class="img-lg"/>
                     </div>
-                   <div class="panel" style="background-color: #f9c769; border-color: #d5d3d0">
+                   <!--<div class="panel">
                         <div class="mar-top clearfix">
-                            <h3 class="h3 mar-no text-center" >Seleccione el Concepto</h3>
+                            <h3 class="h3 mar-no text-center">Certificado</h3>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="panel-body">
-                        <form name="FormularioEscogerCertificado" method="post">
+
+                        <div class="row">
+					    <div class="eq-height">
+                         <form name="FormularioEscogerCertificado" method="post">
                             {% csrf_token %}
-                        <fieldset>
-                            <div class="col-sm-2 col-sm-offset-5">
-                                <div class="form-group">
-                                {{ FormularioEscogerCertificado.periodo }}
-                                </div>
-                           </div>
-                            <div class="col-sm-2 col-sm-offset-5">
-                                <div class="form-group">
-                                    {{ FormularioEscogerCertificado.tipo_certificado }}
-                                </div>
-                            </div>
-                        </fieldset>
-                        <!--Small-->
-                        <!--===================================================-->
+					        <div class="col-md-6 col-lg-4 eq-box-lg">
+					            <div class="panel">
+					                <div class="panel-heading">
+					                    <h4 class="panel-title" style="background-color: #f9c769; border-color: #d5d3d0">Seleccione el periodo</h4>
+					                </div>
+					                <div class="panel-body">
+
+					                    <!--Small-->
+					                    <!--===================================================-->
+					                    {{ FormularioEscogerCertificado.periodo }}
+					                    <!--===================================================-->
+
+					                </div>
+					            </div>
+					        </div>
+                            <div class="col-md-6 col-lg-4 eq-box-lg">
+					            <div class="panel">
+					                <div class="panel-heading">
+					                    <h4 class="panel-title" style="background-color: #f9c769; border-color: #d5d3d0">Seleccione el concepto</h4>
+					                </div>
+					                <div class="panel-body">
+
+					                    <!--Small-->
+					                    <!--===================================================-->
+					                    {{ FormularioEscogerCertificado.periodo }}
+					                    <!--===================================================-->
+
+					                </div>
+					            </div>
+					        </div>
 
                             <div class="col-sm-2 col-sm-offset-5">
-                            <div class="form-group">
-                                <button style="background-color: #e8a018; border-color: #d5d3d0" class="btn btn-primary btn-block" type="submit" name="btnGenerer">Generar</button>
-                            </div>
+                                <div class="form-group">
+                                    <button style="background-color: #e8a018; border-color: #d5d3d0" class="btn btn-primary btn-block" type="submit" name="btnGenerer">Generar</button>
+                                </div>
+                             </div>
+                         </form>
                         </div>
-
-                        </form>
+                        </div>
                         </div>
                         <!--===================================================-->
 
