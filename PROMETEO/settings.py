@@ -43,7 +43,8 @@ INSTALLED_APPS = (
     'empresas',
     'modelos_existentes',
     'carpetas',
-    'bandeja_entrada'
+    'bandeja_entrada',
+    'certificados'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -65,7 +66,8 @@ TEMPLATES = [
         'DIRS': [os.path.join(BASE_DIR, 'templates'),
                  os.path.join(BASE_DIR,'usuarios/templates'),
                  os.path.join(BASE_DIR,'empresas/templates'),
-                 os.path.join(BASE_DIR,'bandeja_entrada/templates'),]
+                 os.path.join(BASE_DIR,'bandeja_entrada/templates'),
+                 os.path.join(BASE_DIR,'certificados/templates'),]
         ,
         'APP_DIRS': True,
         'OPTIONS': {

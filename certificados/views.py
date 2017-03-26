@@ -47,7 +47,7 @@ def generarPdf_general(request, tipo_certificado, periodo, id_empresa_vinculada)
     posicion_y_titulo = 780
     C.drawString(posicion_x_titulo,posicion_y_titulo,empresa.nmbre_rzon_scial)
     C.drawString(posicion_x_titulo,posicion_y_titulo - distancia, "NIT "+str(empresa.id_emprsa))
-    C.setFont('Helvetica', 11   )
+    C.setFont('Helvetica', 11)
     C.drawString(posicion_x_titulo , posicion_y_titulo - (distancia * 2),empresa.drccion)
 
 
@@ -61,6 +61,8 @@ def generarPdf_general(request, tipo_certificado, periodo, id_empresa_vinculada)
         C.drawString(posicion_x_titulo , posicion_y_titulo - (distancia * 3),
                      municipio[0].nmbre_mncpio + ", " + departamento[0].nmbre_dpto )
 
+    #start X, height end y, height
+    C.line(30,1125,560,1125)
     C.setFont('Helvetica-Bold', 16)
     C.drawString(180,715,formato_definido.nmbre_frmto)
     C.setFont('Helvetica-Bold', 13)
@@ -85,19 +87,11 @@ def generarPdf_general(request, tipo_certificado, periodo, id_empresa_vinculada)
     styleN = styles["BodyText"]
     styleN.fontSize =8
 
-    width, height =A4
-
-    high = 1000
-
-    registros = []
-
     #obteniendo datos
-
     data = []
     data.append([corporacion,planchanum,principal,suplente,numvotos])
-    sendToTable(data, registros, high, C)
-    registros= []
-    high = high - 80
+
+    tabla_concepto(C, 300, formato_definido)
 
     C.showPage() #guarda pagina
 
@@ -108,28 +102,48 @@ def generarPdf_general(request, tipo_certificado, periodo, id_empresa_vinculada)
     response.write(pdf)
     return response
 
-def sendToTable(data, registros, high, C):
-    #data.append(registros)
+def tabla_concepto(pdf,y, formato_definido):
+        #Creamos una tupla de encabezados para neustra tabla
+        encabezados = ('Concepto', 'Tasa %', 'Base', 'Retención')
+        #Creamos una lista de tuplas que van a contener los datos
+        datos = [(formato_definido.nmbre_frmto,formato_definido.id_emprsa, formato_definido.cdgo_frmto, formato_definido.fcha_crcion)]
+        total = ('Total','', formato_definido.cdgo_frmto, formato_definido.fcha_crcion)
+        #Establecemos el tamaño de cada una de las columnas de la tabla
+        datos = Table([encabezados] + datos + [total], colWidths=[8 * cm, 2 * cm, 3 * cm, 3 * cm] )
+        #Aplicamos estilos a las celdas de la tabla
+        datos.setStyle(TableStyle(
+        [
+                #La primera fila(encabezados) va a estar centrada
+                ('ALIGN',(0,0),(3,0),'CENTER'),
+                #Los bordes de todas las celdas serán de color negro y con un grosor de 1
+                ('GRID', (0, 0), (-1, -1), 0.25, colors.black),
+                ('FONT', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                ('FONTSIZE', (0, 0), (-1, 0), 11),
+                ('ALIGN',(0,-1),(-1,-1),'LEFT'),
+                ('VALIGN',(0,-1),(-1,-1),'MIDDLE'),
+                #fin caracteristicas encabezado
 
-    for registro in registros:
+                #caracteristicas para segunda fila
+                ('ALIGN',(1,-2),(-1,-1),'RIGHT'),
+                ('VALIGN',(1,-2),(-1,-1),'MIDDLE'),
 
-        #this_registro = [registro['Corporación'],registro['NoPlancha'],registro['CandidatoPrincipal'],registro['CandidatoSuplente'],
-                        # registro['NoVotos']]
+                #caracteristicas para tercera fila
+                ('ALIGN',(2,-1),(-1,-1),'RIGHT'),
+                ('VALIGN',(2,-1),(-1,-1),'MIDDLE'),
 
-        #data.append(this_registro)
+                #Caracteristicas para primera columna tercera fila
+                ('FONTSIZE', (0, 2), (-1, -1), 10),
+                ('FONT', (0, 2), (-1, -1), 'Helvetica-Bold'),
+                ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
+                ('ALIGN',(0,2),(-1,-1),'RIGHT'),
+                ('VALIGN',(0,2),(-1,-1),'MIDDLE'),
+                ('SPAN',(0,2),(1,2)),
+        ]
 
-        high = high - 18
+        ))
+        #Establecemos el tamaño de la hoja que ocupará la tabla
+        datos.wrapOn(pdf, 800, 600)
+        #Definimos la coordenada donde se dibujará la tabla
+        datos.drawOn(pdf, 60,y)
 
 
-    #table size
-    width, height = A4
-    table = Table(data, colWidths=[12.5 * cm, 2.2 * cm, 6.0 * cm, 6.0 * cm, 1.9 * cm, 1.9 * cm])
-
-
-
-    #stilos de la tabla
-    table.setStyle(TableStyle([('INNERGRID', (0,0), (-1, -1), 0.25, colors.black),
-                               ('BOX', (0,0),(-1,-1), 0.25, colors.black)]))
-    #pdf size
-    table.wrapOn(C, width, height)
-    table.drawOn(C, 30, high)
