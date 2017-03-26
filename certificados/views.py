@@ -91,7 +91,7 @@ def generarPdf_general( request, formato_definido, periodo, id_empresa_vinculada
     posicion_y_titulo = 780
     C.drawString(posicion_x_titulo,posicion_y_titulo,empresa.nmbre_rzon_scial)
     C.drawString(posicion_x_titulo,posicion_y_titulo - distancia, "NIT "+str(empresa.id_emprsa))
-    C.setFont('Helvetica', 11   )
+    C.setFont('Helvetica', 11)
     C.drawString(posicion_x_titulo , posicion_y_titulo - (distancia * 2),empresa.drccion)
 
 
@@ -105,6 +105,8 @@ def generarPdf_general( request, formato_definido, periodo, id_empresa_vinculada
         C.drawString(posicion_x_titulo , posicion_y_titulo - (distancia * 3),
                      municipio[0].nmbre_mncpio + ", " + departamento[0].nmbre_dpto )
 
+    #start X, height end y, height
+    C.line(30,1125,560,1125)
     C.setFont('Helvetica-Bold', 16)
     C.drawString(180,715,formato_definido.nmbre_frmto)
     C.setFont('Helvetica-Bold', 13)
@@ -122,6 +124,19 @@ def generarPdf_general( request, formato_definido, periodo, id_empresa_vinculada
     y = 580
     tabla_datos(usuario_Web, C, y)
 
+    C.setFont('Helvetica', 13)
+    C.drawString(60, 550,"Por los conceptos que se detallan a continuación:" )
+
+    tabla_concepto(C, 480, formato_definido)
+
+    C.setFont('Helvetica', 13)
+    C.drawString(60, 450,"Observaciones: Ejemplo del Portal i3tributaria.com SIN VALOR LEGAL  \
+    La retención efectuada fue debidamente consignada en la Dirección de Impuestos y Aduanas Nacionales\
+    de la ciudad de Medellin . El presente certificado emitido el 13/12/2013, se expide en concordancia con las \
+    disposiciones legales contenidas en el artículo 381 del Estatuto Tributario. \
+    NOTA: Se expide sin firma autógrafa de acuerdo con el art.10 del DC.836 de 1991, y concepto DIAN 105489 de \
+    Dic de 2007" )
+
 
     C.showPage() #guarda pagina
 
@@ -131,6 +146,7 @@ def generarPdf_general( request, formato_definido, periodo, id_empresa_vinculada
     buffer.close()
     response.write(pdf)
     return response
+
 
 def tabla_datos(usuarioWeb, pdf,y):
         #Creamos una tupla de encabezados para neustra tabla
@@ -181,28 +197,50 @@ def tabla_datos(usuarioWeb, pdf,y):
         #Definimos la coordenada donde se dibujará la tabla
         detalle_orden.drawOn(pdf, 60,y)
 
-def sendToTable(data, registros, high, C):
-    data.append(registros)
 
-    for registro in registros:
+def tabla_concepto(pdf,y, formato_definido):
+        #Creamos una tupla de encabezados para neustra tabla
+        encabezados = ('Concepto', 'Tasa %', 'Base', 'Retención')
+        #Creamos una lista de tuplas que van a contener los datos
+        datos = [(formato_definido.nmbre_frmto,formato_definido.id_emprsa, formato_definido.cdgo_frmto, formato_definido.fcha_crcion)]
+        total = ('Total','', formato_definido.cdgo_frmto, formato_definido.fcha_crcion)
+        #Establecemos el tamaño de cada una de las columnas de la tabla
+        datos = Table([encabezados] + datos + [total], colWidths=[8 * cm, 3 * cm, 3 * cm, 3 * cm] )
+        #Aplicamos estilos a las celdas de la tabla
+        datos.setStyle(TableStyle(
+        [
+                #La primera fila(encabezados) va a estar centrada
+                ('ALIGN',(0,0),(3,0),'CENTER'),
+                #Los bordes de todas las celdas serán de color negro y con un grosor de 1
+                ('GRID', (0, 0), (-1, -1), 0.25, colors.black),
+                ('FONT', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                ('FONTSIZE', (0, 0), (-1, 0), 11),
+                ('ALIGN',(0,-1),(-1,-1),'LEFT'),
+                ('VALIGN',(0,-1),(-1,-1),'MIDDLE'),
+                #fin caracteristicas encabezado
 
-        this_registro = [registro['Corporación'],registro['NoPlancha'],registro['CandidatoPrincipal'],registro['CandidatoSuplente'],
-                        registro['NoVotos']]
+                #caracteristicas para segunda fila
+                ('ALIGN',(1,-2),(-1,-1),'RIGHT'),
+                ('VALIGN',(1,-2),(-1,-1),'MIDDLE'),
 
-        data.append(this_registro)
+                #caracteristicas para tercera fila
+                ('ALIGN',(2,-1),(-1,-1),'RIGHT'),
+                ('VALIGN',(2,-1),(-1,-1),'MIDDLE'),
 
-        high = high - 18
+                #Caracteristicas para primera columna tercera fila
+                ('FONTSIZE', (0, 2), (-1, -1), 10),
+                ('FONT', (0, 2), (-1, -1), 'Helvetica-Bold'),
+                ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
+                ('ALIGN',(0,2),(-1,-1),'RIGHT'),
+                ('VALIGN',(0,2),(-1,-1),'MIDDLE'),
+                ('SPAN',(0,2),(1,2)),
+        ]
+
+        ))
+        #Establecemos el tamaño de la hoja que ocupará la tabla
+        datos.wrapOn(pdf, 800, 600)
+        #Definimos la coordenada donde se dibujará la tabla
+        datos.drawOn(pdf, 60,y)
 
 
-    #table size
-    width, height = A4
-    table = Table(data, colWidths=[12.5 * cm, 2.2 * cm, 6.0 * cm, 6.0 * cm, 1.9 * cm, 1.9 * cm])
 
-
-
-    #stilos de la tabla
-    table.setStyle(TableStyle([('INNERGRID', (0,0), (-1, -1), 0.25, colors.black),
-                               ('BOX', (0,0),(-1,-1), 0.25, colors.black)]))
-    #pdf size
-    table.wrapOn(C, width, height)
-    table.drawOn(C, 30, high)
