@@ -10,7 +10,7 @@ class FormularioEscogerCertificado(forms.Form):
 
     FORMATOS = [('1','Retefuente'), ('2','Reteica')]
 
-    PERIODOS = [('1','Retefuente'), ('2','Reteica')]
+    PERIODOS = [('2016-1','2016-1'), ('2016-2','2016-2')]
 
     tipo_certificado = forms.ChoiceField(widget=forms.Select(attrs={'class':'demo-chosen-select list-group-item  list-item-sm', 'data-live-search':'true',
                                                                 'data-width':'100%'}), choices=FORMATOS, initial='retefuente')

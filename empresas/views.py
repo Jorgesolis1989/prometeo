@@ -22,10 +22,10 @@ def seleccion_concepto(request, id_emprsa=None):
     # POST
     if request.POST and "btnGenerer" in request.POST:
         form = FormularioEscogerCertificado(request.POST)
-        print(form)
+        #print(form)
         if form.is_valid():
             tipo_certificado = form.cleaned_data["tipo_certificado"]
-            periodo = form.cleaned_data["tipo_certificado"]
+            periodo = form.cleaned_data["periodo"]
             return generarPdf_general(request,tipo_certificado, periodo,id_emprsa )
         else:
             print("no valido")

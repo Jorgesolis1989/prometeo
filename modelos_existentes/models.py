@@ -162,3 +162,11 @@ class Formatos_Definidos (models.Model):
     nmbre_frmto = models.CharField(max_length=80)
     fcha_crcion = models.DateField()
     actvo= models.IntegerField(default=1)
+
+    class Meta:
+        verbose_name_plural= u'formatos definidos'
+        db_table = 'frmtos_dfndos'
+      #  unique_together = (('cdgo_pais', 'cdgo_dpto' ,'cdgo_mncpio' ))
+
+    def __str__(self):
+        return '%s - Formato definido' %(self.nmbre_frmto)

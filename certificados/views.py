@@ -9,7 +9,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from modelos_existentes.models import Empresa
 from empresas.models import Empresa_Con_Logo
-from modelos_existentes.models import Departamentos, Paises,Municipios
+from modelos_existentes.models import Departamentos, Paises,Municipios , Formatos_Definidos
 
 
 def generarPdf_general(request, tipo_certificado, periodo, id_empresa_vinculada):
@@ -18,6 +18,13 @@ def generarPdf_general(request, tipo_certificado, periodo, id_empresa_vinculada)
     empresa = Empresa.objects.get(id_emprsa= id_empresa_vinculada)
     logo_empresa = Empresa_Con_Logo.objects.get(id_emprsa=id_empresa_vinculada)
 
+    # Formato
+    try:
+        formato_definido = Formatos_Definidos.objects.get(id_emprsa = empresa.id_emprsa , cdgo_frmto= tipo_certificado,
+                                                         actvo=1)
+    except Formatos_Definidos.DoesNotExist as e:
+        print("No existe" + e)
+
     #crea la cabezera HttpResponse con PDF
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=certificado-de-'+ str(empresa.nmbre_rzon_scial )+'.pdf'
@@ -25,7 +32,7 @@ def generarPdf_general(request, tipo_certificado, periodo, id_empresa_vinculada)
     buffer = BytesIO()
     #size = landscape(A4)
     C = canvas.Canvas(buffer, pagesize=A4)
-    C.setTitle("Certificado de- "+str(tipo_certificado))
+    C.setTitle("Certificado de- "+str(formato_definido.nmbre_frmto))
 
     """Encabezado"""
 
@@ -55,9 +62,9 @@ def generarPdf_general(request, tipo_certificado, periodo, id_empresa_vinculada)
                      municipio[0].nmbre_mncpio + ", " + departamento[0].nmbre_dpto )
 
     C.setFont('Helvetica-Bold', 16)
-    C.drawString(220,700,tipo_certificado)
+    C.drawString(180,715,formato_definido.nmbre_frmto)
     C.setFont('Helvetica-Bold', 13)
-    C.drawString(30,1060,"Nombre de la Jornada: "+ str())
+    C.drawString(220, 700,"Año Gravable "+ periodo)
 
 
     ## tabla header
