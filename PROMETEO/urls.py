@@ -36,6 +36,7 @@ urlpatterns = [
     url(r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete', name='password_reset_complete'),
     url(r'^usuarios/', include('usuarios.urls')),
     url(r'^empresas/', include('empresas.urls')),
+    url(r'^certificados/', include('certificados.urls')),
     url(r'^folders/', include('carpetas.urls')),
     url(r'^inbox_list/', include('bandeja_entrada.urls')),
     url(r'^register_success/', views.confirmar_registro),

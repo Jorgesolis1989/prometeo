@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from empresas.models import Empresa_Con_Logo
-from modelos_existentes.models import Empresa, Usuario_Web_Vinculacion_Empresa, Usuario_Web_Vinculacion_Folder
+from modelos_existentes.models import Empresa, Usuario_Web_Vinculacion_Empresa, Usuario_Web_Vinculacion_Folder, Formatos_Definidos
 from django.contrib.auth.models import User
 from modelos_existentes.models import Usuario_Web
 from certificados.forms import FormularioEscogerCertificado
 from django.shortcuts import render, get_object_or_404
 import datetime
-from certificados.views import  generarPdf_general
+
 
 from empresas.forms import FormularioVincularEmpresas
 
@@ -18,30 +18,6 @@ activate(settings.TIME_ZONE)
 def cargar_logos_empresas(request):
     return Empresa_Con_Logo.objects.filter(activo=1)
 
-def seleccion_concepto(request, id_emprsa=None):
-    # POST
-    if request.POST and "btnGenerer" in request.POST:
-        form = FormularioEscogerCertificado(request.POST)
-        #print(form)
-        if form.is_valid():
-            tipo_certificado = form.cleaned_data["tipo_certificado"]
-            periodo = form.cleaned_data["periodo"]
-            return generarPdf_general(request,tipo_certificado, periodo,id_emprsa )
-        else:
-            print("no valido")
-
-    try:
-        empresa_logo = Empresa_Con_Logo.objects.get(id_emprsa=id_emprsa)
-    except Exception:
-        return redirect('login_user')
-
-    logo_empresa = empresa_logo.lgtpo_emprsa
-
-    return render(request, 'seleccion-concepto.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) ,
-                                                       'logos_empresas': cargar_logos_empresas(request),
-                                                       'logo_empresa':logo_empresa , 'carpetas': cargar_carpetas(request) ,
-                                                        'FormularioEscogerCertificado': FormularioEscogerCertificado()
-                                                        })
 
 def cargar_empresas_vinculadas(request):
         usuario_web = get_object_or_404(Usuario_Web, email_usrio=request.user.email ,)

@@ -89,10 +89,10 @@ class movimientos_formato_concepto(models.Model):
     ano_mes = models.CharField(max_length=7)
     cnta_cntble = models.CharField(max_length=16)
     id_trcro = models.CharField(max_length=7)
-    vlor_grvble = models.IntegerField(max_length=16)
-    cmpo_1 = models.IntegerField(max_length=16)
-    cmpo_2 = models.IntegerField(max_length=16)
-    cmpo_3 = models.IntegerField(max_length=16)
+    vlor_grvble = models.IntegerField()
+    cmpo_1 = models.IntegerField()
+    cmpo_2 = models.IntegerField()
+    cmpo_3 = models.IntegerField()
     cmpo_4 = models.CharField(max_length=20)
     cmpo_5 = models.CharField(max_length=20)
     cmpo_6 = models.CharField(max_length=20)
@@ -166,7 +166,7 @@ class Formatos_Definidos (models.Model):
     class Meta:
         verbose_name_plural= u'formatos definidos'
         db_table = 'frmtos_dfndos'
-      #  unique_together = (('cdgo_pais', 'cdgo_dpto' ,'cdgo_mncpio' ))
+        unique_together = (('id_clnte', 'id_emprsa' ,'cdgo_frmto' ))
 
     def __str__(self):
-        return '%s - Formato definido' %(self.nmbre_frmto)
+        return '%s' %(self.nmbre_frmto)
