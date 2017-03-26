@@ -37,6 +37,7 @@ urlpatterns = [
     url(r'^usuarios/', include('usuarios.urls')),
     url(r'^empresas/', include('empresas.urls')),
     url(r'^folders/', include('carpetas.urls')),
+    url(r'^inbox_list/', include('bandeja_entrada.urls')),
     url(r'^register_success/', views.confirmar_registro),
     url(r'^activate/(?P<activation_key>\w+)/',views.confirmar_registro, name="register_confirm"),
     url(r'^PROMETEO/media/(.*)$', 'django.views.static.serve', {'document_root' : os.path.join(os.path.dirname(__file__), 'media')}),

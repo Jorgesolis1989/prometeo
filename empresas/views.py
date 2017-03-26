@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from empresas.models import Empresa_Con_Logo
-from modelos_existentes.models import Empresa , Usuario_Web_Vinculacion_Empresa , Usuario_Web_Vinculacion_Folder
+from modelos_existentes.models import Empresa, Usuario_Web_Vinculacion_Empresa, Usuario_Web_Vinculacion_Folder
 from django.contrib.auth.models import User
 from modelos_existentes.models import Usuario_Web
 from certificados.forms import FormularioEscogerCertificado

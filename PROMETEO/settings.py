@@ -43,7 +43,7 @@ INSTALLED_APPS = (
     'empresas',
     'modelos_existentes',
     'carpetas',
-
+    'bandeja_entrada'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -64,7 +64,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates'),
                  os.path.join(BASE_DIR,'usuarios/templates'),
-                 os.path.join(BASE_DIR,'empresas/templates'),]
+                 os.path.join(BASE_DIR,'empresas/templates'),
+                 os.path.join(BASE_DIR,'bandeja_entrada/templates'),]
         ,
         'APP_DIRS': True,
         'OPTIONS': {

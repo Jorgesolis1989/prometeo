@@ -7,10 +7,11 @@
     {%endblock breadcrumb %}
 {%block title %}Selección del Concepto{%endblock title %}
 {%block content %}
-    <div class="row">
+    <div class="panel">
+        <div class="panel-body">
         <div class="eq-height">
             <div class="col-md-6 col-lg-4 eq-box-lg">
-                <div class="panel">
+                <div class="panel-body">
                     <div class="alignleft">
                         <img src="{{ MEDIA_URL }} {{logo_empresa.url }}" alt="" class="img-lg"/>
                     </div>
@@ -19,8 +20,6 @@
                             <h3 class="h3 mar-no text-center">Certificado</h3>
                         </div>
                     </div>-->
-                    <div class="panel-body">
-
                         <div class="row">
 					    <div class="eq-height">
                          <form name="FormularioEscogerCertificado" method="post">
@@ -49,7 +48,7 @@
 
 					                    <!--Small-->
 					                    <!--===================================================-->
-					                    {{ FormularioEscogerCertificado.periodo }}
+					                    {{ FormularioEscogerCertificado.tipo_certificado }}
 					                    <!--===================================================-->
 
 					                </div>
@@ -64,12 +63,11 @@
                          </form>
                         </div>
                         </div>
-                        </div>
-                        <!--===================================================-->
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
 {%endblock content%}

@@ -7,64 +7,77 @@
         </ol>
     {%endblock breadcrumb %}
 {%block content %}
-    <div class="mar-top clearfix">
-        <h3 class="h3 mar-no text-center">Cambiar Contraseña</h3>
-    </div>
-    <hr>
- <form method="post" action="" class="form-horizontal">
-    {% csrf_token %}
-    <div class="row">
-         <div class="col-sm-10">
-             <fieldset>
-                <div class="form-group">
-                    <label class="col-lg-4 control-label">Contraseña Anterior: </label>
-                    <div class="col-lg-8">
-                        {{ form.old_password}}
-                        <p class="text-danger text-bold ">{{form.old_password.errors}}</p>
-                    </div>
-                </div>
-            </fieldset>
-
-             <fieldset>
-                <div class="form-group">
-                    <label class="col-lg-4 control-label">Contraseña Nueva:</label>
-                    <div class="col-lg-8">
-                        {{ form.new_password}}
-                    </div>
-                </div>
-            </fieldset>
-
-             <fieldset>
-                <div class="form-group">
-                    <label class="col-lg-4 control-label">Confirmar Contraseña: </label>
-                    <div class="col-lg-8">
-                        {{ form.confirm_password}}
-                        <p class="text-danger text-bold ">{{ form.new_password.errors}}</p>
-                    </div>
-                    <div class="checkbox pad-btm text-left col-sm-4  col-sm-offset-4">
-                        <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox" onchange="showPassword()">
-                        <label for="demo-form-checkbox">Mostrar contraseñas<a href="#" class="btn-link"></a></label>
-                    </div>
-                </div>
-
-            </fieldset>
-
-             <div class="row">
-                    <div class="col-sm-3 col-sm-offset-6">
-                        <div class="form-group">
-                            <button  style="background-color: #e8a018; border-color: #d5d3d0" class="btn btn-primary btn-block" type="submit" name="btnRegister">Actualizar Contraseña </button>
+<div class="panel">
+    <div class="panel-body">
+        <!-- Newsfeed Content -->
+        <!--===================================================-->
+        <div class="media-block">
+            <div class="media-body">
+                <div class="media">
+                    <div class="media-body">
+                        <div class="mar-top clearfix">
+                            <h4 class="h4 mar-no text-center">Cambiar Contraseña</h4>
                         </div>
-                    </div>
-             </div>
-             <div class="row">
-                    <div class="col-sm-8 col-sm-offset-8">
-                        <p class="text-success text-bold ">
-                            {{ mensaje }}
-                        </p>
-                    </div>
-             </div>
-         </div>
-    </div>
- </form>
+                        <hr>
+                        <form method="post" action="" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="row">
+                             <div class="col-sm-10">
+                                 <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Contraseña Anterior: </label>
+                                        <div class="col-lg-8">
+                                            {{ form.old_password}}
+                                            <p class="text-danger text-bold ">{{form.old_password.errors}}</p>
+                                        </div>
+                                    </div>
+                                </fieldset>
 
+                                 <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Contraseña Nueva:</label>
+                                        <div class="col-lg-8">
+                                            {{ form.new_password}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                 <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Confirmar Contraseña: </label>
+                                        <div class="col-lg-8">
+                                            {{ form.confirm_password}}
+                                            <p class="text-danger text-bold ">{{ form.new_password.errors}}</p>
+                                        </div>
+                                        <div class="checkbox pad-btm text-left col-sm-6  col-sm-offset-4">
+                                            <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox" onchange="showPassword()">
+                                            <label for="demo-form-checkbox">Mostrar contraseñas<a href="#" class="btn-link"></a></label>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+
+                                 <div class="row">
+                                        <div class="col-sm-3 col-sm-offset-6">
+                                            <div class="form-group">
+                                                <button  style="background-color: #e8a018; border-color: #d5d3d0" class="btn btn-primary btn-block" type="submit" name="btnRegister">Actualizar Contraseña </button>
+                                            </div>
+                                        </div>
+                                 </div>
+                                 <div class="row">
+                                        <div class="col-sm-8 col-sm-offset-8">
+                                            <p class="text-success text-bold ">
+                                                {{ mensaje }}
+                                            </p>
+                                        </div>
+                                 </div>
+                             </div>
+                        </div>
+                     </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {%endblock content%}

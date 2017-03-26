@@ -7,24 +7,18 @@
         </ol>
     {%endblock breadcrumb %}
 {%block content %}
-    <div class="row">
-        <div class="eq-height">
-            <div class="col-md-6 col-lg-4 eq-box-lg">
-                <div class="panel">
-                    <div class="panel" style="background-color: #f9c769; border-color: #d5d3d0">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="eq-height">
+                <div class="panel" style="background-color: #f9c769; border-color: #d5d3d0">
                         <div class="mar-top clearfix">
-                            <h3 class="h3 mar-no text-center" >Vincular Empresas</h3>
+                            <h4 class="h4 mar-no text-center" >Vincular Empresas</h4>
                             <br>
                         </div>
                     </div>
-                    <hr>
-                    <div class="panel-body">
-                        <!--Small-->
-                        <!--===================================================-->
                     <form method="post">
                       {% csrf_token %}
                         <div class="list-group">
-
                             {% for empresa in todas_las_empresas %}
                             <a class="list-group-item  list-item-sm" href="#">
                                 <div class="checkbox">
@@ -37,18 +31,14 @@
                                     <label for="{{ empresa.id_emprsa }}">{{ empresa.nmbre_rzon_scial }} </label>
                                 </div>
                             </a>
-
                             {% endfor %}
                         </div>
-                        <div class="col-sm-2 col-sm-offset-5">
-                            <div class="form-group">
-                                <button name="btnRegisterEmpresa" style="background-color: #e8a018; border-color: #d5d3d0" class="btn btn-primary btn-block" type="submit" name="btnSave">Guardar</button>
+                            <div class="col-sm-2 col-sm-offset-5">
+                                <div class="form-group">
+                                    <button name="btnRegisterEmpresa" style="background-color: #e8a018; border-color: #d5d3d0" class="btn btn-primary btn-block" type="submit" name="btnSave">Guardar</button>
+                                </div>
                             </div>
-                        </div>
                     </form>
-                        <!--===================================================-->
-                    </div>
-                </div>
             </div>
         </div>
     </div>
