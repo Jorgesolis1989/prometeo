@@ -105,3 +105,60 @@ class movimientos_formato_concepto(models.Model):
 
     def __str__(self):
         return '%s - Movimientos  %s' %(self.id_clnte, self.id_emprsa,self.cdgo_frmto, self.cdgo_cncpto,self.nmro_scncial,self.ano_mes)
+
+
+class Paises(models.Model):
+    cdgo_pais = models.IntegerField(primary_key=True)
+    nmbre_pais = models.CharField(max_length=40)
+    id_mnda = models.CharField(max_length=4)
+    id_idioma =  models.CharField(max_length=4)
+    fcha_crcion = models.DateField()
+    actvo = models.IntegerField(default=1)
+
+    class Meta:
+        verbose_name_plural= u'Paises'
+        db_table = 'paises'
+
+    def __str__(self):
+        return 'Pais  %s' %(self.nmbre_pais)
+
+
+class Departamentos(models.Model):
+    cdgo_pais = models.IntegerField()
+    cdgo_dpto = models.IntegerField(primary_key=True)
+    nmbre_dpto = models.CharField(max_length=40)
+    fcha_crcion = models.DateField()
+    actvo = models.IntegerField(default=1)
+
+    class Meta:
+        verbose_name_plural= u'Departamentos'
+        db_table = 'dptos'
+     #   unique_together = (('cdgo_pais', 'cdgo_dpto'))
+
+    def __str__(self):
+        return 'Departamento %s' %(self.nmbre_dpto)
+
+class Municipios(models.Model):
+      cdgo_pais = models.IntegerField()
+      cdgo_dpto = models.IntegerField()
+      cdgo_mncpio = models.IntegerField(primary_key=True)
+      nmbre_mncpio = models.CharField(max_length=40)
+      fcha_crcion = models.DateField()
+      actvo = models.IntegerField(default=1)
+
+      class Meta:
+        verbose_name_plural= u'municipios'
+        db_table = 'mncpios'
+      #  unique_together = (('cdgo_pais', 'cdgo_dpto' ,'cdgo_mncpio' ))
+
+        def __str__(self):
+            return '%s - Municipio' %(self.nmbre_mncpio)
+
+
+class Formatos_Definidos (models.Model):
+    id_clnte = models.IntegerField()
+    id_emprsa = models.IntegerField()
+    cdgo_frmto = models.IntegerField(primary_key=True)
+    nmbre_frmto = models.CharField(max_length=80)
+    fcha_crcion = models.DateField()
+    actvo= models.IntegerField(default=1)

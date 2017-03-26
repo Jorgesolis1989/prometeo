@@ -25,13 +25,14 @@ def seleccion_concepto(request, id_emprsa=None):
         print(form)
         if form.is_valid():
             tipo_certificado = form.cleaned_data["tipo_certificado"]
-            return generarPdf_general(request,tipo_certificado)
+            periodo = form.cleaned_data["tipo_certificado"]
+            return generarPdf_general(request,tipo_certificado, periodo,id_emprsa )
         else:
             print("no valido")
 
     try:
         empresa_logo = Empresa_Con_Logo.objects.get(id_emprsa=id_emprsa)
-    except Exception as e:
+    except Exception:
         return redirect('login_user')
 
     logo_empresa = empresa_logo.lgtpo_emprsa

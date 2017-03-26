@@ -1,36 +1,61 @@
 from certificados.forms import FormularioEscogerCertificado
 from reportlab.lib.enums import TA_CENTER
-from reportlab.lib.pagesizes import A4, cm, landscape, A3
+from reportlab.lib.pagesizes import A4, cm, landscape
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import Paragraph, Table, TableStyle, Image
 from django.http import HttpResponse
-from django.shortcuts import render
 from io import BytesIO
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
+from modelos_existentes.models import Empresa
+from empresas.models import Empresa_Con_Logo
+from modelos_existentes.models import Departamentos, Paises,Municipios
 
-def generarPdf_general(request, tipo_reporte):
+
+def generarPdf_general(request, tipo_certificado, periodo, id_empresa_vinculada):
+
+    #Empresa
+    empresa = Empresa.objects.get(id_emprsa= id_empresa_vinculada)
+    logo_empresa = Empresa_Con_Logo.objects.get(id_emprsa=id_empresa_vinculada)
 
     #crea la cabezera HttpResponse con PDF
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename=reporte-de-elecciones'+ str()+'.pdf'
+    response['Content-Disposition'] = 'attachment; filename=certificado-de-'+ str(empresa.nmbre_rzon_scial )+'.pdf'
     #Crea el objeto pdf, usando el objeto BytesIO
     buffer = BytesIO()
     #size = landscape(A4)
-    C = canvas.Canvas(buffer, pagesize=A3)
-    C.setTitle("Certificado de- "+str())
+    C = canvas.Canvas(buffer, pagesize=A4)
+    C.setTitle("Certificado de- "+str(tipo_certificado))
 
-    #Encabezado
+    """Encabezado"""
+
+    #Logo de la empresa
     C.setLineWidth(.3)
-    C.setFont('Helvetica-Bold', 22)
-    C.drawString(30,1150,"SIVORE")
-    #C.drawImage('http://http://54.200.145.159:8080/static/media/sql_soluciones.png', 730,1090, 50, 70)
-    C.setFont('Helvetica', 12)
-    C.drawString(30,1135,"Sistema PROMETEO")
-    #start X, height end y, height
-    C.line(30,1125,560,1125)
+    C.drawImage(logo_empresa.lgtpo_emprsa.url, 120, 730, 200, 100)
+    C.setFont('Helvetica', 14)
+
+    # Titulo de la empresa
+    distancia = 15
+    posicion_x_titulo = 330
+    posicion_y_titulo = 780
+    C.drawString(posicion_x_titulo,posicion_y_titulo,empresa.nmbre_rzon_scial)
+    C.drawString(posicion_x_titulo,posicion_y_titulo - distancia, "NIT "+str(empresa.id_emprsa))
+    C.setFont('Helvetica', 11   )
+    C.drawString(posicion_x_titulo , posicion_y_titulo - (distancia * 2),empresa.drccion)
+
+
+    departamento = Departamentos.objects.filter(cdgo_pais = empresa.cdgo_pais, cdgo_dpto= empresa.cdgo_dpto)
+
+    municipio = Municipios.objects.filter(cdgo_pais = empresa.cdgo_pais,
+                                          cdgo_dpto= empresa.cdgo_dpto,
+                                          cdgo_mncpio= empresa.cdgo_mncpio , actvo=1)
+    # En caso que sea colombia
+    if municipio is not None:
+        C.drawString(posicion_x_titulo , posicion_y_titulo - (distancia * 3),
+                     municipio[0].nmbre_mncpio + ", " + departamento[0].nmbre_dpto )
+
     C.setFont('Helvetica-Bold', 16)
-    C.drawString(330,1100,"Reporte de Elecciones")
+    C.drawString(220,700,tipo_certificado)
     C.setFont('Helvetica-Bold', 13)
     C.drawString(30,1060,"Nombre de la Jornada: "+ str())
 
@@ -47,15 +72,13 @@ def generarPdf_general(request, tipo_reporte):
     suplente = Paragraph('''Candidato Suplente''', styleBH)
     numvotos = Paragraph('''# Votos''', styleBH)
 
-
-
     ##table
     styles = getSampleStyleSheet()
     styleBH.alignment = TA_CENTER
     styleN = styles["BodyText"]
     styleN.fontSize =8
 
-    width, height =A3
+    width, height =A4
 
     high = 1000
 
@@ -92,7 +115,7 @@ def sendToTable(data, registros, high, C):
 
 
     #table size
-    width, height = A3
+    width, height = A4
     table = Table(data, colWidths=[12.5 * cm, 2.2 * cm, 6.0 * cm, 6.0 * cm, 1.9 * cm, 1.9 * cm])
 
 
