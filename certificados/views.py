@@ -129,14 +129,13 @@ def generarPdf_general( request, formato_definido, periodo, id_empresa_vinculada
 
     tabla_concepto(C, 480, formato_definido)
 
-    C.setFont('Helvetica', 13)
-    C.drawString(60, 450,"Observaciones: Ejemplo del Portal i3tributaria.com SIN VALOR LEGAL  \
-    La retención efectuada fue debidamente consignada en la Dirección de Impuestos y Aduanas Nacionales\
-    de la ciudad de Medellin . El presente certificado emitido el 13/12/2013, se expide en concordancia con las \
-    disposiciones legales contenidas en el artículo 381 del Estatuto Tributario. \
-    NOTA: Se expide sin firma autógrafa de acuerdo con el art.10 del DC.836 de 1991, y concepto DIAN 105489 de \
-    Dic de 2007" )
+    C.setFont('Helvetica', 11)
 
+    C.drawString(60, 450,"La retención efectuada fue debidamente consignada en la Dirección de Impuestos y Aduanas ")
+    C.drawString(60, 430,"Nacionales de la ciudad de Medellin . El presente certificado emitido el 13/12/2013, se expide en")
+    C.drawString(60, 410,"concordancia con las disposiciones legales contenidas en el artículo 381 del Estatuto Tributario.")
+    C.drawString(60, 390,"NOTA: Se expide sin firma autógrafa de acuerdo con el art.10 del DC.836 de 1991, y concepto")
+    C.drawString(60, 370,"DIAN 105489 de Dic de 2007.")
 
     C.showPage() #guarda pagina
 
