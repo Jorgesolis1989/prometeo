@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from empresas.models import Empresa_Con_Logo
 from modelos_existentes.models import Empresa, Usuario_Web_Vinculacion_Empresa, Usuario_Web_Vinculacion_Folder, Formatos_Definidos
 from django.contrib.auth.models import User
 from modelos_existentes.models import Usuario_Web
@@ -14,10 +13,6 @@ from empresas.forms import FormularioVincularEmpresas
 from django.utils.timezone import activate
 from django.conf import settings
 activate(settings.TIME_ZONE)
-
-
-def cargar_logos_empresas(request):
-    return Empresa_Con_Logo.objects.filter(activo=1)
 
 
 def cargar_empresas_vinculadas(request):
@@ -79,7 +74,7 @@ def vincular_empresas(request):
     #   empresas = Empresa.objects.filter(actvo=True)
 
 
-    return render(request, 'vincular_empresas.html', {'todas_las_empresas':  empresas , 'empresas_vinculadas': empresas_vinculadas , 'logos_empresas': cargar_logos_empresas(request), 'carpetas': cargar_carpetas(request)})
+    return render(request, 'vincular_empresas.html', {'todas_las_empresas':  empresas , 'empresas_vinculadas': empresas_vinculadas , 'carpetas': cargar_carpetas(request)})
 
 
 
