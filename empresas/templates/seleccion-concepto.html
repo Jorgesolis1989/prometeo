@@ -1,4 +1,4 @@
-{% extends "base-principal.html" %}
+{% extends "base-principal-empresas.html" %}
     {%block breadcrumb %}
         <ol class="breadcrumb">
             <li><a href="{% url 'login_user' %}">Atrás</a></li>
@@ -9,11 +9,11 @@
 {%block content %}
     <div class="panel">
         <div class="panel-body">
-        <div class="eq-height">
+            <div class="eq-height">
             <div class="col-md-6 col-lg-4 eq-box-lg">
                 <div class="panel-body">
                     <div class="alignleft">
-                        <img src="{{ MEDIA_URL }} {{logo_empresa.url }}" alt="" class="img-lg"/>
+                        <img src="{{ MEDIA_URL }} {{ empresa_con_logo.lgtpo_emprsa.url }}" alt="" class="img-lg"/>
                     </div>
                    <!--<div class="panel">
                         <div class="mar-top clearfix">
@@ -68,6 +68,4 @@
             </div>
         </div>
     </div>
-</div>
-
 {%endblock content%}

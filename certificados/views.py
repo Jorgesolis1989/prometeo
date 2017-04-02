@@ -49,14 +49,17 @@ def seleccion_concepto(request, id_emprsa=None):
 
     form.fields['tipo_certificado'].queryset = formatos
 
-    return render(request, 'seleccion-concepto.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) ,
+    #Empresa que practica retención
+    empresa = Empresa.objects.get(id_emprsa= id_emprsa)
+
+    return render(request, 'seleccion-concepto.html', {'empresa':empresa,'empresas_vinculadas': cargar_empresas_vinculadas(request) ,
                                                        'logos_empresas': cargar_logos_empresas(request),
-                                                       'logo_empresa':logo_empresa , 'carpetas': cargar_carpetas(request) ,
+                                                       'logo_empresa':logo_empresa, 'carpetas': cargar_carpetas(request) ,
                                                         'FormularioEscogerCertificado': form
                                                         })
 
 
-def generarPdf_general( request, formato_definido, periodo, id_empresa_vinculada):
+def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada):
 
     #Empresa que practica retención
     empresa = Empresa.objects.get(id_emprsa= id_empresa_vinculada)
