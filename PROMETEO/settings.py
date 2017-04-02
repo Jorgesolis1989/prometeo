@@ -44,7 +44,8 @@ INSTALLED_APPS = (
     'modelos_existentes',
     'carpetas',
     'bandeja_entrada',
-    'certificados'
+    'certificados',
+    'django_crontab',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -133,6 +134,10 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+CRONJOBS = [
+        ('*/1 * * * *', 'empresas.cron.cargar_logo_empresa' , '>> /tmp/cargar_logo_empresa.log')
+    ]
 
 
 RECAPTCHA_PUBLIC_KEY = '6LcLryMTAAAAAEbrchsa2PMbizBwJoOk197CK15q'

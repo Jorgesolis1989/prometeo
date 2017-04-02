@@ -6,7 +6,7 @@ from modelos_existentes.models import Usuario_Web
 from certificados.forms import FormularioEscogerCertificado
 from django.shortcuts import render, get_object_or_404
 import datetime
-from empresas.sacarLogosEmpresas import cargar_logo_empresa
+
 
 
 from empresas.forms import FormularioVincularEmpresas
@@ -79,7 +79,6 @@ def vincular_empresas(request):
     #   empresas = Empresa.objects.filter(actvo=True)
 
 
-    cargar_logo_empresa()
     return render(request, 'vincular_empresas.html', {'todas_las_empresas':  empresas , 'empresas_vinculadas': empresas_vinculadas , 'logos_empresas': cargar_logos_empresas(request), 'carpetas': cargar_carpetas(request)})
 
 
