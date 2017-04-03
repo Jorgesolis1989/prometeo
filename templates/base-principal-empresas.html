@@ -138,7 +138,7 @@
                     <a href="#" class="navbar-brand">
                         {% with empresa.id_emprsa|slugify as id  %}
                             {% with "images/logosEmpresas/"|add:id|add:".bmp" as template %}
-                           <object data="{% static template %}" type="image/png">
+                           <object data="{% static template %}" type="image/png" class="brand-icon">
                             <img src="{% static 'images/logosEmpresas/logo-empresa-df.bmp'%}" class="brand-icon">
                            </object>
                             {% endwith %}
@@ -303,7 +303,7 @@
                                         <div class="media-left pos-rel">
                                             {% with empresa.id_emprsa|slugify as id  %}
                                             {% with "images/logosEmpresas/"|add:id|add:".bmp" as template %}
-                                            <object data="{% static template %}" type="image/png">
+                                            <object data="{% static template %}" type="image/png" class="brand-icon">
                                                 <img src="{% static 'images/logosEmpresas/logo-empresa-df.bmp'%}" class="brand-icon">
                                             </object>
                                             {% endwith %}
