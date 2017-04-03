@@ -136,7 +136,7 @@ USE_L10N = True
 USE_TZ = True
 
 CRONJOBS = [
-        ('*/1 * * * *', 'empresas.cron.cargar_logo_empresa' , '>> /tmp/cargar_logo_empresa.log')
+        ('*/15 * * * *', 'empresas.cron.cargar_logo_empresa' , '>> /tmp/cargar_logo_empresa.log')
     ]
 
 
