@@ -299,14 +299,14 @@
                                         <a href="/certificados/selection_concept/{{empresa.id_emprsa}}"  class="list-group-item" type="submit">
                                         <div class="media-left pos-rel">
 
-                                            <img class="img-circle img-xs" src="
-                                            {% for empresa_con_logo in logos_empresas %}
-                                                {% if empresa_con_logo.id_emprsa == empresa.id_emprsa %}
-                                                {{ MEDIA_URL }} {{ empresa_con_logo.lgtpo_emprsa.url }}
-                                                {% endif %}
-                                                {% endfor %}" alt="">
+                                            {% with empresa.id_emprsa|slugify as id  %}
+                                            {% with "images/logosEmpresas/"|add:id|add:".bmp" as template %}
+                                               <object data="{% static template %}" type="image/png" class="brand-icon">
+                                                <img src="{% static 'images/logosEmpresas/logo-empresa-df.bmp'%}" class="brand-icon">
+                                               </object>
+                                            {% endwith %}
+                                            {% endwith %}
                                             <i class="badge badge-success badge-stat badge-icon pull-left"></i>
-
                                         </div>
                                         <div class="media-body">
                                             <p class="mar-no">{{ empresa.nmbre_rzon_scial }}</p>

@@ -135,11 +135,15 @@
                 <!--Brand logo & name-->
                 <!--================================-->
                 <div class="navbar-header">
-                    <a href="{% url 'login_user' %}" class="navbar-brand">
-                        <img src="{{ MEDIA_URL }} {{ logo_empresa.lgtpo_emprsa.url }}" alt="" class="brand-icon"/>
-                        <div class="brand-title">
-                            <span class="brand-text">{{ empresa.nmbre_rzon_scial }}</span>
-                        </div>
+                    <a href="#" class="navbar-brand">
+                        {% with empresa.id_emprsa|slugify as id  %}
+                            {% with "images/logosEmpresas/"|add:id|add:".bmp" as template %}
+                           <object data="{% static template %}" type="image/png">
+                            <img src="{% static 'images/logosEmpresas/logo-empresa-df.bmp'%}" class="brand-icon">
+                           </object>
+                            {% endwith %}
+                        {% endwith %}
+                    <h5 class="brand-text ">{{ empresa.nmbre_rzon_scial }}</h5>
                     </a>
                 </div>
                 <!--================================-->
@@ -297,11 +301,13 @@
                                 <form method="post" action="" >
                                         <a href="/certificados/selection_concept/{{empresa.id_emprsa}}"  class="list-group-item" type="submit">
                                         <div class="media-left pos-rel">
-
-                                            <img class="img-circle img-xs" src="
-                                                {% if logo_empresa.id_emprsa == empresa.id_emprsa %}
-                                                {{ MEDIA_URL }} {{ logo_empresa.lgtpo_emprsa.url }}
-                                                {% endif %}" alt="">
+                                            {% with empresa.id_emprsa|slugify as id  %}
+                                            {% with "images/logosEmpresas/"|add:id|add:".bmp" as template %}
+                                            <object data="{% static template %}" type="image/png">
+                                                <img src="{% static 'images/logosEmpresas/logo-empresa-df.bmp'%}" class="brand-icon">
+                                            </object>
+                                            {% endwith %}
+                                            {% endwith %}
                                             <i class="badge badge-success badge-stat badge-icon pull-left"></i>
 
                                         </div>
