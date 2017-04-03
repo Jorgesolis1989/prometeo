@@ -8,12 +8,12 @@ from io import BytesIO
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from modelos_existentes.models import Empresa
-from empresas.models import Empresa_Con_Logo
 from modelos_existentes.models import Usuario_Web , Usuario_Web_Vinculacion_Empresa
 from modelos_existentes.models import Departamentos, Paises,Municipios , Formatos_Definidos
 import datetime
 from django.shortcuts import render, redirect
-from empresas.views import cargar_empresas_vinculadas, cargar_logos_empresas, cargar_carpetas
+from empresas.views import cargar_empresas_vinculadas, cargar_carpetas
+from PROMETEO.settings import STATICFILES_DIRS
 
 from empresas.forms import FormularioVincularEmpresas
 from reportlab.lib.units import inch
@@ -23,21 +23,13 @@ def seleccion_concepto(request, id_emprsa=None):
     # POST
     if request.POST and "btnGenerer" in request.POST:
         form = FormularioEscogerCertificado(request.POST)
-        print(form)
         if form.is_valid():
             tipo_certificado = form.cleaned_data["tipo_certificado"]
-            print(tipo_certificado)
             periodo = form.cleaned_data["periodo"]
             return generarPdf_general(request,tipo_certificado, periodo,id_emprsa )
         else:
             print("no valido")
 
-    try:
-        empresa_logo = Empresa_Con_Logo.objects.get(id_emprsa=id_emprsa)
-    except Exception:
-        return redirect('login_user')
-
-    logo_empresa = empresa_logo.lgtpo_emprsa
 
     formatos = Formatos_Definidos.objects.filter(actvo=1, id_emprsa=id_emprsa)
 
@@ -49,18 +41,19 @@ def seleccion_concepto(request, id_emprsa=None):
 
     form.fields['tipo_certificado'].queryset = formatos
 
-    return render(request, 'seleccion-concepto.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) ,
-                                                       'logos_empresas': cargar_logos_empresas(request),
-                                                       'logo_empresa':logo_empresa , 'carpetas': cargar_carpetas(request) ,
-                                                        'FormularioEscogerCertificado': form
+    #Empresa que practica retención
+    empresa = Empresa.objects.get(id_emprsa= id_emprsa)
+
+    return render(request, 'seleccion-concepto.html', {'empresa':empresa,'empresas_vinculadas': cargar_empresas_vinculadas(request) ,
+                                                        'carpetas': cargar_carpetas(request) ,  'FormularioEscogerCertificado': form
                                                         })
 
 
-def generarPdf_general( request, formato_definido, periodo, id_empresa_vinculada):
+def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada):
 
     #Empresa que practica retención
     empresa = Empresa.objects.get(id_emprsa= id_empresa_vinculada)
-    logo_empresa = Empresa_Con_Logo.objects.get(id_emprsa=id_empresa_vinculada)
+
 
     # Usuario de la empresa que descarga el certificado
     try:
@@ -82,7 +75,12 @@ def generarPdf_general( request, formato_definido, periodo, id_empresa_vinculada
 
     #Logo de la empresa
     C.setLineWidth(.3)
-    C.drawImage(logo_empresa.lgtpo_emprsa.url, 120, 730, 200, 100)
+    try:
+        C.drawImage(STATICFILES_DIRS[0]+"/images/logosEmpresas/"+str(empresa.id_emprsa)+".bmp", 120, 730, 200, 100)
+    except OSError as e:
+        C.drawImage(STATICFILES_DIRS[0]+"/images/logosEmpresas/logo-empresa-df.png", 220, 730, 100, 100)
+
+
     C.setFont('Helvetica', 14)
 
     # Titulo de la empresa
@@ -154,10 +152,8 @@ def tabla_datos(usuarioWeb, pdf,y):
 
 
         nombreEmpresa_filter = Empresa.objects.filter(id_emprsa= usuarioWeb.nit_tcro_ascdo,actvo=1)
-        print(nombreEmpresa_filter)
 
         if nombreEmpresa_filter:
-            print("entre")
             nombreEmpresa = nombreEmpresa_filter[0].nmbre_rzon_scial
         else:
             nombreEmpresa = "NO INSCRITA"
@@ -165,7 +161,7 @@ def tabla_datos(usuarioWeb, pdf,y):
 
         detalles =[["NOMBRE DE LA EMPRESA" , nombreEmpresa],
                    ["NIT" , usuarioWeb.nit_tcro_ascdo ]]
-        print(detalles)
+
 
         #detalles = [(empresa.cdgo_dpto, empresa.cdgo_mncpio, empresa.cdgo_pais, empresa.nmbre_rzon_scial) for empresa in Empresa.objects.all()]
         #Establecemos el tamaño de cada una de las columnas de la tabla

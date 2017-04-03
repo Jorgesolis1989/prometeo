@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from modelos_existentes.models import Usuario_Web_Vinculacion_Folder , Usuario_Web
-from empresas.views import cargar_empresas_vinculadas, cargar_logos_empresas
+from empresas.views import cargar_empresas_vinculadas
 
 
 # Create your views here.
@@ -37,7 +37,7 @@ def crear_carpeta(request):
         except Exception as e:
             print(e)
 
-    return render(request, 'base-principal.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) , 'logos_empresas':cargar_logos_empresas(request), 'carpetas': cargar_carpetas(request)})
+    return render(request, 'base-principal.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) ,  'carpetas': cargar_carpetas(request)})
 
 def editar_carpeta(request):
 
@@ -56,7 +56,7 @@ def editar_carpeta(request):
             print(e)
 
 
-        return render(request, 'base-principal.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) , 'logos_empresas':cargar_logos_empresas(request), 'carpetas': cargar_carpetas(request)})
+        return render(request, 'base-principal.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) , 'carpetas': cargar_carpetas(request)})
 
 
 
@@ -78,5 +78,5 @@ def eliminar_carpeta(request, id_folder=None):
 
         except Exception as e:
             print(e)
-    return render(request, 'base-principal.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) ,'logos_empresas':cargar_logos_empresas(request), 'carpetas': cargar_carpetas(request)})
+    return render(request, 'base-principal.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) , 'carpetas': cargar_carpetas(request)})
 

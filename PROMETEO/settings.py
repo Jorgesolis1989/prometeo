@@ -44,7 +44,8 @@ INSTALLED_APPS = (
     'modelos_existentes',
     'carpetas',
     'bandeja_entrada',
-    'certificados'
+    'certificados',
+    'django_crontab',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -106,7 +107,7 @@ DATABASES = {
 STATIC_URL = '/static/'
 
 
-HOSTNAME = '54.200.145.159:8080'
+HOSTNAME = '127.0.0.1:8080'
 MEDIA_ROOT = 'PROMETEO/media/'
 MEDIA_URL = 'http://%s/PROMETEO/media/' %(HOSTNAME)
 
@@ -133,6 +134,10 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+CRONJOBS = [
+        ('*/1 * * * *', 'empresas.cron.cargar_logo_empresa' , '>> /tmp/cargar_logo_empresa.log')
+    ]
 
 
 RECAPTCHA_PUBLIC_KEY = '6LcLryMTAAAAAEbrchsa2PMbizBwJoOk197CK15q'

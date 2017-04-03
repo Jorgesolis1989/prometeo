@@ -52,7 +52,7 @@ class Empresa(models.Model):
     cdgo_pstal = models.CharField(max_length=6, null=True)
     drccion = models.CharField(max_length=50)
     web_site = models.CharField(max_length=100 , null=True)
-    lgtpo_emprsa = models.BinaryField( null=True)
+    lgtpo_emprsa = models.ImageField(null=True)
     fcha_crcion = models.DateField(default=datetime.now, null=True)
     actvo = models.IntegerField(default=1)
 
@@ -156,16 +156,17 @@ class Municipios(models.Model):
 
 
 class Formatos_Definidos (models.Model):
+    id = models.BigIntegerField(primary_key=True)
     id_clnte = models.IntegerField()
     id_emprsa = models.IntegerField()
-    cdgo_frmto = models.IntegerField(primary_key=True)
+    cdgo_frmto = models.IntegerField()
     nmbre_frmto = models.CharField(max_length=80)
     fcha_crcion = models.DateField()
     actvo= models.IntegerField(default=1)
 
     class Meta:
-        verbose_name_plural= u'formatos definidos'
-        db_table = 'frmtos_dfndos'
+        verbose_name_plural= u'formatos definido'
+        db_table = 'frmtos_dfndos_view'
         unique_together = (('id_clnte', 'id_emprsa' ,'cdgo_frmto' ))
 
     def __str__(self):

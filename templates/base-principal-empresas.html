@@ -135,11 +135,15 @@
                 <!--Brand logo & name-->
                 <!--================================-->
                 <div class="navbar-header">
-                    <a href="{% url 'login_user' %}" class="navbar-brand">
-                        <img src="{% static 'img/logo-res.png' %}" alt="" class="brand-icon">
-                        <div class="brand-title">
-                            <span class="brand-text">PROMETEO</span>
-                        </div>
+                    <a href="#" class="navbar-brand">
+                        {% with empresa.id_emprsa|slugify as id  %}
+                            {% with "images/logosEmpresas/"|add:id|add:".bmp" as template %}
+                           <object data="{% static template %}" type="image/png" class="brand-icon">
+                            <img src="{% static 'images/logosEmpresas/logo-empresa-df.bmp'%}" class="brand-icon">
+                           </object>
+                            {% endwith %}
+                        {% endwith %}
+                    <h5 class="brand-text ">{{ empresa.nmbre_rzon_scial }}</h5>
                     </a>
                 </div>
                 <!--================================-->
@@ -288,34 +292,35 @@
                                     <br>
                                     <center><i class="demo-pli-building"></i>
                                         <span>
-                                            <strong>Empresas Vinculadas</strong>
+                                            <strong>Empresa Vinculada</strong>
                                         </span>
                                     </center>
                                 </div>
 
                                 <div class="list-group bg-trans scroll" data-provide="markdown">
                                 <form method="post" action="" >
-                                    {% for empresa in empresas_vinculadas %}
                                         <a href="/certificados/selection_concept/{{empresa.id_emprsa}}"  class="list-group-item" type="submit">
                                         <div class="media-left pos-rel">
-
                                             {% with empresa.id_emprsa|slugify as id  %}
                                             {% with "images/logosEmpresas/"|add:id|add:".bmp" as template %}
-                                               <object data="{% static template %}" type="image/png" class="brand-icon">
+                                            <object data="{% static template %}" type="image/png" class="brand-icon">
                                                 <img src="{% static 'images/logosEmpresas/logo-empresa-df.bmp'%}" class="brand-icon">
-                                               </object>
+                                            </object>
                                             {% endwith %}
                                             {% endwith %}
                                             <i class="badge badge-success badge-stat badge-icon pull-left"></i>
+
                                         </div>
                                         <div class="media-body">
                                             <p class="mar-no">{{ empresa.nmbre_rzon_scial }}</p>
                                             <small class="text-muted"></small>
                                         </div>
                                     </a>
-                                    {% endfor %}
                                 </form>
                                 </div>
+                            </div>
+                            <div id="demo-custom-toolbar" class="table-toolbar-right">
+                                <a href="{% url 'login_user' %}" class="btn btn-mint btn-labeled fa fa-list-alt text-lg"><b>Regresar</b></a>
                             </div>
                         </div>
                         <div class="fluid">
@@ -328,13 +333,6 @@
                                 <!-- Newsfeed Content -->
                                 <!--===================================================-->
                                 {% block content %}
-                                        <div id="container" class="cls-container">
-                                        <h3 class="h2 mar-no text-center ">Bienvenidos a</h3>
-                                            <div class="mar-ver pad-btm">
-                                                <a href="http://54.200.145.159:8080/" target="_blank"><img src="{% static 'images/img-welcome.png' %}" alt=""></a>
-                                                <h3 class="text-danger text-bold">Nunca la información de sus proveedores,<br>clientes y empleados<br>estuvo tan cerca!</h3>
-                                             </div>
-                                        </div>
                                 {% endblock content %}
                                 <!--===================================================-->
                                 <!-- End Newsfeed Content -->
