@@ -78,7 +78,8 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
     try:
         C.drawImage(STATICFILES_DIRS[0]+"/images/logosEmpresas/"+str(empresa.id_emprsa)+".bmp", 120, 730, 200, 100)
     except OSError as e:
-        C.drawImage(STATICFILES_DIRS[0]+"/images/logosEmpresas/logo-empresa-df.png", 120, 730, 100, 100)
+        C.drawImage(STATICFILES_DIRS[0]+"/images/logosEmpresas/logo-empresa-df.png", 220, 730, 100, 100)
+
 
     C.setFont('Helvetica', 14)
 

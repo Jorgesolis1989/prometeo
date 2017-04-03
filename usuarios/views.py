@@ -408,5 +408,5 @@ def actualizar_usuario(request):
                         'tel_fijo': usuario_web.tlno_fjo, 'tel_movil': usuario_web.tlfno_mvil}
         form.fields['email'].widget.attrs['readonly'] = True
 
-    return render(request, 'actualizar-usuario.html', {'form': form , 'mensaje': mensaje , 'empresas_vinculadas': empresas_vinculadas , 'logos_empresas':cargar_logos_empresas(request) , 'carpetas': cargar_carpetas(request)})
+    return render(request, 'actualizar-usuario.html', {'form': form , 'mensaje': mensaje , 'empresas_vinculadas': empresas_vinculadas , 'carpetas': cargar_carpetas(request)})
 
