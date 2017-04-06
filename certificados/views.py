@@ -8,12 +8,16 @@ from io import BytesIO
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from modelos_existentes.models import Empresa
-from modelos_existentes.models import Usuario_Web , Usuario_Web_Vinculacion_Empresa
+from modelos_existentes.models import Usuario_Web , Certificado_Retencion
 from modelos_existentes.models import Departamentos, Paises,Municipios , Formatos_Definidos
 import datetime
 from django.shortcuts import render, redirect
 from empresas.views import cargar_empresas_vinculadas, cargar_carpetas
 from PROMETEO.settings import STATICFILES_DIRS
+import pdfkit
+from django.template.loader import get_template
+from django.template import Context
+import pdfkit
 
 from empresas.forms import FormularioVincularEmpresas
 from reportlab.lib.units import inch
@@ -26,7 +30,10 @@ def seleccion_concepto(request, id_emprsa=None):
         if form.is_valid():
             tipo_certificado = form.cleaned_data["tipo_certificado"]
             periodo = form.cleaned_data["periodo"]
+
+            #return  seleccion_other()
             return generarPdf_general(request,tipo_certificado, periodo,id_emprsa )
+            #return example()
         else:
             print("no valido")
 
@@ -47,6 +54,8 @@ def seleccion_concepto(request, id_emprsa=None):
     return render(request, 'seleccion-concepto.html', {'empresa':empresa,'empresas_vinculadas': cargar_empresas_vinculadas(request) ,
                                                         'carpetas': cargar_carpetas(request) ,  'FormularioEscogerCertificado': form
                                                         })
+
+
 
 
 def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada):
@@ -76,16 +85,16 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
     #Logo de la empresa
     C.setLineWidth(.3)
     try:
-        C.drawImage(STATICFILES_DIRS[0]+"/images/logosEmpresas/"+str(empresa.id_emprsa)+".bmp", 120, 730, 200, 100)
+        C.drawImage(STATICFILES_DIRS[0]+"/images/logosEmpresas/"+str(empresa.id_emprsa)+".bmp", 180, 730, 70, 70)
     except OSError as e:
-        C.drawImage(STATICFILES_DIRS[0]+"/images/logosEmpresas/logo-empresa-df.png", 220, 730, 100, 100)
+        C.drawImage(STATICFILES_DIRS[0]+"/images/logosEmpresas/logo-empresa-df.png", 180, 730, 70, 100)
 
 
     C.setFont('Helvetica', 14)
 
     # Titulo de la empresa
     distancia = 15
-    posicion_x_titulo = 330
+    posicion_x_titulo = 260
     posicion_y_titulo = 780
     C.drawString(posicion_x_titulo,posicion_y_titulo,empresa.nmbre_rzon_scial)
     C.drawString(posicion_x_titulo,posicion_y_titulo - distancia, "NIT "+str(empresa.id_emprsa))
@@ -196,8 +205,39 @@ def tabla_datos(usuarioWeb, pdf,y):
 def tabla_concepto(pdf,y, formato_definido):
         #Creamos una tupla de encabezados para neustra tabla
         encabezados = ('Concepto', 'Tasa %', 'Base', 'Retención')
+
         #Creamos una lista de tuplas que van a contener los datos
-        datos = [(formato_definido.nmbre_frmto,formato_definido.id_emprsa, formato_definido.cdgo_frmto, formato_definido.fcha_crcion)]
+
+        #Consulta
+
+        consulta = "SELECT row_number() OVER (ORDER BY cd.nmbre_cncpto) AS id , cd.nmbre_cncpto as nmbre_cncpto, cdp.prcntje_aplccion as tasa, mfc.vlor_grvble AS retencion, (mfc.vlor_grvble/(cdp.prcntje_aplccion/100)) AS base \
+        FROM mvmnto_frmto_cncpto AS mfc INNER JOIN cncptos_dfndos_prmtros AS cdp ON mfc.cdgo_cncpto = cdp.cdgo_cncpto AND mfc.cnta_cntble = cdp.cnta_cntble \
+        INNER JOIN cncptos_dfndos AS cd ON mfc.cdgo_cncpto=cd.cdgo_cncpto AND mfc.id_emprsa=cd.id_emprsa  WHERE " \
+        "mfc.id_emprsa = %s AND mfc.id_trcro = '%s' and mfc.ano_mes_fnal= '%s' ;"%(str(890300005) , '67020646     ', '2016-12')
+
+
+        """
+        consulta = "SELECT row_number() OVER (ORDER BY cd.nmbre_cncpto) AS id , cd.nmbre_cncpto as nmbre_cncpto, cdp.prcntje_aplccion as tasa, mfc.vlor_grvble AS retencion, (mfc.vlor_grvble/(cdp.prcntje_aplccion/100)) AS base \
+        FROM mvmnto_frmto_cncpto AS mfc INNER JOIN cncptos_dfndos_prmtros AS cdp ON mfc.cdgo_cncpto = cdp.cdgo_cncpto AND mfc.cnta_cntble = cdp.cnta_cntble \
+        INNER JOIN cncptos_dfndos AS cd ON mfc.cdgo_cncpto=cd.cdgo_cncpto AND mfc.id_emprsa=cd.id_emprsa  WHERE " \
+        "mfc.id_emprsa = %s AND mfc.id_trcro = '%s' "%('890300005' , '67020646     ')
+        """
+        #consulta = "select * from frmtos_dfndos_view"
+
+        #print(consulta)
+        retenciones = Certificado_Retencion.objects.raw(consulta)
+
+        #print("retenciones : " , retenciones)
+        datos = []
+        for retencion in retenciones:
+            datos.append((retencion.nmbre_cncpto , retencion.tasa, retencion.base, retencion.retencion))
+            #print(retencion[0] ,  retencion[1] , retencion[2] ,retencion[3] , retencion[4])
+            #print(retencion.id, retencion.nmbre_cncpto)
+
+
+
+        #print(datos)
+
         total = ('Total','', formato_definido.cdgo_frmto, formato_definido.fcha_crcion)
         #Establecemos el tamaño de cada una de las columnas de la tabla
         datos = Table([encabezados] + datos + [total], colWidths=[8 * cm, 3 * cm, 3 * cm, 3 * cm] )
@@ -237,5 +277,32 @@ def tabla_concepto(pdf,y, formato_definido):
         #Definimos la coordenada donde se dibujará la tabla
         datos.drawOn(pdf, 60,y)
 
+"""
+def example():
+
+    template = get_template("output_pdf.html")
+    context = Context({"data": data})  # data is the context data that is sent to the html file to render the output.
+    html = template.render(context)  # Renders the template with the context data.
+    pdfkit.from_string(html, 'out.pdf')
+    pdf = open("out.pdf")
+    response = HttpResponse(pdf.read(), content_type='application/pdf')  # Generates the response as pdf response.
+    response['Content-Disposition'] = 'attachment; filename=output.pdf'
+    pdf.close()
+    os.remove("out.pdf")  # remove the locally created pdf file.
+    return response  # returns the response.
 
 
+    options = {
+        'page-size': 'A4',
+        'margin-top': '0.75in',
+        'margin-right': '0.75in',
+        'margin-bottom': '0.75in',
+        'margin-left': '0.75in',
+    }
+        # Use False instead of output path to save pdf to a variable
+    pdf = pdfkit.from_string('MicroPyramid', 'micro.pdf')
+    response = HttpResponse(pdf,content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="micro.pdf"'
+
+    return response
+"""
