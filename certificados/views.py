@@ -18,6 +18,7 @@ import pdfkit
 from django.template.loader import get_template
 from django.template import Context
 import pdfkit
+from reportlab.lib.enums import TA_LEFT, TA_CENTER
 
 from empresas.forms import FormularioVincularEmpresas
 from reportlab.lib.units import inch
@@ -115,7 +116,7 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
     #start X, height end y, height
     C.line(30,1125,560,1125)
     C.setFont('Helvetica-Bold', 16)
-    C.drawString(180,715,formato_definido.nmbre_frmto)
+    C.drawString(100,715,formato_definido.nmbre_frmto)
     C.setFont('Helvetica-Bold', 13)
     C.drawString(220, 700,"Año Gravable "+ periodo)
 
@@ -124,25 +125,38 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
 
 
     C.setFont('Helvetica-Bold', 13)
-    C.drawString(60, 620,"RETENCIÓN PRACTICADA A: ")
+    C.drawString(60, 640,"RETENCIÓN PRACTICADA A: ")
 
     #Llamo al método cabecera donde están definidos los datos que aparecen en la cabecera del reporte.
     #cabecera(pdf)
-    y = 580
+    y = 600
     tabla_datos(usuario_Web, C, y)
 
     C.setFont('Helvetica', 13)
-    C.drawString(60, 550,"Por los conceptos que se detallan a continuación:" )
+    C.drawString(60, y - 30,"Por los conceptos que se detallan a continuación:" )
 
-    tabla_concepto(C, 480, formato_definido)
+
+    consulta = "SELECT row_number() OVER (ORDER BY cd.nmbre_cncpto) AS id , cd.nmbre_cncpto as nmbre_cncpto, cdp.prcntje_aplccion as tasa, mfc.vlor_grvble AS retencion, (mfc.vlor_grvble/(cdp.prcntje_aplccion/100)) AS base \
+        FROM mvmnto_frmto_cncpto AS mfc INNER JOIN cncptos_dfndos_prmtros AS cdp ON mfc.cdgo_cncpto = cdp.cdgo_cncpto AND mfc.cnta_cntble = cdp.cnta_cntble \
+        INNER JOIN cncptos_dfndos AS cd ON mfc.cdgo_cncpto=cd.cdgo_cncpto AND mfc.id_emprsa=cd.id_emprsa  WHERE " \
+        "mfc.id_emprsa = %s AND mfc.id_trcro = '%s' and mfc.ano_mes_fnal= '%s' ;"%(str(890300005) , '67020646     ', '2016-12')
+
+
+
+    tabla_concepto(C, y - 190, formato_definido , consulta)
 
     C.setFont('Helvetica', 11)
 
-    C.drawString(60, 450,"La retención efectuada fue debidamente consignada en la Dirección de Impuestos y Aduanas ")
-    C.drawString(60, 430,"Nacionales de la ciudad de Medellin . El presente certificado emitido el 13/12/2013, se expide en")
-    C.drawString(60, 410,"concordancia con las disposiciones legales contenidas en el artículo 381 del Estatuto Tributario.")
-    C.drawString(60, 390,"NOTA: Se expide sin firma autógrafa de acuerdo con el art.10 del DC.836 de 1991, y concepto")
-    C.drawString(60, 370,"DIAN 105489 de Dic de 2007.")
+    #p = Paragraph('some text. ' * 30, styles['default']),
+
+    #p.wrapOn(C, 100, 100)
+    #p.drawOn(C, 60 , y - 200)
+
+    C.drawString(60, y- 220,"La retención efectuada fue debidamente consignada en la Dirección de Impuestos y Aduanas ")
+    C.drawString(60, y -230,"Nacionales de la ciudad de Medellin . El presente certificado emitido el 13/12/2013, se expide en")
+    C.drawString(60, y -240,"concordancia con las disposiciones legales contenidas en el artículo 381 del Estatuto Tributario.")
+    C.drawString(60, y -250,"NOTA: Se expide sin firma autógrafa de acuerdo con el art.10 del DC.836 de 1991, y concepto")
+    C.drawString(60, y -260,"DIAN 105489 de Dic de 2007.")
 
     C.showPage() #guarda pagina
 
@@ -202,18 +216,13 @@ def tabla_datos(usuarioWeb, pdf,y):
         detalle_orden.drawOn(pdf, 60,y)
 
 
-def tabla_concepto(pdf,y, formato_definido):
+def tabla_concepto(pdf,y, formato_definido, consulta):
         #Creamos una tupla de encabezados para neustra tabla
         encabezados = ('Concepto', 'Tasa %', 'Base', 'Retención')
 
         #Creamos una lista de tuplas que van a contener los datos
 
         #Consulta
-
-        consulta = "SELECT row_number() OVER (ORDER BY cd.nmbre_cncpto) AS id , cd.nmbre_cncpto as nmbre_cncpto, cdp.prcntje_aplccion as tasa, mfc.vlor_grvble AS retencion, (mfc.vlor_grvble/(cdp.prcntje_aplccion/100)) AS base \
-        FROM mvmnto_frmto_cncpto AS mfc INNER JOIN cncptos_dfndos_prmtros AS cdp ON mfc.cdgo_cncpto = cdp.cdgo_cncpto AND mfc.cnta_cntble = cdp.cnta_cntble \
-        INNER JOIN cncptos_dfndos AS cd ON mfc.cdgo_cncpto=cd.cdgo_cncpto AND mfc.id_emprsa=cd.id_emprsa  WHERE " \
-        "mfc.id_emprsa = %s AND mfc.id_trcro = '%s' and mfc.ano_mes_fnal= '%s' ;"%(str(890300005) , '67020646     ', '2016-12')
 
 
         """
@@ -229,19 +238,26 @@ def tabla_concepto(pdf,y, formato_definido):
 
         #print("retenciones : " , retenciones)
         datos = []
+        base_total = 0
+        retencion_total = 0
         for retencion in retenciones:
-            datos.append((retencion.nmbre_cncpto , retencion.tasa, retencion.base, retencion.retencion))
+            datos.append((retencion.nmbre_cncpto , retencion.tasa, int(retencion.base), retencion.retencion))
+            base_total += retencion.base
+            retencion_total += retencion.retencion
             #print(retencion[0] ,  retencion[1] , retencion[2] ,retencion[3] , retencion[4])
             #print(retencion.id, retencion.nmbre_cncpto)
 
 
 
-        #print(datos)
+        #print(len(datos))
+        cantidad_filas = len(datos)
 
-        total = ('Total','', formato_definido.cdgo_frmto, formato_definido.fcha_crcion)
+        total = ('Total','', int(base_total), retencion_total)
         #Establecemos el tamaño de cada una de las columnas de la tabla
         datos = Table([encabezados] + datos + [total], colWidths=[8 * cm, 3 * cm, 3 * cm, 3 * cm] )
         #Aplicamos estilos a las celdas de la tabla
+
+
         datos.setStyle(TableStyle(
         [
                 #La primera fila(encabezados) va a estar centrada
@@ -250,25 +266,24 @@ def tabla_concepto(pdf,y, formato_definido):
                 ('GRID', (0, 0), (-1, -1), 0.25, colors.black),
                 ('FONT', (0, 0), (-1, 0), 'Helvetica-Bold'),
                 ('FONTSIZE', (0, 0), (-1, 0), 11),
-                ('ALIGN',(0,-1),(-1,-1),'LEFT'),
+
                 ('VALIGN',(0,-1),(-1,-1),'MIDDLE'),
                 #fin caracteristicas encabezado
 
-                #caracteristicas para segunda fila
-                ('ALIGN',(1,-2),(-1,-1),'RIGHT'),
+                #caracteristicas para el centro
+                #Primera columna
+                ('ALIGN',(0,1),(0,cantidad_filas),'LEFT'),
+                ('ALIGN',(1,1),(3,cantidad_filas),'RIGHT'),
                 ('VALIGN',(1,-2),(-1,-1),'MIDDLE'),
 
-                #caracteristicas para tercera fila
-                ('ALIGN',(2,-1),(-1,-1),'RIGHT'),
-                ('VALIGN',(2,-1),(-1,-1),'MIDDLE'),
 
                 #Caracteristicas para primera columna tercera fila
-                ('FONTSIZE', (0, 2), (-1, -1), 10),
-                ('FONT', (0, 2), (-1, -1), 'Helvetica-Bold'),
+                ('FONTSIZE', (0, (cantidad_filas + 1)), (-1, (cantidad_filas + 1)), 10),
+                ('FONT', (0, (cantidad_filas + 1)), (-1, (cantidad_filas + 1)), 'Helvetica-Bold'),
                 ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
-                ('ALIGN',(0,2),(-1,-1),'RIGHT'),
-                ('VALIGN',(0,2),(-1,-1),'MIDDLE'),
-                ('SPAN',(0,2),(1,2)),
+                ('ALIGN',(0,(cantidad_filas + 1)),(-1,(cantidad_filas + 1)),'RIGHT'),
+                ('VALIGN',(0,(cantidad_filas + 1)),(-1,(cantidad_filas + 1)),'MIDDLE'),
+                ('SPAN',(0, (cantidad_filas + 1) ),(1,(cantidad_filas + 1))),
         ]
 
         ))
@@ -277,20 +292,8 @@ def tabla_concepto(pdf,y, formato_definido):
         #Definimos la coordenada donde se dibujará la tabla
         datos.drawOn(pdf, 60,y)
 
-"""
+
 def example():
-
-    template = get_template("output_pdf.html")
-    context = Context({"data": data})  # data is the context data that is sent to the html file to render the output.
-    html = template.render(context)  # Renders the template with the context data.
-    pdfkit.from_string(html, 'out.pdf')
-    pdf = open("out.pdf")
-    response = HttpResponse(pdf.read(), content_type='application/pdf')  # Generates the response as pdf response.
-    response['Content-Disposition'] = 'attachment; filename=output.pdf'
-    pdf.close()
-    os.remove("out.pdf")  # remove the locally created pdf file.
-    return response  # returns the response.
-
 
     options = {
         'page-size': 'A4',
@@ -300,9 +303,8 @@ def example():
         'margin-left': '0.75in',
     }
         # Use False instead of output path to save pdf to a variable
-    pdf = pdfkit.from_string('MicroPyramid', 'micro.pdf')
-    response = HttpResponse(pdf,content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="micro.pdf"'
+    pdf = pdfkit.from_string('MicroPyramid', 'salida.pdf', options=options)
+    response = HttpResponse(pdf ,content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="salida.pdf"'
 
     return response
-"""
