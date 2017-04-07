@@ -14,7 +14,7 @@ import datetime
 from django.shortcuts import render, redirect
 from empresas.views import cargar_empresas_vinculadas, cargar_carpetas
 from PROMETEO.settings import STATICFILES_DIRS
-import pdfkit
+#import pdfkit
 from django.template.loader import get_template
 from django.template import Context
 #import pdfkit
