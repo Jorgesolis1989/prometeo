@@ -171,3 +171,22 @@ class Formatos_Definidos (models.Model):
 
     def __str__(self):
         return '%s' %(self.nmbre_frmto)
+
+
+
+class Certificado_Retencion(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    nmbre_cncpto = models.CharField(max_length=80)
+    tasa = models.IntegerField()
+    retencion = models.IntegerField()
+    base = models.IntegerField()
+
+    class Meta:
+        verbose_name_plural= u'certficidos'
+        db_table = 'crtificdo_frm_view'
+
+
+    def __str__(self):
+        return '%s' %(self.nmbre_cncpto)
+
+
