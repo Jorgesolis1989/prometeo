@@ -17,7 +17,7 @@ from PROMETEO.settings import STATICFILES_DIRS
 import pdfkit
 from django.template.loader import get_template
 from django.template import Context
-import pdfkit
+#import pdfkit
 from reportlab.lib.enums import TA_LEFT, TA_CENTER
 
 from empresas.forms import FormularioVincularEmpresas
@@ -292,7 +292,7 @@ def tabla_concepto(pdf,y, formato_definido, consulta):
         #Definimos la coordenada donde se dibujará la tabla
         datos.drawOn(pdf, 60,y)
 
-
+"""
 def example():
 
     options = {
@@ -308,3 +308,4 @@ def example():
     response['Content-Disposition'] = 'attachment; filename="salida.pdf"'
 
     return response
+"""
