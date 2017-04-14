@@ -116,9 +116,10 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
     #start X, height end y, height
     C.line(30,1125,560,1125)
     C.setFont('Helvetica-Bold', 16)
-    C.drawString(100,715,formato_definido.nmbre_frmto)
+    C.drawString(100,713,formato_definido.nmbre_frmto)
+    #print(len(formato_definido.nmbre_frmto))
     C.setFont('Helvetica-Bold', 13)
-    C.drawString(220, 700,"Año Gravable "+ periodo)
+    C.drawString(220, 698,"Año Gravable "+ str(periodo))
 
     C.setFont('Helvetica', 13)
     C.drawString(180, 670,"Fecha de emisión: "+ str(datetime.datetime.today().date()))
@@ -136,10 +137,16 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
     C.drawString(60, y - 30,"Por los conceptos que se detallan a continuación:" )
 
 
+    numero_a_retener = '' + usuario_Web.nit_tcro_ascdo
+    for i in range(13 - len(usuario_Web.nit_tcro_ascdo)):
+        numero_a_retener += ' '
+
+    #print(numero_a_retener,"#")
+
     consulta = "SELECT row_number() OVER (ORDER BY cd.nmbre_cncpto) AS id , cd.nmbre_cncpto as nmbre_cncpto, cdp.prcntje_aplccion as tasa, mfc.vlor_grvble AS retencion, (mfc.vlor_grvble/(cdp.prcntje_aplccion/100)) AS base \
         FROM mvmnto_frmto_cncpto AS mfc INNER JOIN cncptos_dfndos_prmtros AS cdp ON mfc.cdgo_cncpto = cdp.cdgo_cncpto AND mfc.cnta_cntble = cdp.cnta_cntble \
         INNER JOIN cncptos_dfndos AS cd ON mfc.cdgo_cncpto=cd.cdgo_cncpto AND mfc.id_emprsa=cd.id_emprsa  WHERE " \
-        "mfc.id_emprsa = %s AND mfc.id_trcro = '%s' and mfc.ano_mes_fnal= '%s' ;"%(str(890300005) , '67020646     ', '2016-12')
+        "mfc.id_emprsa = %s AND mfc.id_trcro = '%s' and mfc.ano_mes_fnal= '%s' ;"%(str(empresa.id_emprsa) , numero_a_retener ,  periodo.ano_mes_fnal)
 
 
 
@@ -152,11 +159,14 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
     #p.wrapOn(C, 100, 100)
     #p.drawOn(C, 60 , y - 200)
 
+
+
+
     C.drawString(60, y- 220,"La retención efectuada fue debidamente consignada en la Dirección de Impuestos y Aduanas ")
-    C.drawString(60, y -230,"Nacionales de la ciudad de Medellin . El presente certificado emitido el 13/12/2013, se expide en")
-    C.drawString(60, y -240,"concordancia con las disposiciones legales contenidas en el artículo 381 del Estatuto Tributario.")
-    C.drawString(60, y -250,"NOTA: Se expide sin firma autógrafa de acuerdo con el art.10 del DC.836 de 1991, y concepto")
-    C.drawString(60, y -260,"DIAN 105489 de Dic de 2007.")
+    C.drawString(60, y -240,"Nacionales de la ciudad de Medellin . El presente certificado emitido el 13/12/2013, se expide en")
+    C.drawString(60, y -260,"concordancia con las disposiciones legales contenidas en el artículo 381 del Estatuto Tributario.")
+    C.drawString(60, y -280,"NOTA: Se expide sin firma autógrafa de acuerdo con el art.10 del DC.836 de 1991, y concepto")
+    C.drawString(60, y -300,"DIAN 105489 de Dic de 2007.")
 
     C.showPage() #guarda pagina
 

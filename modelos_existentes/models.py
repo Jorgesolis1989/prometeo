@@ -190,3 +190,14 @@ class Certificado_Retencion(models.Model):
         return '%s' %(self.nmbre_cncpto)
 
 
+class Periodo (models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    ano_mes_fnal = models.CharField(max_length=7)
+
+    class Meta:
+        verbose_name_plural= u'periodos'
+        db_table = 'periodos'
+
+
+    def __str__(self):
+        return '%s' %(self.ano_mes_fnal)
