@@ -201,3 +201,20 @@ class Periodo (models.Model):
 
     def __str__(self):
         return '%s' %(self.ano_mes_fnal)
+
+class Formatos_Definidos_Enc_Pie(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    id_clnte = models.IntegerField()
+    id_emprsa = models.IntegerField()
+    cdgo_frmto = models.IntegerField()
+    tpo_rgstro = models.IntegerField()
+    nmro_scncial = models.IntegerField()
+    dscrpcion_cmpo = models.CharField(max_length=200)
+
+    class Meta:
+        verbose_name_plural= u'frmtos_dfndos_enc_pie_view'
+        db_table = 'frmtos_dfndos_enc_pie_view'
+
+
+    def __str__(self):
+        return '%s' %(self.dscrpcion_cmpo)
