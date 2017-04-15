@@ -8,7 +8,7 @@ from io import BytesIO
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from modelos_existentes.models import Empresa
-from modelos_existentes.models import Usuario_Web , Certificado_Retencion
+from modelos_existentes.models import Usuario_Web , Certificado_Retencion, Formatos_Definidos_Enc_Pie
 from modelos_existentes.models import Departamentos, Paises,Municipios , Formatos_Definidos
 import datetime
 from django.shortcuts import render, redirect
@@ -23,6 +23,8 @@ from reportlab.lib.enums import TA_LEFT, TA_CENTER
 from empresas.forms import FormularioVincularEmpresas
 from reportlab.lib.units import inch
 
+posicion_x = 0
+posicion_y = 0
 
 def seleccion_concepto(request, id_emprsa=None):
     # POST
@@ -61,6 +63,7 @@ def seleccion_concepto(request, id_emprsa=None):
 
 def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada):
 
+
     #Empresa que practica retención
     empresa = Empresa.objects.get(id_emprsa= id_empresa_vinculada)
 
@@ -75,6 +78,7 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
     #crea la cabezera HttpResponse con PDF
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=certificado-de-'+ str(empresa.nmbre_rzon_scial )+'.pdf'
+
     #Crea el objeto pdf, usando el objeto BytesIO
     buffer = BytesIO()
     #size = landscape(A4)
@@ -83,24 +87,32 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
 
     """Encabezado"""
 
-    #Logo de la empresa
+    #******************************************************************************************************
+    # ***********************************Logo de la empresa   *********************************************
+    #******************************************************************************************************
     C.setLineWidth(.3)
+    posicion_x = 180
+    posicion_y =  730
+
+
     try:
-        C.drawImage(STATICFILES_DIRS[0]+"/images/logosEmpresas/"+str(empresa.id_emprsa)+".bmp", 180, 730, 70, 70)
+        C.drawImage(STATICFILES_DIRS[0]+"/images/logosEmpresas/"+str(empresa.id_emprsa)+".bmp", posicion_x, posicion_y, 70, 70)
     except OSError as e:
-        C.drawImage(STATICFILES_DIRS[0]+"/images/logosEmpresas/logo-empresa-df.png", 180, 730, 70, 100)
+        C.drawImage(STATICFILES_DIRS[0]+"/images/logosEmpresas/logo-empresa-df.png", posicion_x, posicion_y, 70, 100)
 
 
     C.setFont('Helvetica', 14)
 
-    # Titulo de la empresa
+    #******************************************************************************************************
+    # ***********************************Datos  de la empresa *********************************************
+    #******************************************************************************************************
     distancia = 15
-    posicion_x_titulo = 260
-    posicion_y_titulo = 780
-    C.drawString(posicion_x_titulo,posicion_y_titulo,empresa.nmbre_rzon_scial)
-    C.drawString(posicion_x_titulo,posicion_y_titulo - distancia, "NIT "+str(empresa.id_emprsa))
+    posicion_x = 260
+    posicion_y = 780
+    C.drawString(posicion_x,posicion_y,empresa.nmbre_rzon_scial)
+    C.drawString(posicion_x,posicion_y - distancia, "NIT "+str(empresa.id_emprsa))
     C.setFont('Helvetica', 11)
-    C.drawString(posicion_x_titulo , posicion_y_titulo - (distancia * 2),empresa.drccion)
+    C.drawString(posicion_x , posicion_y - (distancia * 2),empresa.drccion)
 
 
     departamento = Departamentos.objects.filter(cdgo_pais = empresa.cdgo_pais, cdgo_dpto= empresa.cdgo_dpto)
@@ -110,40 +122,95 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
                                           cdgo_mncpio= empresa.cdgo_mncpio , actvo=1)
     # En caso que sea colombia
     if municipio is not None:
-        C.drawString(posicion_x_titulo , posicion_y_titulo - (distancia * 3),
+        C.drawString(posicion_x , posicion_y - (distancia * 3),
                      municipio[0].nmbre_mncpio + ", " + departamento[0].nmbre_dpto )
 
     #start X, height end y, height
-    C.line(30,1125,560,1125)
+    #C.line(30,1125,560,1125)
+    posicion_x = 100
+    posicion_y = 713
+
+    #******************************************************************************************************
+    # ***********************************Nombre del formayo *********************************************
+    #******************************************************************************************************
+
+
     C.setFont('Helvetica-Bold', 16)
-    C.drawString(100,715,formato_definido.nmbre_frmto)
-    C.setFont('Helvetica-Bold', 13)
-    C.drawString(220, 700,"Año Gravable "+ periodo)
+    C.drawString(posicion_x,posicion_y,formato_definido.nmbre_frmto)
 
-    C.setFont('Helvetica', 13)
-    C.drawString(180, 670,"Fecha de emisión: "+ str(datetime.datetime.today().date()))
-
+    #******************************************************************************************************
+    # ***********************************Año gravable *********************************************
+    #******************************************************************************************************
 
     C.setFont('Helvetica-Bold', 13)
-    C.drawString(60, 640,"RETENCIÓN PRACTICADA A: ")
+    C.drawString(posicion_x + 120, posicion_y - 13,"Año Gravable "+ str(periodo))
+
+
+    #******************************************************************************************************
+    # ***********************************Fecha de emision     *********************************************
+    #******************************************************************************************************
+
+    C.setFont('Helvetica', 12)
+    C.drawString(posicion_x + 100, posicion_y - 30,"Fecha de emisión: "+ str(datetime.datetime.today().date()))
+
+
+    #******************************************************************************************************
+    # ***********************************Encabezado    *********************************************
+    #******************************************************************************************************
+
+    C.setFont('Helvetica', 11)
+    descripcion_datos = Formatos_Definidos_Enc_Pie.objects.filter(id_emprsa= empresa.id_emprsa,
+                                                            cdgo_frmto = formato_definido.cdgo_frmto ,
+                                                            tpo_rgstro = 1).order_by('nmro_scncial')
+
+    descripcion = ""
+
+    if descripcion_datos:
+        for descripcion_data in descripcion_datos:
+            descripcion += descripcion_data.dscrpcion_cmpo +  " "
+    else:
+        descripcion = ""
+    #print(descripcion)
+    posicion_y = poner_parrafo(C, 59 , posicion_y - 40  , descripcion)
+
+
+    #******************************************************************************************************
+    # ***********************************Retencion practicada a   *****************************************
+    #******************************************************************************************************
+    posicion_y -= 45
+    C.setFont('Helvetica-Bold', 13)
+    C.drawString(posicion_x - 40, posicion_y,"RETENCIÓN PRACTICADA A: ")
 
     #Llamo al método cabecera donde están definidos los datos que aparecen en la cabecera del reporte.
     #cabecera(pdf)
-    y = 600
-    tabla_datos(usuario_Web, C, y)
+    posicion_y -= 40
+    tabla_datos(usuario_Web, C, posicion_y)
 
-    C.setFont('Helvetica', 13)
-    C.drawString(60, y - 30,"Por los conceptos que se detallan a continuación:" )
+    #******************************************************************************************************
+    # ***********************************Por conceptos   **************************************************
+    #******************************************************************************************************
+    posicion_y -= 30
+    C.setFont('Helvetica', 11)
+    C.drawString(posicion_x - 40, posicion_y,"Por los conceptos que se detallan acontinuación: ")
 
+
+    #******************************************************************************************************
+    # ***********************************Por conceptos   **************************************************
+    #******************************************************************************************************
+    numero_a_retener = str(usuario_Web.nit_tcro_ascdo)
+    for i in range(13 - len(usuario_Web.nit_tcro_ascdo)):
+        numero_a_retener += ' '
+
+    #print(numero_a_retener,"#")
 
     consulta = "SELECT row_number() OVER (ORDER BY cd.nmbre_cncpto) AS id , cd.nmbre_cncpto as nmbre_cncpto, cdp.prcntje_aplccion as tasa, mfc.vlor_grvble AS retencion, (mfc.vlor_grvble/(cdp.prcntje_aplccion/100)) AS base \
         FROM mvmnto_frmto_cncpto AS mfc INNER JOIN cncptos_dfndos_prmtros AS cdp ON mfc.cdgo_cncpto = cdp.cdgo_cncpto AND mfc.cnta_cntble = cdp.cnta_cntble \
         INNER JOIN cncptos_dfndos AS cd ON mfc.cdgo_cncpto=cd.cdgo_cncpto AND mfc.id_emprsa=cd.id_emprsa  WHERE " \
-        "mfc.id_emprsa = %s AND mfc.id_trcro = '%s' and mfc.ano_mes_fnal= '%s' ;"%(str(890300005) , '67020646     ', '2016-12')
+        "mfc.id_emprsa = %s AND mfc.id_trcro = '%s' and mfc.ano_mes_fnal= '%s' ;"%(str(empresa.id_emprsa) , numero_a_retener ,  periodo.ano_mes_fnal)
 
 
 
-    tabla_concepto(C, y - 190, formato_definido , consulta)
+    tabla_concepto(C, posicion_y - 100, formato_definido , consulta)
 
     C.setFont('Helvetica', 11)
 
@@ -152,11 +219,13 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
     #p.wrapOn(C, 100, 100)
     #p.drawOn(C, 60 , y - 200)
 
-    C.drawString(60, y- 220,"La retención efectuada fue debidamente consignada en la Dirección de Impuestos y Aduanas ")
-    C.drawString(60, y -230,"Nacionales de la ciudad de Medellin . El presente certificado emitido el 13/12/2013, se expide en")
-    C.drawString(60, y -240,"concordancia con las disposiciones legales contenidas en el artículo 381 del Estatuto Tributario.")
-    C.drawString(60, y -250,"NOTA: Se expide sin firma autógrafa de acuerdo con el art.10 del DC.836 de 1991, y concepto")
-    C.drawString(60, y -260,"DIAN 105489 de Dic de 2007.")
+
+
+    C.drawString(60, posicion_y- 220,"La retención efectuada fue debidamente consignada en la Dirección de Impuestos y Aduanas ")
+    C.drawString(60, posicion_y -240,"Nacionales de la ciudad de Medellin . El presente certificado emitido el 13/12/2013, se expide en")
+    C.drawString(60, posicion_y -260,"concordancia con las disposiciones legales contenidas en el artículo 381 del Estatuto Tributario.")
+    C.drawString(60, posicion_y -280,"NOTA: Se expide sin firma autógrafa de acuerdo con el art.10 del DC.836 de 1991, y concepto")
+    C.drawString(60, posicion_y -300,"DIAN 105489 de Dic de 2007.")
 
     C.showPage() #guarda pagina
 
@@ -291,6 +360,27 @@ def tabla_concepto(pdf,y, formato_definido, consulta):
         datos.wrapOn(pdf, 800, 600)
         #Definimos la coordenada donde se dibujará la tabla
         datos.drawOn(pdf, 60,y)
+
+def poner_parrafo(C, x , y , parrafo):
+    var_x = x
+    var_y = y
+    limite = 81
+    separador = 15
+    #print("len " , int(len(parrafo) / limite))
+    for i in range(int(len(parrafo) / limite) + 1 ):
+
+        var_y  -= separador
+        if len(parrafo) > (i + 1 )* limite:
+
+            C.drawString(var_x, var_y-separador , parrafo[(i* limite):(i + 1 )* limite])
+            C.drawString(540 , var_y-separador, '-')
+        else:
+            C.drawString(var_x, var_y-separador , parrafo[(i* limite):len(parrafo)])
+
+    #print("car y " , var_y)
+
+    return  var_y
+
 
 """
 def example():
