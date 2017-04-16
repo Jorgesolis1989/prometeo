@@ -91,14 +91,14 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
     # ***********************************Logo de la empresa   *********************************************
     #******************************************************************************************************
     C.setLineWidth(.3)
-    posicion_x = 180
+    posicion_x = 200
     posicion_y =  730
 
 
     try:
         C.drawImage(STATICFILES_DIRS[0]+"/images/logosEmpresas/"+str(empresa.id_emprsa)+".bmp", posicion_x, posicion_y, 70, 70)
     except OSError as e:
-        C.drawImage(STATICFILES_DIRS[0]+"/images/logosEmpresas/logo-empresa-df.png", posicion_x, posicion_y, 70, 100)
+        C.drawImage(STATICFILES_DIRS[0]+"/images/logosEmpresas/logo-empresa-df.png", posicion_x, posicion_y, 70, 70)
 
 
     C.setFont('Helvetica', 14)
@@ -107,7 +107,7 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
     # ***********************************Datos  de la empresa *********************************************
     #******************************************************************************************************
     distancia = 15
-    posicion_x = 260
+    posicion_x = 280
     posicion_y = 780
     C.drawString(posicion_x,posicion_y,empresa.nmbre_rzon_scial)
     C.drawString(posicion_x,posicion_y - distancia, "NIT "+str(empresa.id_emprsa))
@@ -127,7 +127,7 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
 
     #start X, height end y, height
     #C.line(30,1125,560,1125)
-    posicion_x = 100
+
     posicion_y = 713
 
     #******************************************************************************************************
@@ -136,14 +136,15 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
 
 
     C.setFont('Helvetica-Bold', 16)
-    C.drawString(posicion_x,posicion_y,formato_definido.nmbre_frmto)
+    #print(60 - (len(formato_definido.nmbre_frmto)))
+    C.drawString(310 - ( ( int(len(formato_definido.nmbre_frmto) /2 ) + 1 )* 10)  ,posicion_y,formato_definido.nmbre_frmto)
 
     #******************************************************************************************************
     # ***********************************Año gravable *********************************************
     #******************************************************************************************************
-
+    posicion_x = 100
     C.setFont('Helvetica-Bold', 13)
-    C.drawString(posicion_x + 120, posicion_y - 13,"Año Gravable "+ str(periodo))
+    C.drawString(posicion_x + 140, posicion_y - 13,"Año Gravable "+ str(periodo))
 
 
     #******************************************************************************************************
@@ -151,7 +152,7 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
     #******************************************************************************************************
 
     C.setFont('Helvetica', 12)
-    C.drawString(posicion_x + 100, posicion_y - 30,"Fecha de emisión: "+ str(datetime.datetime.today().date()))
+    C.drawString(posicion_x + 120   , posicion_y - 30,"Fecha de emisión: "+ str(datetime.datetime.today().date()))
 
 
     #******************************************************************************************************
@@ -159,19 +160,19 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
     #******************************************************************************************************
 
     C.setFont('Helvetica', 11)
-    descripcion_datos = Formatos_Definidos_Enc_Pie.objects.filter(id_emprsa= empresa.id_emprsa,
+    descripcion_datos_encabezado = Formatos_Definidos_Enc_Pie.objects.filter(id_emprsa= empresa.id_emprsa,
                                                             cdgo_frmto = formato_definido.cdgo_frmto ,
                                                             tpo_rgstro = 1).order_by('nmro_scncial')
 
     descripcion = ""
 
-    if descripcion_datos:
-        for descripcion_data in descripcion_datos:
+    if descripcion_datos_encabezado:
+        for descripcion_data in descripcion_datos_encabezado:
             descripcion += descripcion_data.dscrpcion_cmpo +  " "
     else:
         descripcion = ""
     #print(descripcion)
-    posicion_y = poner_parrafo(C, 59 , posicion_y - 40  , descripcion)
+    posicion_y = poner_parrafo(C, 59 , posicion_y - 40  , descripcion , 81)
 
 
     #******************************************************************************************************
@@ -212,20 +213,32 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
 
     tabla_concepto(C, posicion_y - 100, formato_definido , consulta)
 
+
+    #******************************************************************************************************
+    # ***********************************Pie de pagina   **************************************************
+    #******************************************************************************************************
+
+    descripcion_datos_pie = Formatos_Definidos_Enc_Pie.objects.filter(id_emprsa= empresa.id_emprsa,
+                                                    cdgo_frmto = formato_definido.cdgo_frmto ,
+                                                    tpo_rgstro = 2).order_by('nmro_scncial')
+
+    descripcion = ""
+
+    if descripcion_datos_pie:
+        for descripcion_data in descripcion_datos_pie:
+            descripcion += descripcion_data.dscrpcion_cmpo +  " "
+    else:
+        descripcion = ""
+
+
     C.setFont('Helvetica', 11)
+    poner_parrafo(C, 60 , posicion_y -200 , descripcion, 95)
 
-    #p = Paragraph('some text. ' * 30, styles['default']),
-
-    #p.wrapOn(C, 100, 100)
-    #p.drawOn(C, 60 , y - 200)
-
-
-
-    C.drawString(60, posicion_y- 220,"La retención efectuada fue debidamente consignada en la Dirección de Impuestos y Aduanas ")
-    C.drawString(60, posicion_y -240,"Nacionales de la ciudad de Medellin . El presente certificado emitido el 13/12/2013, se expide en")
-    C.drawString(60, posicion_y -260,"concordancia con las disposiciones legales contenidas en el artículo 381 del Estatuto Tributario.")
-    C.drawString(60, posicion_y -280,"NOTA: Se expide sin firma autógrafa de acuerdo con el art.10 del DC.836 de 1991, y concepto")
-    C.drawString(60, posicion_y -300,"DIAN 105489 de Dic de 2007.")
+    #C.drawString(60, posicion_y- 220,"La retención efectuada fue debidamente consignada en la Dirección de Impuestos y Aduanas ")
+    #C.drawString(60, posicion_y -240,"Nacionales de la ciudad de Medellin . El presente certificado emitido el 13/12/2013, se expide en")
+    #C.drawString(60, posicion_y -260,"concordancia con las disposiciones legales contenidas en el artículo 381 del Estatuto Tributario.")
+    #C.drawString(60, posicion_y -280,"NOTA: Se expide sin firma autógrafa de acuerdo con el art.10 del DC.836 de 1991, y concepto")
+    #C.drawString(60, posicion_y -300,"DIAN 105489 de Dic de 2007.")
 
     C.showPage() #guarda pagina
 
@@ -267,18 +280,6 @@ def tabla_datos(usuarioWeb, pdf,y):
 
         ]))
 
-        """
-        detalle_orden.setStyle(TableStyle(
-        [
-                #La primera fila(encabezados) va a estar centrada
-                ('ALIGN',(0,0),(3,0),'LEFT'),
-                #Los bordes de todas las celdas serán de color negro y con un grosor de 1
-                ('GRID', (0, 0), (-1, -1), 1, colors.black),
-                #El tamaño de las letras de cada una de las celdas será de 10
-                ('FONTSIZE', (0, 0), (-1, -1), 10)
-                ]
-        ))
-        """
         #Establecemos el tamaño de la hoja que ocupará la tabla
         detalle_orden.wrapOn(pdf, 800, 600)
         #Definimos la coordenada donde se dibujará la tabla
@@ -290,16 +291,6 @@ def tabla_concepto(pdf,y, formato_definido, consulta):
         encabezados = ('Concepto', 'Tasa %', 'Base', 'Retención')
 
         #Creamos una lista de tuplas que van a contener los datos
-
-        #Consulta
-
-
-        """
-        consulta = "SELECT row_number() OVER (ORDER BY cd.nmbre_cncpto) AS id , cd.nmbre_cncpto as nmbre_cncpto, cdp.prcntje_aplccion as tasa, mfc.vlor_grvble AS retencion, (mfc.vlor_grvble/(cdp.prcntje_aplccion/100)) AS base \
-        FROM mvmnto_frmto_cncpto AS mfc INNER JOIN cncptos_dfndos_prmtros AS cdp ON mfc.cdgo_cncpto = cdp.cdgo_cncpto AND mfc.cnta_cntble = cdp.cnta_cntble \
-        INNER JOIN cncptos_dfndos AS cd ON mfc.cdgo_cncpto=cd.cdgo_cncpto AND mfc.id_emprsa=cd.id_emprsa  WHERE " \
-        "mfc.id_emprsa = %s AND mfc.id_trcro = '%s' "%('890300005' , '67020646     ')
-        """
         #consulta = "select * from frmtos_dfndos_view"
 
         #print(consulta)
@@ -309,7 +300,9 @@ def tabla_concepto(pdf,y, formato_definido, consulta):
         datos = []
         base_total = 0
         retencion_total = 0
+        contador =0
         for retencion in retenciones:
+            contador += 1
             datos.append((retencion.nmbre_cncpto , retencion.tasa, int(retencion.base), retencion.retencion))
             base_total += retencion.base
             retencion_total += retencion.retencion
@@ -358,22 +351,30 @@ def tabla_concepto(pdf,y, formato_definido, consulta):
         ))
         #Establecemos el tamaño de la hoja que ocupará la tabla
         datos.wrapOn(pdf, 800, 600)
-        #Definimos la coordenada donde se dibujará la tabla
-        datos.drawOn(pdf, 60,y)
 
-def poner_parrafo(C, x , y , parrafo):
+
+        #Definimos la coordenada donde se dibujará la tabla
+        datos.drawOn(pdf, 60,y - (contador * 10))
+
+def poner_parrafo(C, x , y , parrafo , limite):
+
     var_x = x
     var_y = y
-    limite = 81
     separador = 15
     #print("len " , int(len(parrafo) / limite))
-    for i in range(int(len(parrafo) / limite) + 1 ):
+    tamanio = int(len(parrafo) / limite) + 1
+    #print("tamanio " , tamanio , len(parrafo))
+    for i in range(tamanio):
 
         var_y  -= separador
-        if len(parrafo) > (i + 1 )* limite:
+        if len(parrafo) > (i + 1 )      * limite:
+            sub_parrafo = parrafo[(i* limite):(i + 1 )* limite]
+            #mayusculas = len([c for c in sub_parrafo if c.isupper()])
 
-            C.drawString(var_x, var_y-separador , parrafo[(i* limite):(i + 1 )* limite])
-            C.drawString(540 , var_y-separador, '-')
+            C.drawString(var_x, var_y-separador ,sub_parrafo )
+            #C.drawString(var_x, var_y-separador ,"de sin firma autógrafa de acuerdo con el artículo 10 del decreto 836 de 1991 y concepto dian 10kk")
+            #print(str(len(parrafo[(i* limite):(i + 1 )* limite])))
+            #C.drawString(540 , var_y-separador, '-')
         else:
             C.drawString(var_x, var_y-separador , parrafo[(i* limite):len(parrafo)])
 
@@ -381,21 +382,3 @@ def poner_parrafo(C, x , y , parrafo):
 
     return  var_y
 
-
-"""
-def example():
-
-    options = {
-        'page-size': 'A4',
-        'margin-top': '0.75in',
-        'margin-right': '0.75in',
-        'margin-bottom': '0.75in',
-        'margin-left': '0.75in',
-    }
-        # Use False instead of output path to save pdf to a variable
-    pdf = pdfkit.from_string('MicroPyramid', 'salida.pdf', options=options)
-    response = HttpResponse(pdf ,content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="salida.pdf"'
-
-    return response
-"""
