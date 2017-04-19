@@ -218,3 +218,18 @@ class Formatos_Definidos_Enc_Pie(models.Model):
 
     def __str__(self):
         return '%s' %(self.dscrpcion_cmpo)
+
+class Documentos_Correo(models.Model):
+    email_usrio = models.CharField(max_length=80)
+    nmro_flder = models.IntegerField(null=False)
+    id_dcmnto = models.IntegerField(primary_key=True)
+    asnto_dcmnto = models.CharField(max_length=80)
+    fcha_dcmnto = models.DateField()
+
+    class Meta:
+        verbose_name_plural= u'documentos_correo'
+        db_table = 'usrios_web_mnjo_flders_det'
+
+    def __str__(self):
+        return '%s' %(self.asnto_dcmnto)
+

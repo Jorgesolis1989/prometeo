@@ -9,11 +9,12 @@ from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from modelos_existentes.models import Empresa
 from modelos_existentes.models import Usuario_Web , Certificado_Retencion, Formatos_Definidos_Enc_Pie
-from modelos_existentes.models import Departamentos, Paises,Municipios , Formatos_Definidos
+from modelos_existentes.models import Departamentos, Paises,Municipios , Formatos_Definidos, Documentos_Correo
 import datetime
 from django.shortcuts import render, redirect
 from empresas.views import cargar_empresas_vinculadas, cargar_carpetas
 from PROMETEO.settings import STATICFILES_DIRS
+
 #import pdfkit
 from django.template.loader import get_template
 from django.template import Context
@@ -234,11 +235,6 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
     C.setFont('Helvetica', 11)
     poner_parrafo(C, 60 , posicion_y -200 , descripcion, 95)
 
-    #C.drawString(60, posicion_y- 220,"La retención efectuada fue debidamente consignada en la Dirección de Impuestos y Aduanas ")
-    #C.drawString(60, posicion_y -240,"Nacionales de la ciudad de Medellin . El presente certificado emitido el 13/12/2013, se expide en")
-    #C.drawString(60, posicion_y -260,"concordancia con las disposiciones legales contenidas en el artículo 381 del Estatuto Tributario.")
-    #C.drawString(60, posicion_y -280,"NOTA: Se expide sin firma autógrafa de acuerdo con el art.10 del DC.836 de 1991, y concepto")
-    #C.drawString(60, posicion_y -300,"DIAN 105489 de Dic de 2007.")
 
     C.showPage() #guarda pagina
 
@@ -247,6 +243,27 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
     pdf = buffer.getvalue()
     buffer.close()
     response.write(pdf)
+
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  """""""""""""""""""""""""""""""
+                Aca se guarda el correo en la tabla usrios_web_mnjo_flders_det
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" """""""""""""""""""""""""""""""
+    documento_correo = Documentos_Correo()
+    documento_correo.email_usrio = usuario_Web.email_usrio
+    documento_correo.asnto_dcmnto = "Generado " + formato_definido.nmbre_frmto
+    documento_correo.nmro_flder = 0
+    try:
+        ultimo_registro = Documentos_Correo.objects.latest('id_dcmnto').id_dcmnto
+    except Documentos_Correo.DoesNotExist as e:
+        ultimo_registro = 0
+
+    documento_correo.id_dcmnto = ultimo_registro + 1
+    documento_correo.fcha_dcmnto = datetime.datetime.now()
+
+    try:
+        documento_correo.save()
+    except Exception as e:
+        print("No guardo " + e)
+
     return response
 
 

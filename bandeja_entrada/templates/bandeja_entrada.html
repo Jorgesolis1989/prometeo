@@ -12,7 +12,7 @@
         <div class="fluid">
             <div class="panel">
                 <div id="demo-email-list" class="panel-body">
-                    <h1 class="page-header text-overflow pad-btm">Bandeja de Entrada (17)</h1>
+                    <h1 class="page-header text-overflow pad-btm">Bandeja de Entrada ({{ documentos_correo.count }})</h1>
 
                     <div class="row">
                         <div class="col-sm-7">
@@ -76,9 +76,10 @@
 
                                 <!--Pager buttons-->
                                 <span class="text-muted">
-                                    <strong>1-50</strong>
+                                    <strong>1-
+                                         {% if documentos_correo.count < 50 %}{{ documentos_correo.count }}  {% else %} 50 {% endif %}</strong>
                                     of
-                                    <strong>160</strong>
+                                    <strong>{{ documentos_correo.count }}</strong>
                                 </span>
                                 <div class="btn-group btn-group">
                                     <button class="btn btn-sm btn-default" type="button">
@@ -96,21 +97,8 @@
                     <!--Mail list group-->
                     <ul id="demo-mail-list" class="mail-list">
 
-                        <!--Mail list item-->
-                        <li class="mail-list-unread mail-attach">
-                            <div class="mail-control">
-                                <input id="email-list-1" class="magic-checkbox" type="checkbox">
-                                <label for="email-list-1"></label>
-                            </div>
-                            <div class="mail-star"><a href="#"><i class="demo-psi-star"></i></a></div>
-                            <div class="mail-time">05:55 PM</div>
-                            <div class="mail-from"><a href="#">Certificado de Retencion en la Fuente</a></div>
-                            <div class="mail-attach-icon"></div>
-                            <div class="mail-subject">
-                                <a href="mailbox-message.html">Sistemas de información Empresariales - certificado retefuente generado por la empresa yyyy </a>
-                            </div>
-                        </li>
 
+                        {% for documento_correo in documentos_correo %}
                         <!--Mail list item-->
                         <li class="mail-starred">
                             <div class="mail-control">
@@ -118,96 +106,14 @@
                                 <label for="email-list-1"></label>
                             </div>
                             <div class="mail-star"><a href="#"><i class="demo-psi-star"></i></a></div>
-                            <div class="mail-from"><a href="#">Shopping Mall</a></div>
-                            <div class="mail-time">10:45 AM</div>
+                            <div class="mail-from"><a href="#">Prometeo</a></div>
+                            <div class="mail-time">{{ documento_correo.fcha_dcmnto | date}}</div>
                             <div class="mail-attach-icon"></div>
                             <div class="mail-subject">
-                                <a href="mailbox-message.html">Tracking Your Order - Shoes Store Online</a>
+                                <a href="mailbox-message.html"> {{ documento_correo.asnto_dcmnto }}</a>
                             </div>
                         </li>
-
-                        <!--Mail list item-->
-                        <li class="mail-list-unread mail-starred mail-attach">
-                            <div class="mail-control">
-                                <input id="email-list-1" class="magic-checkbox" type="checkbox">
-                                <label for="email-list-1"></label>
-                            </div>
-                            <div class="mail-star"><a href="#"><i class="demo-psi-star"></i></a></div>
-                            <div class="mail-from"><a href="#">Dropbox</a></div>
-                            <div class="mail-time">07:18 AM</div>
-                            <div class="mail-attach-icon"><i class="demo-psi-paperclip"></i></div>
-                            <div class="mail-subject">
-                                <a href="mailbox-message.html">Reset your account password</a>
-                            </div>
-                        </li>
-
-                        <!--Mail list item-->
-                        <li class="mail-list-unread">
-                            <div class="mail-control">
-                                <input id="email-list-1" class="magic-checkbox" type="checkbox">
-                                <label for="email-list-1"></label>
-                            </div>
-                            <div class="mail-star"><a href="#"><i class="demo-psi-star"></i></a></div>
-                            <div class="mail-from"><a href="#">Server Host</a></div>
-                            <div class="mail-time">01:51 PM</div>
-                            <div class="mail-attach-icon"></div>
-                            <div class="mail-subject">
-                                <a href="mailbox-message.html">
-                                    <span class="label label-danger">
-                                    Bussines
-                                    </span>
-                                    Regarding to your website issues.
-                                </a>
-                            </div>
-                        </li>
-
-                        <!--Mail list item-->
-                        <li>
-                            <div class="mail-control">
-                                <input id="email-list-1" class="magic-checkbox" type="checkbox">
-                                <label for="email-list-1"></label>
-                            </div>
-                            <div class="mail-star"><a href="#"><i class="demo-psi-star"></i></a></div>
-                            <div class="mail-from"><a href="#">Lisa D. Smith</a></div>
-                            <div class="mail-time">Yesterday</div>
-                            <div class="mail-attach-icon"></div>
-                            <div class="mail-subject">
-                                <a href="mailbox-message.html">Hi John! How are you?</a>
-                            </div>
-                        </li>
-
-
-                        <!--Mail list item-->
-                        <li class="mail-starred">
-                            <div class="mail-control">
-                                <input id="email-list-1" class="magic-checkbox" type="checkbox">
-                                <label for="email-list-1"></label>
-                            </div>
-                            <div class="mail-star"><a href="#"><i class="demo-psi-star"></i></a></div>
-                            <div class="mail-from"><a href="#">Lisa D. Smith</a></div>
-                            <div class="mail-time">Oct 5</div>
-                            <div class="mail-attach-icon"></div>
-                            <div class="mail-subject"><a href="mailbox-message.html">Hi John! How are you?</a></div>
-                        </li>
-                        <!--Mail list item-->
-                        <li class="mail-starred">
-                            <div class="mail-control">
-                                <input id="email-list-1" class="magic-checkbox" type="checkbox">
-                                <label for="email-list-1"></label>
-                            </div>
-                            <div class="mail-star"><a href="#"><i class="demo-psi-star"></i></a></div>
-                            <div class="mail-from"><a href="#">Johny Juan</a></div>
-                            <div class="mail-time">Oct 5</div>
-                            <div class="mail-attach-icon"></div>
-                            <div class="mail-subject">
-                                <a href="mailbox-message.html">
-                                    <span class="label label-info">
-                                        Partner
-                                    </span>
-                                    Repair Status Unregistered User
-                                </a>
-                            </div>
-                        </li>
+                        {% endfor %}
 
                     </ul>
                 </div>
@@ -215,7 +121,9 @@
                 <!--Mail footer-->
                 <div class="panel-footer clearfix">
                     <div class="pull-right">
-                        <span class="text-muted"><strong>1-50</strong> of <strong>160</strong></span>
+                        <span class="text-muted"><strong>1-
+                            {% if documentos_correo.count < 50 %}{{ documentos_correo.count }}  {% else %} 50 {% endif %}
+                        </strong> of <strong>{{ documentos_correo.count }}</strong></span>
                         <div class="btn-group btn-group">
                             <button type="button" class="btn btn-default">
                                 <i class="demo-psi-arrow-left"></i>
