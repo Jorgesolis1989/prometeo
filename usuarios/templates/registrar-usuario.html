@@ -1,4 +1,4 @@
-{% extends "base-usuario.html" %}
+{% extends "base-login.html" %}
 {%block title %}Registro de Usuario | PROMETEO{%endblock title %}
 {%block content %}
 	<div id="container" class="cls-container">
@@ -24,25 +24,24 @@
                              <div class="col-sm-10">
                                  <fieldset>
                                     <div class="form-group">
-                                        <label class="col-lg-4 control-label">Nombres: </label>
+                                        <label class="col-lg-4 control-label">Nombres (*)</label>
                                         <div class="col-lg-8">
                                             {{ form.first_name}}
                                         </div>
                                     </div>
                                 </fieldset>
-
                                  <fieldset>
                                     <div class="form-group">
-                                        <label class="col-lg-4 control-label">Email: </label>
+                                        <label class="col-lg-4 control-label">Email (*)</label>
                                         <div class="col-lg-8">
                                             {{ form.email}}
                                         </div>
                                     </div>
                                 </fieldset>
 
-                                 <fieldset>
+                         <fieldset>
                                     <div class="form-group">
-                                        <label class="col-lg-4 control-label">Nit de la empresa: </label>
+                                        <label class="col-lg-4 control-label">Nit de la empresa (*)</label>
                                         <div class="col-lg-8">
                                             {{ form.nit_empresa}}
                                         </div>
@@ -51,7 +50,7 @@
 
                                  <fieldset>
                                     <div class="form-group">
-                                        <label class="col-lg-4 control-label">Email alternativo: </label>
+                                        <label class="col-lg-4 control-label">Email alternativo (*)</label>
                                         <div class="col-lg-8">
                                             {{ form.email_alternativo}}
                                               <p class="text-danger text-bold ">{{ form.email_alternativo.errors}}</p>
@@ -62,7 +61,7 @@
 
                                  <fieldset>
                                     <div class="form-group">
-                                        <label class="col-lg-4 control-label">Teléfono fijo : </label>
+                                        <label class="col-lg-4 control-label">Teléfono fijo (*)</label>
                                         <div class="col-lg-8">
                                             {{ form.tel_fijo}}
                                         </div>
@@ -71,7 +70,7 @@
 
                                  <fieldset>
                                     <div class="form-group">
-                                        <label class="col-lg-4 control-label">Teléfono móvil : </label>
+                                        <label class="col-lg-4 control-label">Teléfono móvil (*)</label>
                                         <div class="col-lg-8">
                                             {{ form.tel_movil}}
                                         </div>
@@ -79,7 +78,7 @@
                                 </fieldset>
                                  <fieldset>
                                     <div class="form-group">
-                                        <label class="col-lg-4 control-label">Contraseña: </label>
+                                        <label class="col-lg-4 control-label">Contraseña (*)</label>
                                         <div class="col-lg-8">
                                             {{ form.password}}
                                             <div class="checkbox pad-btm text-left">
@@ -97,7 +96,8 @@
                                 </div>
                                 <div class="col-sm-5 col-sm-offset-5">
                                     <div class="form-group">
-                                        <button style="background-color: #e8a018; border-color: #d5d3d0" class="btn btn-primary btn-block" type="submit" name="btnRegister">Registrarse</button>
+                                        <button style="background-color: #e8a018; border-color: #d5d3d0" class="btn btn-primary" type="submit" name="btnRegister">Registrarse</button>
+                                        <a href="{% url 'login_user' %}" style=" color:#ffffff; border-color: #d5d3d0" class="btn btn-mint btn-active-mint" type="button"><b>Regresar</b></a>
                                     </div>
                                 </div>
                              </div>
