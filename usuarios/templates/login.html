@@ -1,4 +1,4 @@
-{% extends "base-usuario.html" %}
+{% extends "base-login.html" %}
 {%block title %} Inicio de sesión | PROMETEO {%endblock title %}
 {%block content %}
     <!--===================================================-->
@@ -15,8 +15,7 @@
                             <p class="text-danger text-bold ">
                                 {{ mensajeE }}
                             </p>
-                    </div>
-                    <form method="post" action="" >
+                        <form method="post" action="" >
                         {% csrf_token %}
                         <div class="form-group">
                            {{ form.username }}
@@ -29,20 +28,22 @@
                             <label for="demo-form-checkbox">Recuerdame</label>
                         </div>
                         <div class="col-sm-4 col-sm-offset-4">
-                            <button style="background-color: #e8a018; border-color: #d5d3d0" class="btn btn-primary btn-block" type="submit"><b>Ingresar</b></button>
+                            <button style="border-color: #d5d3d0; color:#ffffff;" class="btn btn-warning" type="submit"><b>Ingresar</b></button>
                         </div>
                     </form>
-
+                    </div>
+                    <div><br>
+                        <hr>
+                        <a href="{% url 'reset_password_reset1' %}" class="btn-link mar-rgt ">Recordar mi clave</a>
+                        <a href="{% url 'register_user' %}" class="btn-link mar-lft" type="submit" name="btnToRegister"><u>Registrarme</u></a>
+                    </div>
                 </div>
-                <hr>
-                <div class="pad-all">
-                    <a href="{% url 'reset_password_reset1' %}" class="btn-link mar-rgt ">Recordar mi clave</a>
-                    <a href="{% url 'register_user' %}" class="btn-link mar-lft" type="submit" name="btnToRegister"><u>Registrarme</u></a>
-                </div>
+            </div>
+            <div class="col-sm-2 col-sm-offset-8">
+                <a href="/" style=" color:#ffffff; border-color: #d5d3d0" class="btn btn-mint btn-active-mint" type="button"><b>Regresar</b></a>
             </div>
         </div>
 	</div>
-
+{%endblock content%}
 	<!--===================================================-->
 	<!-- END OF CONTAINER -->
-{%endblock content%}
