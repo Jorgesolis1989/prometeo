@@ -6,6 +6,7 @@
         </ol>
     {%endblock breadcrumb %}
 {%block content %}
+    {% load staticfiles %}
     <div class="fixed-fluid">
         <div class="fixed-sm-200 fixed-md-250 pull-sm-left">
         </div>
@@ -105,13 +106,13 @@
                                 <input id="email-list-1" class="magic-checkbox" type="checkbox">
                                 <label for="email-list-1"></label>
                             </div>
-                            <div class="mail-star"><a href="#"><i class="demo-psi-star"></i></a></div>
+
                             <div class="mail-from"><a href="#">Prometeo</a></div>
                             <div class="mail-time">{{ documento_correo.fcha_dcmnto | date}}</div>
-                            <div class="mail-attach-icon"></div>
-                            <div class="mail-subject">
+                                                        <div class="mail-subject">
                                 <a href="mailbox-message.html"> {{ documento_correo.asnto_dcmnto }}</a>
                             </div>
+                        <div class="mail-attach-icon" > <a href="#" > <img src="{% static 'images/pdf-icon-4.png' %}" alt="" width="30" height="30"  /></a></div>
                         </li>
                         {% endfor %}
 
