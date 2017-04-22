@@ -20,9 +20,6 @@ from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 
-
-
-import pdfkit
 from django.template.loader import get_template
 from django.template import Context
 #import pdfkit
