@@ -14,8 +14,15 @@ import datetime
 from django.shortcuts import render, redirect
 from empresas.views import cargar_empresas_vinculadas, cargar_carpetas
 from PROMETEO.settings import STATICFILES_DIRS
+from certificados.models import Documentos
 
-#import pdfkit
+from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+
+
+
+import pdfkit
 from django.template.loader import get_template
 from django.template import Context
 #import pdfkit
@@ -37,7 +44,7 @@ def seleccion_concepto(request, id_emprsa=None):
 
             #return  seleccion_other()
             return generarPdf_general(request,tipo_certificado, periodo,id_emprsa )
-            #return example()
+            #return example(request)
         else:
             print("no valido")
 
@@ -83,7 +90,7 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
     #Crea el objeto pdf, usando el objeto BytesIO
     buffer = BytesIO()
     #size = landscape(A4)
-    C = canvas.Canvas(buffer, pagesize=A4)
+    C = canvas.Canvas(buffer, pagesize=A4,  )
     C.setTitle("Certificado de- "+str(formato_definido.nmbre_frmto))
 
     """Encabezado"""
@@ -240,6 +247,8 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
 
     #guarda pdf
     C.save()
+
+
     pdf = buffer.getvalue()
     buffer.close()
     response.write(pdf)
@@ -263,6 +272,15 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
         documento_correo.save()
     except Exception as e:
         print("No guardo " + e)
+
+
+    documento = Documentos()
+    documento.id_dcmnto = documento_correo.id_dcmnto
+
+    try:
+        documento.save()
+    except Exception as e:
+        print(e)
 
     return response
 
@@ -399,3 +417,19 @@ def poner_parrafo(C, x , y , parrafo , limite):
 
     return  var_y
 
+
+
+
+def example(request):
+    # Generate PDF from a web URL (maybe only from your project)
+    #pdfkit.from_url('http://google.com', 'out.pdf')
+    # Generate PDF from a html file.
+    #pdfkit.from_file('file.html', 'out.pdf')
+    # Generate PDF from a plain html string.
+    pdf = pdfkit.from_string('<h1>Hello</h1>!', 'out.pdf')
+
+        # Generate download
+    response = HttpResponse(pdf,content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="hola.pdf"'
+
+    return response
