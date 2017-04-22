@@ -132,6 +132,8 @@
 
 
 
+
+
     // BOOTBOX - PROMPT MODAL
     // =================================================================
     // Require Bootbox
@@ -470,6 +472,14 @@
             animateOut : 'hinge'
         });
     });
+
+
+    $('.mostrar_pdf').on('click', function(){
+    var id_documento = $(this).attr('id')
+    document.formDelete.action = "/certificado/"+id_documento
+    document.formDelete.submit()
+	});
+
 
 
  })
