@@ -134,7 +134,7 @@
 
                 <!--Brand logo & name-->
                 <!--================================-->
-                <div class="navbar-header">
+                <div style="height: auto" class="navbar-header">
                     <a href="{% url 'login_user' %}" class="navbar-brand">
                         <img src="{% static 'img/logo-res.png' %}" alt="" class="brand-icon">
                         <div class="brand-title">
@@ -158,6 +158,12 @@
                                 <i class="demo-pli-view-list "></i>
                             </a>
                         </li>
+                        <ul class=" list-unstyled pull-left">
+                            <li class="scroll"><b>SQL Soluciones S.A</b></li>
+                            <li class="scroll">Teléfono:(2) 5242436</li>
+                            <li class="scroll">Dirección: Calle 28 100-118</li>
+                            <li class="scroll">Ciudad: Cali Colombia</li>
+                        </ul>
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <!--End Navigation toogle button-->
 
@@ -177,7 +183,9 @@
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <!--End mega dropdown-->
 
+
                     </ul>
+
                     <ul class="nav navbar-top-links pull-right">
 
                         <!--Language selector-->
@@ -328,10 +336,11 @@
                                 <!-- Newsfeed Content -->
                                 <!--===================================================-->
                                 {% block content %}
+                                    <br>
                                         <div id="container" class="cls-container">
                                         <h3 class="h2 mar-no text-center ">Bienvenidos a</h3>
                                             <div class="mar-ver pad-btm">
-                                                <a href="http://54.200.145.159:8080/" target="_blank"><img src="{% static 'images/img-welcome.png' %}" alt=""></a>
+                                                <a href="http://54.200.145.159:8080/" target="_blank"><img src="{% static 'images/splash_prometeo.bmp' %}" alt=""></a>
                                                 <h3 class="text-danger text-bold">Nunca la información de sus proveedores,<br>clientes y empleados<br>estuvo tan cerca!</h3>
                                              </div>
                                         </div>
@@ -509,14 +518,12 @@
                                             <strong>PQRS</strong>
                                         </span>
                                     </a>
-
                                     <!--Menu list item-->
-
 						            <li class="list-divider"></li>
+                                    <a href="{% url 'login_user' %}" style=" color:#ffffff; border-color: #d5d3d0" class="btn btn-mint btn-active-mint pull-right " type="button"><b>Regresar</b></a>
                                 </ul>
                             </div>
                         </div>
-
                     </div>
                     <!--================================-->
                     <!--End menu-->
