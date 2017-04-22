@@ -180,6 +180,16 @@
 
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <!--End mega dropdown-->
+                        <ul class="nav navbar-top-links pull-right">
+                            <li>
+                                <ul class=" list-unstyled pull-left ">
+                                    <li class="scroll"><b>SQL Soluciones S.A</b></li>
+                                    <li class="scroll">Teléfono:(2) 5242436</li>
+                                    <li class="scroll">Dirección: Calle 28 100-118</li>
+                                    <li class="scroll">Ciudad: Cali Colombia</li>
+                                </ul>
+                            </li>
+                        </ul>
 
                     </ul>
                     <ul class="nav navbar-top-links pull-right">
@@ -207,7 +217,7 @@
 
                                 <!-- Dropdown heading  -->
                                 <div class="pad-all bord-btm">
-                                    <p class="text-main mar-btm"><span class="text-bold"></span>Bienvenido</p>
+                                    <p class="text-main mar-btm"><span class="text-bold"></span>Información de usuario</p>
                                 </div>
 
 
@@ -215,7 +225,7 @@
                                 <ul class="head-list">
                                     <li>
                                         <a href="#">
-                                            <i class="demo-pli-male icon-lg icon-fw"></i> Perfil
+                                            <i class="demo-pli-male icon-lg icon-fw"></i> NIT de usuario:
                                         </a>
                                     </li>
 
@@ -319,9 +329,58 @@
                                 </form>
                                 </div>
                             </div>
+
+                        <!---bloque informacion de interes -->
+                            <div class="panel">
+                                <!---bloque informacion de interes -->
+                                <div class="panel-heading" style="background-color: #f9c769;">
+                                    <br>
+                                    <center><i class="demo-pli-building"></i>
+                                        <span>
+                                            <strong>Información de Interés</strong>
+                                        </span>
+                                    </center>
+                                </div>
+
+                                <div class="list-group bg-trans scroll" data-provide="markdown">
+                                    <div class="media-left pos-rel">
+                                    </div>
+                                    <div class="media-body">
+                                        <p class="mar-no">asdas</p>
+                                        <small class="text-muted"></small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <!---bloque informacion de interes -->
+                            <div class="panel">
+                                <!---bloque enlaces de interes -->
+                                <div class="panel-heading" style="background-color: #f9c769;">
+                                    <br>
+                                    <center><i class="demo-pli-building"></i>
+                                        <span>
+                                            <strong>Enlaces de Interés</strong>
+                                        </span>
+                                    </center>
+                                </div>
+
+                                <div class="list-group bg-trans scroll" data-provide="markdown">
+                                    <div class="media-left pos-rel">
+                                    </div>
+                                    <div class="media-body">
+                                        <p class="mar-no">
+                                            <a href="http://www.dian.gov.co/" target="_blank" class="list-group-item"">DIAN</a>
+                                        </p>
+                                        <small class="text-muted"></small>
+
+                                    </div>
+                                </div>
+                            </div>
+                        <!--
                             <div id="demo-custom-toolbar" class="table-toolbar-right">
                                 <a href="{% url 'login_user' %}" class="btn btn-mint btn-labeled fa fa-list-alt text-lg"><b>Regresar</b></a>
                             </div>
+                            -->
                         </div>
                         <div class="fluid">
                             <!-- Status Form -->
@@ -511,6 +570,7 @@
                                     <!--Menu list item-->
 
 						            <li class="list-divider"></li>
+                                    <a href="{% url 'login_user' %}" style=" color:#ffffff; border-color: #d5d3d0" class="btn btn-mint btn-active-mint pull-right " type="button"><b>Regresar</b></a>
                                 </ul>
                             </div>
                         </div>
