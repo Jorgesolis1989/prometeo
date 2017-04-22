@@ -31,7 +31,7 @@ def login_user(request):
 
     if request.user.is_authenticated() and not request.user.is_superuser:
         empresas_vinculadas = cargar_empresas_vinculadas(request)
-        return render(request, 'bandeja_entrada.html', {'empresas_vinculadas': empresas_vinculadas  , 'carpetas': cargar_carpetas(request)})
+        return render(request, 'login.html', {'empresas_vinculadas': empresas_vinculadas  , 'carpetas': cargar_carpetas(request)})
 
     elif request.method == 'POST':
         form = FormularioLogin(request.POST)
@@ -44,7 +44,7 @@ def login_user(request):
 
 
                     #Redireccionar
-                    return render(request, 'bandeja_entrada.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) , 'carpetas': cargar_carpetas(request) })
+                    return render(request, 'login.html', {'empresas_vinculadas': cargar_empresas_vinculadas(request) , 'carpetas': cargar_carpetas(request) })
                 else:
                    mensajeE = "Usuario no activado"
             else:
@@ -124,7 +124,7 @@ def registro_usuario(request):
             try:
                 #Consultando el usuario en la base de datos.
                 email_usuario = User.objects.get(email=email)
-                print("email" + str(email_usuario))
+                #print("email" + str(email_usuario))
 
             #Si el usuario no existe, lo crea
             except User.DoesNotExist:
