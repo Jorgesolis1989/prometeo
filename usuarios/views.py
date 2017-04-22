@@ -124,7 +124,7 @@ def registro_usuario(request):
             try:
                 #Consultando el usuario en la base de datos.
                 email_usuario = User.objects.get(email=email)
-                print("email" + str(email_usuario))
+                #print("email" + str(email_usuario))
 
             #Si el usuario no existe, lo crea
             except User.DoesNotExist:

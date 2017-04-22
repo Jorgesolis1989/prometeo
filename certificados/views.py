@@ -13,11 +13,12 @@ from modelos_existentes.models import Departamentos, Paises,Municipios , Formato
 import datetime
 from django.shortcuts import render, redirect
 from empresas.views import cargar_empresas_vinculadas, cargar_carpetas
-from PROMETEO.settings import STATICFILES_DIRS
-from certificados.models import Documentos
+from PROMETEO.settings import STATICFILES_DIRS , MEDIA_ROOT
+
 
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
+
 from django.template.loader import render_to_string
 
 from django.template.loader import get_template
@@ -32,19 +33,6 @@ posicion_x = 0
 posicion_y = 0
 
 def seleccion_concepto(request, id_emprsa=None):
-    # POST
-    if request.POST and "btnGenerer" in request.POST:
-        form = FormularioEscogerCertificado(request.POST)
-        if form.is_valid():
-            tipo_certificado = form.cleaned_data["tipo_certificado"]
-            periodo = form.cleaned_data["periodo"]
-
-            #return  seleccion_other()
-            return generarPdf_general(request,tipo_certificado, periodo,id_emprsa )
-            #return example(request)
-        else:
-            print("no valido")
-
 
     formatos = Formatos_Definidos.objects.filter(actvo=1, id_emprsa=id_emprsa)
 
@@ -58,6 +46,24 @@ def seleccion_concepto(request, id_emprsa=None):
 
     #Empresa que practica retención
     empresa = Empresa.objects.get(id_emprsa= id_emprsa)
+
+    # POST
+    if request.POST and "btnGenerer" in request.POST:
+        form = FormularioEscogerCertificado(request.POST)
+        if form.is_valid():
+            tipo_certificado = form.cleaned_data["tipo_certificado"]
+            periodo = form.cleaned_data["periodo"]
+
+            #return  seleccion_other()
+            #return generarPdf_general(request,tipo_certificado, periodo,id_emprsa )
+            numero_certificado = generarPdf_general(request,tipo_certificado, periodo,id_emprsa )
+            llamarMensaje = 'carga_mensaje_pdf'
+            return render(request, 'seleccion-concepto.html', {'llamarMensaje':llamarMensaje, 'empresa': empresa.nmbre_rzon_scial ,'id_certificado':  str(numero_certificado) , 'empresa':empresa,'empresas_vinculadas': cargar_empresas_vinculadas(request) ,
+                                                       'carpetas': cargar_carpetas(request) ,  'FormularioEscogerCertificado': form
+                                                      })
+            #return example(request)
+        else:
+            print("no valido")
 
     return render(request, 'seleccion-concepto.html', {'empresa':empresa,'empresas_vinculadas': cargar_empresas_vinculadas(request) ,
                                                         'carpetas': cargar_carpetas(request) ,  'FormularioEscogerCertificado': form
@@ -82,12 +88,14 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
 
     #crea la cabezera HttpResponse con PDF
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename=certificado-de-'+ str(empresa.nmbre_rzon_scial )+'.pdf'
+    response['Content-Disposition'] =  'filename=certificado-de-'+ str(empresa.nmbre_rzon_scial )+'.pdf'
 
     #Crea el objeto pdf, usando el objeto BytesIO
     buffer = BytesIO()
+
     #size = landscape(A4)
-    C = canvas.Canvas(buffer, pagesize=A4,  )
+    C = canvas.Canvas(buffer, pagesize=A4)
+
     C.setTitle("Certificado de- "+str(formato_definido.nmbre_frmto))
 
     """Encabezado"""
@@ -148,6 +156,7 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
     # ***********************************Año gravable *********************************************
     #******************************************************************************************************
     posicion_x = 100
+
     C.setFont('Helvetica-Bold', 13)
     C.drawString(posicion_x + 140, posicion_y - 13,"Año Gravable "+ str(periodo))
 
@@ -240,15 +249,6 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
     poner_parrafo(C, 60 , posicion_y -200 , descripcion, 95)
 
 
-    C.showPage() #guarda pagina
-
-    #guarda pdf
-    C.save()
-
-
-    pdf = buffer.getvalue()
-    buffer.close()
-    response.write(pdf)
 
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  """""""""""""""""""""""""""""""
                 Aca se guarda el correo en la tabla usrios_web_mnjo_flders_det
@@ -270,16 +270,16 @@ def generarPdf_general(request, formato_definido, periodo, id_empresa_vinculada)
     except Exception as e:
         print("No guardo " + e)
 
+    C._filename=  MEDIA_ROOT + "pdf/" + str(documento_correo.id_dcmnto) + ".pdf"
 
-    documento = Documentos()
-    documento.id_dcmnto = documento_correo.id_dcmnto
+    C.showPage() #guarda pagina
 
-    try:
-        documento.save()
-    except Exception as e:
-        print(e)
+    #guarda pdf
+    C.save()
 
-    return response
+    return  str(documento_correo.id_dcmnto) +  " " +    formato_definido.nmbre_frmto
+
+    #return  response
 
 
 def tabla_datos(usuarioWeb, pdf,y):
@@ -415,18 +415,3 @@ def poner_parrafo(C, x , y , parrafo , limite):
     return  var_y
 
 
-
-
-def example(request):
-    # Generate PDF from a web URL (maybe only from your project)
-    #pdfkit.from_url('http://google.com', 'out.pdf')
-    # Generate PDF from a html file.
-    #pdfkit.from_file('file.html', 'out.pdf')
-    # Generate PDF from a plain html string.
-    pdf = pdfkit.from_string('<h1>Hello</h1>!', 'out.pdf')
-
-        # Generate download
-    response = HttpResponse(pdf,content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="hola.pdf"'
-
-    return response

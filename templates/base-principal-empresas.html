@@ -8,6 +8,7 @@
     <title>{% block title %}PROMETEO {% endblock title %}| SQL Soluciones S.A </title>
 
 
+
     <!--STYLESHEET-->
     <!--=================================================-->
 
@@ -61,6 +62,9 @@
 
     <!--NiftyJS [ RECOMMENDED ]-->
     <script src="{% static 'js/nifty.min.js'%}"></script>
+
+    <!--NiftyJS [ RECOMMENDED ]-->
+    <script src="{% static 'js/demo/mensaje_confirmacion_pdf.js'%}"></script>
 
 
     <!--=================================================-->
@@ -1072,7 +1076,11 @@
     </div>
     <!--===================================================-->
     <!-- END SETTINGS -->
-
+<script>
+    window.onload = function() {
+    llamarMensajes( '{{ llamarMensaje }}' , '{{ id_certificado }}' , '{{ empresa }}' );
+    };
+</script>
 
 </body>
 </html>

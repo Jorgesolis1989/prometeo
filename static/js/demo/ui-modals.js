@@ -132,6 +132,8 @@
 
 
 
+
+
     // BOOTBOX - PROMPT MODAL
     // =================================================================
     // Require Bootbox
@@ -277,6 +279,44 @@
         $(".demo-modal-radio").niftyCheck();
     });
 
+
+     $('#mensaje_de_confirmacion_reporte').on('click', function(){
+        bootbox.dialog({
+            title: "This is a form in a modal.",
+            message:'<div class="row"> ' + '<div class="col-md-12"> ' +
+                    '<form class="form-horizontal"> ' + '<div class="form-group"> ' +
+                    '<label class="col-md-4 control-label" for="name">Name</label> ' +
+                    '<div class="col-md-4"> ' +
+                    '<input id="name" name="name" type="text" placeholder="Your name" class="form-control input-md"> ' +
+                    '<span class="help-block"><small>Here goes your name</small></span> </div> ' +
+                    '</div> ' + '<div class="form-group"> ' +
+                    '<label class="col-md-4 control-label" for="awesomeness">How awesome is this?</label> ' +
+                    '<div class="col-md-8"> <div class="form-block"> ' +
+                    '<label class="form-radio form-icon demo-modal-radio active"><input type="radio" autocomplete="off" name="awesomeness" value="Really awesome" checked> Really awesome</label>' +
+                    '<label class="form-radio form-icon demo-modal-radio"><input type="radio" autocomplete="off" name="awesomeness" value="Super awesome"> Super awesome </label> </div>' +
+                    '</div> </div>' + '</form> </div> </div><script></script>',
+            buttons: {
+                success: {
+                    label: "Save",
+                    className: "btn-purple",
+                    callback: function() {
+                        var name = $('#name').val();
+                        var answer = $("input[name='awesomeness']:checked").val();
+
+                        $.niftyNoty({
+                            type: 'purple',
+                            icon : 'fa fa-check',
+                            message : "Hello " + name + ".<br> You've chosen <strong>" + answer + "</strong>",
+                            container : 'floating',
+                            timer : 4000
+                        });
+                    }
+                }
+            }
+        });
+
+        $(".demo-modal-radio").niftyCheck();
+    });
 
 
     // BOOTBOX - ZOOM IN/OUT ANIMATION
@@ -432,6 +472,14 @@
             animateOut : 'hinge'
         });
     });
+
+
+    $('.mostrar_pdf').on('click', function(){
+    var id_documento = $(this).attr('id')
+    document.formDelete.action = "/certificado/"+id_documento
+    document.formDelete.submit()
+	});
+
 
 
  })
